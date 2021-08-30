@@ -2,6 +2,8 @@ Project: Flashback Games
 
 Aux. API: https://www.programmableweb.com/api/mochi-media-flash-games
 
+# User Stories
+Users should be able to:
 1.	Register a new account
 2.	Login with existing credentials
 3.	Logout
