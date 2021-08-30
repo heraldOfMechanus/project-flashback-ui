@@ -1,3 +1,20 @@
+Project: Flashback Games
+
+Aux. API: https://www.programmableweb.com/api/mochi-media-flash-games
+
+1. Users should be able to access Flash games by clicking a link, remaining on the webpage.
+2. Users should be able to register for new Player accounts.
+3. Users should be able to post comments on flash games, and partake in the community of players.
+4. Unauthenticated users must not be able to post comments on games, but can post as 'Anonymous' on forums.
+5. Users should be able to navigate to a forum where they can hold long discussions.
+6. Users should be able to view and alter their profile information.
+7. Users should be able to set a 'profile picture'. Profile pictures can be set via URL.
+8. Profile pictures must display on forum posts.
+9. Multiple users must be able to log in at the same time.
+10. There should be a sidebar where a list of all supported games is displayed, whether logged in or out.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
