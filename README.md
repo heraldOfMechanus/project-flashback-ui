@@ -3,20 +3,36 @@ Project: Flashback Games
 Aux. API: https://www.programmableweb.com/api/mochi-media-flash-games
 
 # User Stories
-Users should be able to:
-1.	Register a new account
-2.	Login with existing credentials
-3.	Logout
-4.	Play flash games by clicking a link
-5.	Post comments on flash games
-6.	Add games to their list of likes
-7.	Remove game from their list of likes
-8.	View community forum
-9.	Create a new thread on the forum
-10.	Post comments to a thread on the forum
-11.	View profile page
-12.	Update profile/information (including profile picture)
-
+Admin users can:
+1. Login with existing credentials
+2. Logout
+3. Navigate to Forum
+4. Create a new thread
+5. Create comments on threads
+6. View all threads
+7. View comments on threads
+8. Update thread information
+9. Delete threads
+10. View the Trivia Page
+11. Add Questions to the trivia page
+12. Update questions on the trivia page
+13. Remove questions from the trivia page.
+14. View profile page
+15. Update user information
+16. Delete users (i.e., ban them)
+Regular users can:
+1. Register as a new user
+2. Login with existing credentials
+3. Logout
+4. Navigate to Forum
+5. Create new threads
+6. Create comments on threads
+7. Update own comments
+8. Navigate to Trivia Page
+9. Submit answer to multiple choice question
+10. Add explanation for answer
+11. View profile page
+12. Update user information
 
 # Getting Started with Create React App
 
