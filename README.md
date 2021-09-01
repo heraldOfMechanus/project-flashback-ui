@@ -2,18 +2,38 @@ Project: Flashback Games
 
 Aux. API: https://www.programmableweb.com/api/mochi-media-flash-games
 
-1. Users should be able to access Flash games by clicking a link, remaining on the webpage.
-2. Users should be able to register for new Player accounts.
-3. Users should be able to post comments on flash games, and partake in the community of players.
-4. Unauthenticated users must not be able to post comments on games, but can post as 'Anonymous' on forums.
-5. Users should be able to navigate to a forum where they can hold long discussions.
-6. Users should be able to view and alter their profile information.
-7. Users should be able to set a 'profile picture'. Profile pictures can be set via URL.
-8. Profile pictures must display on forum posts.
-9. Multiple users must be able to log in at the same time.
-10. There should be a sidebar where a list of all supported games is displayed, whether logged in or out.
+# User Stories
+Admin users can:
+1. Login with existing credentials
+2. Logout
+3. Navigate to Forum
+4. Create a new thread
+5. Create comments on threads
+6. View all threads
+7. View comments on threads
+8. Update thread information
+9. Delete threads
+10. View the Trivia Page
+11. Add Questions to the trivia page
+12. Update questions on the trivia page
+13. Remove questions from the trivia page.
+14. View profile page
+15. Update user information
+16. Delete users (i.e., ban them)
 
-
+Regular users can:
+1. Register as a new user
+2. Login with existing credentials
+3. Logout
+4. Navigate to Forum
+5. Create new threads
+6. Create comments on threads
+7. Update own comments
+8. Navigate to Trivia Page
+9. Submit answer to multiple choice question
+10. Add explanation for answer
+11. View profile page
+12. Update user information
 
 # Getting Started with Create React App
 
