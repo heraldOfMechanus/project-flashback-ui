@@ -20,6 +20,7 @@ Admin users can:
 14. View profile page
 15. Update user information
 16. Delete users (i.e., ban them)
+
 Regular users can:
 1. Register as a new user
 2. Login with existing credentials
