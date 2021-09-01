@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
 import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Principal } from './dtos/Principal';
+import { NavbarComponent } from './components/NavbarComponent';
+import LoginComponent from './components/LoginComponent';
 
 function App() {
+
+  const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <BrowserRouter>
+      <NavbarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
+      <Switch>
+        <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> } />
+      </Switch>
+    </BrowserRouter>
+    </>
   );
 }
 
