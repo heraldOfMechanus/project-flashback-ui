@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Principal } from './dtos/Principal';
-import { NavbarComponent } from './components/NavbarComponent';
+import { SideBarComponent } from './components/SideBarComponent';
 import LoginComponent from './components/LoginComponent';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <NavbarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
+      <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
       <Switch>
         <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> } />
       </Switch>
