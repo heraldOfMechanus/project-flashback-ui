@@ -11,7 +11,7 @@
 // } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Principal } from "../dtos/Principal";
-import classes from "*.module.css";
+
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -175,11 +175,13 @@ export function SideBarComponent(props: INavbarProps) {
 
                                     <>
                                 
-                                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                                        {['logout'].map((text, index) => (
                                         <ListItem button key={text}>
-                                            
-                                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                                            <ListItemText primary={text}/>
+                                            <Typography color="inherit" variant="h6">
+                                                <Link to={'/' + text}>
+                                                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
+                                                </Link>
+                                            </Typography>
 
                                         </ListItem>
                                         ))}
@@ -187,10 +189,8 @@ export function SideBarComponent(props: INavbarProps) {
                                     :
                                     <>
 
-                                        {['login', 'register', 'landing'].map((text, index) => (
+                                        {['login', 'register'].map((text, index) => (
                                         <ListItem button key={text}>
-
-
                                             <Typography color="inherit" variant="h6">
 
                                                     <Link to={'/' + text}>
@@ -217,16 +217,16 @@ export function SideBarComponent(props: INavbarProps) {
                     
 
 
+                        {/*</List>*/}
+                        {/*<Divider/>*/}
+                        {/* <List>*/}
+                        {/*    {['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
+                        {/*        <ListItem button key={text}>*/}
+                        {/*            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>*/}
+                        {/*            <ListItemText primary={text}/>*/}
+                        {/*        </ListItem>*/}
+                        {/*    ))}*/}
                         </List>
-                        <Divider/>
-                        {/* <List>
-                            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                                    <ListItemText primary={text}/>
-                                </ListItem>
-                            ))}
-                        </List> */}
                     </Drawer>
                     <main className={classes.content}>
                         <div className={classes.toolbar}/>

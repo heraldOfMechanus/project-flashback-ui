@@ -3,6 +3,7 @@ import { Principal } from "../dtos/Principal";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
 import {authenticate} from '../remote/auth-service'
+import {FormControl, InputLabel} from "@material-ui/core";
 
 
 interface ILoginProps {
@@ -58,17 +59,30 @@ function LoginComponent(props: ILoginProps) {
         <>
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.banana}>
-                <input id="username-input" type="text" onChange={updateUsername} />
+
+                <h1>Login page</h1>
+
+                <FormControl>
+                    <InputLabel htmlFor="username-input">Username</InputLabel>
+                    <input id="username-input" type="text" onChange={updateUsername} />
+                    <br/>
+                </FormControl>
                 <br/><br/>
-                <input id="password-input" type="text:" onChange={updatePassword} />
+
+
+                <FormControl>
+                    <InputLabel htmlFor="password-input">Password</InputLabel>
+                    <input id="password-input" type="text:" onChange={updatePassword} />
+                    <br/>
+                </FormControl>
                 <br/><br/>
+
+
                 <button id="login-btn" onClick={login}>Log in!</button>
                 <br/><br/>
                 { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
             </div>
-            <div className={classes.banana}>
-                Jose Tejada
-            </div>
+
         </>
     )
 }

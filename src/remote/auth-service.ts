@@ -20,3 +20,7 @@ export const authenticate = async (credentials: {username: string, password: str
 
         return principal;
 }
+export const logout = (setCurrentUser: (nextUser: Principal | undefined) => void) => {
+        localStorage.removeItem('api-token')
+        setCurrentUser(undefined);
+}
