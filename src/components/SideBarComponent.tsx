@@ -166,54 +166,76 @@ export function SideBarComponent(props: INavbarProps) {
                         </div>
                         <Divider/>
                         <List>
-                            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                                    <ListItemText primary={text}/>
-                                </ListItem>
-                            ))}
+                            
 
                             {
                                 props.currentUser
                                     ?
                                     <>
-                                        <ListItemText inset>
-                                            <Typography color="inherit" variant="h6">
-                                                <p>Home</p>
-                                            </Typography>
-                                        </ListItemText>
-                                        <ListItemText inset>
-                                            <Typography color="inherit" variant="h6" onClick={logout}>Logout</Typography>
-                                        </ListItemText>
+                                
+                                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                                        <ListItem button key={text}>
+                                            
+                                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                                            <ListItemText primary={text}/>
+
+                                        </ListItem>
+                                        ))}
+
                                     </>
                                     :
                                     <>
-                                        <ListItemText inset>
-                                            <Typography color="inherit" variant="h6">
-                                                <Link to="/login">Login</Link>
-                                            </Typography>
-                                        </ListItemText>
-                                        <ListItemText inset>
-                                            <Typography color="inherit" variant="h6">
-                                                Register
-                                            </Typography>
-                                        </ListItemText>
-                                    </>
-                            }
+
+                                        {['login', 'register', 'landing'].map((text, index) => (
+                                        <ListItem button key={text}>
+                                            
+                                            {/* {
+                                                if(index === 0){
+                                                    
+                                                }
+                                                if(index === 1){
+                                                    
+                                                }
+                                                if(index === 2){
+                                                    
+                                                }
+                                                
 
 
+                                            }            
+                                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                                            <ListItemText primary={text}/> */}
+
+
+                                        </ListItem>
+
+                                        // <ListItemText inset>
+                                        //     <Typography color="inherit" variant="h6">
+                                        //         <Link to="/login">Login</Link>
+                                        //     </Typography>
+                                        // </ListItemText>
+                                        // <ListItemText inset>
+                                        //     <Typography color="inherit" variant="h6">
+                                        //         Register
+                                        //     </Typography>
+                                        // </ListItemText>
+                                        ))}
+                                    </> 
+                                }
+                                     
+                    
 
 
                         </List>
                         <Divider/>
-                        <List>
+                        {/* <List>
                             {['All mail', 'Trash', 'Spam'].map((text, index) => (
                                 <ListItem button key={text}>
                                     <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
                                     <ListItemText primary={text}/>
                                 </ListItem>
                             ))}
-                        </List>
+                        </List> */}
                     </Drawer>
                     <main className={classes.content}>
                         <div className={classes.toolbar}/>
