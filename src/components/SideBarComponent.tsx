@@ -171,6 +171,8 @@ export function SideBarComponent(props: INavbarProps) {
                             {
                                 props.currentUser
                                     ?
+
+
                                     <>
                                 
                                         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -181,31 +183,20 @@ export function SideBarComponent(props: INavbarProps) {
 
                                         </ListItem>
                                         ))}
-
                                     </>
                                     :
                                     <>
 
                                         {['login', 'register', 'landing'].map((text, index) => (
                                         <ListItem button key={text}>
-                                            
-                                            {/* {
-                                                if(index === 0){
-                                                    
-                                                }
-                                                if(index === 1){
-                                                    
-                                                }
-                                                if(index === 2){
-                                                    
-                                                }
-                                                
 
 
-                                            }            
-                                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                                            <ListItemText primary={text}/> */}
+                                            <Typography color="inherit" variant="h6">
 
+                                                    <Link to={'/' + text}>
+                                                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
+                                                    </Link>
+                                            </Typography>
 
                                         </ListItem>
 
