@@ -171,8 +171,6 @@ export function SideBarComponent(props: INavbarProps) {
                             {
                                 props.currentUser
                                     ?
-
-
                                     <>
                                 
                                         {['logout'].map((text, index) => (
@@ -189,15 +187,13 @@ export function SideBarComponent(props: INavbarProps) {
                                     :
                                     <>
 
-                                        {['login', 'register'].map((text, index) => (
+                                        {['Login', 'Register'].map((text, index) => (
                                         <ListItem button key={text}>
                                             <Typography color="inherit" variant="h6">
-
-                                                    <Link to={'/' + text}>
+                                                    <Link to={index === 0 ? '/login': '/register'}>
                                                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
                                                     </Link>
                                             </Typography>
-
                                         </ListItem>
 
                                         // <ListItemText inset>

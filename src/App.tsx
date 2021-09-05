@@ -6,6 +6,7 @@ import { Principal } from './dtos/Principal';
 import { SideBarComponent } from './components/SideBarComponent';
 import LoginComponent from './components/LoginComponent';
 import RegisterComponent from "./components/RegisterComponent";
+import LandingPageComponent from './components/LandingPageComponent';
 import {RegisterUserRequest} from "./dtos/register-user-request";
 import {logout} from "./remote/auth-service";
 
@@ -18,9 +19,12 @@ function App() {
     <>
     <BrowserRouter>
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
+      
       <Switch>
+        <Route path="/welcome" render={() => <LandingPageComponent /> }/>
         <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
+        
 
 
 
