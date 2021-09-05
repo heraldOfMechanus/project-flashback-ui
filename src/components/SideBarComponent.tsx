@@ -1,14 +1,3 @@
-// import {
-//     AppBar,
-//     Toolbar,
-//     Typography,
-//     List,
-//     ListItem,
-//     ListItemText,
-//     IconButton,
-//     CssBaseline,
-//     makeStyles, ListItemIcon, Divider, Drawer
-// } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Principal } from "../dtos/Principal";
 
@@ -38,10 +27,10 @@ interface INavbarProps {
 }
 
 export function SideBarComponent(props: INavbarProps) {
+    
     function logout() {
         props.setCurrentUser(undefined);
     }
-
 
     const drawerWidth = 240;
 
@@ -106,6 +95,10 @@ export function SideBarComponent(props: INavbarProps) {
             flexGrow: 1,
             padding: theme.spacing(3),
         },
+        sidebarLinks: {
+            textColor: 'black',
+            textDecoration: 'none',
+        },
     }));
 
     const classes = useStyles();
@@ -142,7 +135,7 @@ export function SideBarComponent(props: INavbarProps) {
                                 <MenuIcon/>
                             </IconButton>
                             <Typography variant="h6" noWrap>
-                                Mini variant drawer
+                                Flashback
                             </Typography>
                         </Toolbar>
                     </AppBar>
@@ -166,57 +159,31 @@ export function SideBarComponent(props: INavbarProps) {
                         </div>
                         <Divider/>
                         <List>
-                            
-
                             {
-                                props.currentUser
-                                    ?
-
-
-                                    <>
-                                
-                                        {['logout'].map((text, index) => (
-                                        <ListItem button key={text}>
-                                            <Typography color="inherit" variant="h6">
-                                                <Link to={'/' + text}>
-                                                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
-                                                </Link>
-                                            </Typography>
-
-                                        </ListItem>
-                                        ))}
-                                    </>
-                                    :
-                                    <>
-
-                                        {['login', 'register'].map((text, index) => (
-                                        <ListItem button key={text}>
-                                            <Typography color="inherit" variant="h6">
-
-                                                    <Link to={'/' + text}>
-                                                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
-                                                    </Link>
-                                            </Typography>
-
-                                        </ListItem>
-
-                                        // <ListItemText inset>
-                                        //     <Typography color="inherit" variant="h6">
-                                        //         <Link to="/login">Login</Link>
-                                        //     </Typography>
-                                        // </ListItemText>
-                                        // <ListItemText inset>
-                                        //     <Typography color="inherit" variant="h6">
-                                        //         Register
-                                        //     </Typography>
-                                        // </ListItemText>
-                                        ))}
-                                    </> 
-                                }
-                                     
-                    
-
-
+                            props.currentUser
+                            ?
+                                <>
+                                    {['logout'].map((text, index) => (
+                                    <ListItem button component={Link} to={'/' + text}>
+                                        <Typography color="inherit" variant="h6">
+                                            <Link className='sidebarLinks' to={'/' + text}>
+                                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
+                                            </Link>
+                                        </Typography>
+                                    </ListItem>
+                                    ))}
+                                </>
+                            :
+                                <>
+                                    {['Login', 'Register'].map((text, index) => (
+                                    <ListItem button component={Link} to={'/' + text}>
+                                        <Typography className='sidebarLinks' variant="h6">
+                                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
+                                        </Typography>
+                                    </ListItem>
+                                    ))}
+                                </>
+                            }
                         {/*</List>*/}
                         {/*<Divider/>*/}
                         {/* <List>*/}
