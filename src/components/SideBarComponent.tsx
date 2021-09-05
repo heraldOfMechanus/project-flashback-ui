@@ -107,85 +107,86 @@ export function SideBarComponent(props: INavbarProps) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-        return (
-            <>
-                <div className={classes.root}>
-                    <CssBaseline/>
-                    <AppBar
-                        position="fixed"
-                        className={clsx(classes.appBar, {
-                            [classes.appBarShift]: open,
-                        })}
-                    >
-                        <Toolbar>
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={handleDrawerOpen}
-                                edge="start"
-                                className={clsx(classes.menuButton, {
-                                    [classes.hide]: open,
-                                })}
-                            >
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography variant="h6" noWrap>
-                                Flashback
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
-                    <Drawer
-                        variant="permanent"
-                        className={clsx(classes.drawer, {
+    
+    return (
+        <>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <AppBar
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
+                    })}
+                >
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, {
+                                [classes.hide]: open,
+                            })}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography variant="h6" noWrap>
+                            Flashback
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
+                        [classes.drawerOpen]: open,
+                        [classes.drawerClose]: !open,
+                    })}
+                    classes={{
+                        paper: clsx({
                             [classes.drawerOpen]: open,
                             [classes.drawerClose]: !open,
-                        })}
-                        classes={{
-                            paper: clsx({
-                                [classes.drawerOpen]: open,
-                                [classes.drawerClose]: !open,
-                            }),
-                        }}
-                    >
-                        <div className={classes.toolbar}>
-                            <IconButton onClick={handleDrawerClose}>
-                                {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
-                            </IconButton>
-                        </div>
-                        <Divider/>
-                        <List>
-                            {
-                            props.currentUser
-                            ?
-                                <>                                    
-                                    <ListItem button onClick={logout}>
-                                        <ListItemIcon><LogoutIcon/></ListItemIcon>
-                                        <Typography color="inherit" variant="h6">Logout</Typography>
-                                    </ListItem>
-                                </>
-                            :
-                                <>
-                                    <ListItem button component={Link} to={'/login'}> 
-                                        <ListItemIcon><LoginIcon/></ListItemIcon>
-                                        <Typography color="inherit" variant="h6">Login</Typography>
-                                    </ListItem>
-                                    <ListItem button component={Link} to={'/register'}>
-                                        <ListItemIcon><AppRegistrationIcon/></ListItemIcon>
-                                        <Typography color="inherit" variant="h6">Register</Typography>
-                                    </ListItem>                                    
-                                </>
-                            }                        
-                        </List>
-                    </Drawer>
-                    <main className={classes.content}>
-                        <div className={classes.toolbar}/>
-                        <Typography paragraph>
-                        </Typography>
-                        <Typography paragraph>
+                        }),
+                    }}
+                >
+                    <div className={classes.toolbar}>
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
+                        </IconButton>
+                    </div>
+                    <Divider/>
+                    <List>
+                        {
+                        props.currentUser
+                        ?
+                            <>                                    
+                                <ListItem button onClick={logout}>
+                                    <ListItemIcon><LogoutIcon/></ListItemIcon>
+                                    <Typography color="inherit" variant="h6">Logout</Typography>
+                                </ListItem>
+                            </>
+                        :
+                            <>
+                                <ListItem button component={Link} to={'/login'}> 
+                                    <ListItemIcon><LoginIcon/></ListItemIcon>
+                                    <Typography color="inherit" variant="h6">Login</Typography>
+                                </ListItem>
+                                <ListItem button component={Link} to={'/register'}>
+                                    <ListItemIcon><AppRegistrationIcon/></ListItemIcon>
+                                    <Typography color="inherit" variant="h6">Register</Typography>
+                                </ListItem>                                    
+                            </>
+                        }                        
+                    </List>
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={classes.toolbar}/>
+                    <Typography paragraph>
+                    </Typography>
+                    <Typography paragraph>
 
-                        </Typography>
-                    </main>
-                </div>
-            </>
-        );
+                    </Typography>
+                </main>
+            </div>
+        </>
+    );
 }
