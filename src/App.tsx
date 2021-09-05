@@ -19,7 +19,7 @@ function App() {
     <BrowserRouter>
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
       <Switch>
-        <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
+        <Route exact path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
 
 
