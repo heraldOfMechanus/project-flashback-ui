@@ -8,7 +8,7 @@ import LoginComponent from './components/LoginComponent';
 import RegisterComponent from "./components/RegisterComponent";
 import LandingPageComponent from './components/LandingPageComponent';
 import {RegisterUserRequest} from "./dtos/register-user-request";
-import {logout} from "./remote/auth-service";
+
 
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/" render={() => <LandingPageComponent /> }/>
         <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
+
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
         
 

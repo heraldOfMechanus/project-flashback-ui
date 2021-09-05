@@ -174,14 +174,16 @@ export function SideBarComponent(props: INavbarProps) {
                                     <>
                                 
                                         {['logout'].map((text, index) => (
+                                            <Link to={'/' + text}>
                                         <ListItem button key={text}>
                                             <Typography color="inherit" variant="h6">
-                                                <Link to={'/' + text}>
+
                                                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>{text}
-                                                </Link>
+
                                             </Typography>
 
                                         </ListItem>
+                                            </Link>
                                         ))}
                                     </>
                                     :
@@ -227,7 +229,6 @@ export function SideBarComponent(props: INavbarProps) {
                     <main className={classes.content}>
                         <div className={classes.toolbar}/>
                         <Typography paragraph>
-
                         </Typography>
                         <Typography paragraph>
 
