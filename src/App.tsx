@@ -8,7 +8,7 @@ import LoginComponent from './components/LoginComponent';
 import RegisterComponent from "./components/RegisterComponent";
 import LandingPageComponent from './components/LandingPageComponent';
 import {RegisterUserRequest} from "./dtos/register-user-request";
-import {logout} from "./remote/auth-service";
+
 
 
 function App() {
