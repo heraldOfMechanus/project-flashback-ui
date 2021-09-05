@@ -21,7 +21,7 @@ function App() {
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
       
       <Switch>
-        <Route path="/welcome" render={() => <LandingPageComponent /> }/>
+        <Route exact path="/" render={() => <LandingPageComponent /> }/>
         <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
         
