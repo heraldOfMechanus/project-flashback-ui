@@ -180,7 +180,6 @@ export function SideBarComponent(props: INavbarProps) {
                     <main className={classes.content}>
                         <div className={classes.toolbar}/>
                         <Typography paragraph>
-
                         </Typography>
                         <Typography paragraph>
 
