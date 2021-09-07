@@ -4,10 +4,10 @@ import {useState} from "react";
 import { Principal } from "../dtos/Principal";
 import {makeStyles} from "@material-ui/core/styles";
 import {FormControl, InputLabel} from '@material-ui/core';
-import { addNewCard } from "../remote/user-service";
+import { addNewCard } from "../remote/triviacard-service";
 
 interface ITriviaAdminProps{
-    currentUser: Principal | undefined
+    
 
 }
 
@@ -23,11 +23,11 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     const classes = useStyles();
 
-    let [triviaCardSetID, setCardID] = useState('')
-    let [question, setQuestion] = useState('')
-    let [correctAnswer, setCorrectAnswer] = useState('')
-    let [answers, setAnswers] = useState('')
-    let [points, setPoints] = useState('')
+    let [cardID, setCardID] = useState('');
+    let [question, setQuestion] = useState('');
+    let [correctAnswer, setCorrectAnswer] = useState('');
+    let [answers, setAnswers] = useState(['']);
+    let [points, setPoints] = useState('');
 
     function updateID(e:any){
         setCardID(e.currentTarget.value)
@@ -48,9 +48,9 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     async function newTrivia(){
         console.log("Card Added")
         try {
-            if(triviaCardSetID && question && correctAnswer && answers && points){
+            if(cardID && question && correctAnswer && answers && points){
 
-                let request = await newTrivia({triviaCardSetID, question, correctAnswer, answers, points})
+                let request = await addNewCard({cardID, question, correctAnswer, answers, points})
                 console.log(RegisterUserRequest)
 
 
@@ -68,7 +68,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
             <div  className={classes.shtoyle} >
 
-                <h1>Register Page</h1>
+                <h1>Trivia Page</h1>
                 <FormControl>
                     <InputLabel htmlFor="id-input">Set ID</InputLabel>
                     <input id="id-input" type="text" onChange={updateID} />
