@@ -1,7 +1,6 @@
 
 import {RegisterUserRequest} from "../dtos/register-user-request";
 import {useState} from "react";
-import { Principal } from "../dtos/Principal";
 import {makeStyles} from "@material-ui/core/styles";
 import {FormControl, InputLabel} from '@material-ui/core';
 import { addNewCard } from "../remote/triviacard-service";
@@ -94,8 +93,24 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                 <br/><br/>
 
                 <FormControl>
-                    <InputLabel htmlFor="answers-input">Other Answers</InputLabel>
-                    <input id="answers-input" type="text:" onChange={updateAnswers} />
+                    <InputLabel htmlFor="answer2-input">Incorrect Answer 1</InputLabel>
+                    <input id="answers2-input" type="text:" onChange={updateAnswers} />
+                    <br/>
+                </FormControl>
+
+                <br/><br/>
+
+                <FormControl>
+                    <InputLabel htmlFor="answer3-input">Incorrect Answer 2</InputLabel>
+                    <input id="answers3-input" type="text:" onChange={updateAnswers} />
+                    <br/>
+                </FormControl>
+
+                <br/><br/>
+
+                <FormControl>
+                    <InputLabel htmlFor="answer4-input">Incorrect Answer 3</InputLabel>
+                    <input id="answers4-input" type="text:" onChange={updateAnswers} />
                     <br/>
                 </FormControl>
 
@@ -110,8 +125,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                 <br/><br/>
                 <button id="newCard-btn" onClick={newTrivia}>Add Card</button>
             </div>
-
-
 
 
         </>
