@@ -6,11 +6,9 @@ import {FormControl, InputLabel} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 
 
-interface IAddTriviaCardSetProps{
-    currentSet: AddTriviaCardSetRequest | undefined;
-}
 
-function AddTriviaCardSetComponent(props: IAddTriviaCardSetProps){
+
+function AddTriviaCardSetComponent(){
 
     const useStyles = makeStyles((theme) => ({
         //Where banana is, this can be named whatever you want.

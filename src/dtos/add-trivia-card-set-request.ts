@@ -1,4 +1,4 @@
-export class AddTriviaCardSet {
+export class AddTriviaCardSetRequest {
 
     topic: string;
     cardCount: number;
