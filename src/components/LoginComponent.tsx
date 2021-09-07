@@ -21,8 +21,8 @@ function LoginComponent(props: ILoginProps) {
         banana: {
             textAlign: "center",
             color: "blue",
+            alignItems: 'center',
         },
-
     }));
     const classes = useStyles();
 
@@ -48,7 +48,7 @@ function LoginComponent(props: ILoginProps) {
                 localStorage.setItem('app-state', JSON.stringify(principal));
                 props.setCurrentUser(principal);
             } else {
-                setErrorMessage('provide actual data, dumbass');
+                setErrorMessage('You must give a valid username and password.');
             }
         } catch (e: any) {
             setErrorMessage(e.message);
@@ -80,8 +80,8 @@ function LoginComponent(props: ILoginProps) {
 
                 <button id="login-btn" onClick={login}>Log in!</button>
                 <br/><br/>
-                { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
             </div>
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
 
         </>
     )

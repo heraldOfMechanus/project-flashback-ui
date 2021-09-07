@@ -10,11 +10,12 @@ function ErrorMessageComponent(props: IErrorMessageProps) {
 
     const useStyles = makeStyles((theme) => ({
         alert: {
-            display: 'flex',
-            alignSelf: 'center',
-            padding: theme.spacing(0, 5),
             width: `25rem`,
-            margin: 54,
+        },
+        box: {
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
         },
     }));
 
@@ -22,9 +23,11 @@ function ErrorMessageComponent(props: IErrorMessageProps) {
     const theme = useTheme();
 
     return(
-        <Alert className={classes.alert} severity="error">
-            <Typography>{props.errorMessage}</Typography>
-        </Alert>
+        <div className={classes.box}>
+            <Alert className={classes.alert} severity="error">
+                <Typography>{props.errorMessage}</Typography>
+            </Alert>
+        </div>
     )
 }
 
