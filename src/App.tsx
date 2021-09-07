@@ -9,6 +9,9 @@ import RegisterComponent from "./components/RegisterComponent";
 import LandingPageComponent from './components/LandingPageComponent';
 import {RegisterUserRequest} from "./dtos/register-user-request";
 import FloatingActionButtonZoom from "./components/AdminDashboardComponent";
+import AddTriviaCardSetComponent from './components/AddTriviaCardSetComponent';
+import {AddTriviaCardSetRequest} from "./dtos/add-trivia-card-set-request";
+import TriviaAdminComponent from './components/TriviaCardsAdminComponent';
 
 
 
@@ -16,16 +19,21 @@ function App() {
 
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
+
   return (
     <>
     <BrowserRouter>
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
       
       <Switch>
-        <Route exact path="/" render={() => <LandingPageComponent /> }/>
         <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
         <Route path="/admin-dashboard" render={() => <FloatingActionButtonZoom/>} />
+        <Route path="/add-trivia-set" render={() => <AddTriviaCardSetComponent /> } />
+        <Route path="/admin-dashboard" render={() => <FloatingActionButtonZoom/>} />
+
+        <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
+        
       </Switch>
 
     </BrowserRouter>
