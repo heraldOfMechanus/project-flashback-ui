@@ -14,6 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import UpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { green } from '@material-ui/core/colors';
 import Box from '@material-ui/core/Box';
+import TriviaAdminComponent from "./TriviaCardsAdminComponent";
 
 function AdminDashBoardComponent(props: { [x: string]: any; children: any; value: any; index: any; }) {
     const { children, value, index, ...other } = props;
@@ -135,8 +136,8 @@ function AdminDashBoardComponent(props: { [x: string]: any; children: any; value
                             onChangeIndex={handleChangeIndex}
                         >
                             <AdminDashBoardComponent value={value} index={0} dir={theme.direction}>
-                                Add new shit
-                                // TODO: Add components to perform the job in here to abstract code!
+
+                                < TriviaAdminComponent />
 
 
                             </AdminDashBoardComponent>
