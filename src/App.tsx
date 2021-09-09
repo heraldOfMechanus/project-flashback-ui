@@ -8,7 +8,7 @@ import LoginComponent from './components/LoginComponent';
 import RegisterComponent from "./components/RegisterComponent";
 import LandingPageComponent from './components/LandingPageComponent';
 import {RegisterUserRequest} from "./dtos/register-user-request";
-import FloatingActionButtonZoom from "./components/AdminDashboardComponent";
+import FloatingActionButtonZoom from "./components/TriviaPageComponent";
 import AddTriviaCardSetComponent from './components/AddTriviaCardSetComponent';
 import {AddTriviaCardSetRequest} from "./dtos/add-trivia-card-set-request";
 import TriviaAdminComponent from './components/TriviaCardsAdminComponent';
