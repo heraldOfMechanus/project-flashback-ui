@@ -1,4 +1,6 @@
 import {flashbackClient} from "./flashback-client";
+import {useState} from "react";
+import {List} from "@mui/material";
 
 export const getAllTriviaCardSet = async () => {
     
@@ -16,12 +18,17 @@ export const addNewTriviaCardSet = async (AddTriviaCardSetRequest: {topic: strin
 
 export const getAllTriviaCardSets = async () => {
 
-    let resp = await flashbackClient.get('trivia/getAllSets');
+
+    const resp = await flashbackClient.get('trivia/card/getAllCards');
+    const data = resp.data
+
+
 
     if (resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
 
-
+    return data;
 }
+
 
