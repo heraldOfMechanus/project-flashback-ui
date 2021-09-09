@@ -1,6 +1,8 @@
 import React from 'react';
 import { Theme, useTheme, makeStyles, createStyles } from '@material-ui/core/styles';
 import { Box, Button, Container, CssBaseline, Grid } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { ButtonBase } from '@mui/material';
 
 function ForumTopicListComponent() {
     
@@ -40,10 +42,10 @@ function ForumTopicListComponent() {
                             <Button>C L I C K Y B O I</Button>
                         </Box>
                     </Grid>
-                    <Grid item className={classes.button}>
+                    <Grid item className={classes.button}>                    
                         <Box color="text.primary" clone>
-                            <Button>C L I C K Y B O I 2</Button>
-                        </Box>
+                            <ButtonBase component={Link} to='/'><Button>C L I C K Y B O I 2</Button></ButtonBase>
+                        </Box>                    
                     </Grid>
                 </Grid>
             </Container>
