@@ -29,6 +29,7 @@ export const getAllTriviaCardSets = async () => {
     }
 
     return data;
+
 }
 
 
