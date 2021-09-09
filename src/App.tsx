@@ -12,7 +12,7 @@ import FloatingActionButtonZoom from "./components/AdminDashboardComponent";
 import AddTriviaCardSetComponent from './components/AddTriviaCardSetComponent';
 import {AddTriviaCardSetRequest} from "./dtos/add-trivia-card-set-request";
 import TriviaAdminComponent from './components/TriviaCardsAdminComponent';
-
+import ForumTopicListComponent from './components/ForumTopicListComponent';
 
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
         <Route path="/admin-dashboard" render={() => <FloatingActionButtonZoom/>} />
 
         <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
+        <Route path = "/forum" render ={()=> <ForumTopicListComponent/>}/>
         
       </Switch>
 
