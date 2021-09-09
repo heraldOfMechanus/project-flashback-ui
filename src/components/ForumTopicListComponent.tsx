@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
 
 function ForumTopicListComponent() {
-    
+
+    const theme = useTheme();
+
     const useStyles = makeStyles((theme) => ({
-        flexgrow: {
-            flexGrow: 1,
+        root: {
             width: '70%',
         },
-        root: {
+        display: {
             backgroundColor: 'lavender',
             borderRadius: '.7rem',
             padding: '1.7rem',
@@ -30,9 +31,9 @@ function ForumTopicListComponent() {
     return (
         <>     
             <CssBaseline />
-            <Container maxWidth="lg" className={classes.flexgrow}>       
+            <Container maxWidth="lg" className={classes.root}>       
                 <Grid 
-                    className={classes.root}
+                    className={classes.display}
                     direction="column"
                     justifyContent="center"
                     spacing={10}
