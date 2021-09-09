@@ -1,8 +1,4 @@
-
-import { Topic, TrendingUpSharp } from "@mui/icons-material";
-import { AxiosResponse } from "axios";
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
-import {useState} from "react";
 
 interface ITriviaPageProps {
 
@@ -10,14 +6,24 @@ interface ITriviaPageProps {
 
 function TriviaPage(props: ITriviaPageProps) {
 
-    let triviaCardSetList;
+    let triviaCardSetList: Array<string> | undefined;
 
 
     async function getTriviaCardSets() {
         try{
 
             console.log("I am getting all of trivia card sets");
-            triviaCardSetList = await getAllTriviaCardSets();
+            let resp = await getAllTriviaCardSets();
+            triviaCardSetList = JSON.parse(JSON.stringify(resp.data));
+            
+            
+            if(triviaCardSetList){
+                for(let i = 0; i < triviaCardSetList.length; i++){
+                    console.log(triviaCardSetList[i]);
+                }
+            } else {
+                console.log("nothing happened.")
+            }
 
         } catch (e: any) {
             console.log(e.message);
@@ -27,11 +33,10 @@ function TriviaPage(props: ITriviaPageProps) {
   
     return(
         <>
-            <body></body>
-            {
-                getTriviaCardSets()
-            }
-            
+            {/* HOW to do this on load, not onclick */}
+            <button id="button-1" onClick={getTriviaCardSets}>GET TRIVIA CARD SETS!!!!!!!</button>
+
+
             {
                 triviaCardSetList
                 ?

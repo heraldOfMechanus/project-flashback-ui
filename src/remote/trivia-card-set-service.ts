@@ -22,6 +22,8 @@ export const getAllTriviaCardSets = async () => {
         throw resp.data;
     }
 
+    return resp;
+
 
 }
 
