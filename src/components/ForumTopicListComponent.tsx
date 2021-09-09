@@ -1,7 +1,6 @@
 import React from 'react';
 import { Theme, useTheme, makeStyles, createStyles } from '@material-ui/core/styles';
-import { Box, Button, Container } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import { Box, Button, Container, CssBaseline, Grid } from '@material-ui/core';
 
 function ForumTopicListComponent() {
     
@@ -13,11 +12,13 @@ function ForumTopicListComponent() {
         root: {
             backgroundColor: 'lavender',
             borderRadius: '.7rem',
+            padding: '1.7rem',
         },
         button: {
             margin: '2rem',
             backgroundColor: 'lightskyblue',
             justifyContent: 'center',
+            borderRadius: '.7rem',
             textAlign: 'center',
         },
     }))
@@ -26,13 +27,13 @@ function ForumTopicListComponent() {
 
     return (
         <>     
-            <Container className={classes.flexgrow}>       
+            <CssBaseline />
+            <Container maxWidth="lg" className={classes.flexgrow}>       
                 <Grid 
-                    container
                     className={classes.root}
                     direction="column"
                     justifyContent="center"
-                    spacing={4}
+                    spacing={10}
                 >
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
