@@ -1,23 +1,27 @@
 import React from 'react';
 import { Theme, useTheme, makeStyles, createStyles } from '@material-ui/core/styles';
-import { Box, Button, Container } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import { Box, Button, Container, CssBaseline, Grid } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { ButtonBase } from '@mui/material';
 
 function ForumTopicListComponent() {
-    
+
+    const theme = useTheme();
+
     const useStyles = makeStyles((theme) => ({
-        flexgrow: {
-            flexGrow: 1,
+        root: {
             width: '70%',
         },
-        root: {
+        display: {
             backgroundColor: 'lavender',
             borderRadius: '.7rem',
+            padding: '1.7rem',
         },
         button: {
             margin: '2rem',
             backgroundColor: 'lightskyblue',
             justifyContent: 'center',
+            borderRadius: '.7rem',
             textAlign: 'center',
         },
     }))
@@ -26,23 +30,23 @@ function ForumTopicListComponent() {
 
     return (
         <>     
-            <Container className={classes.flexgrow}>       
+            <CssBaseline />
+            <Container maxWidth="lg" className={classes.root}>       
                 <Grid 
-                    container
-                    className={classes.root}
+                    className={classes.display}
                     direction="column"
                     justifyContent="center"
-                    spacing={4}
+                    spacing={10}
                 >
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
                             <Button>C L I C K Y B O I</Button>
                         </Box>
                     </Grid>
-                    <Grid item className={classes.button}>
+                    <Grid item className={classes.button}>                    
                         <Box color="text.primary" clone>
-                            <Button>C L I C K Y B O I 2</Button>
-                        </Box>
+                            <ButtonBase component={Link} to='/'><Button>C L I C K Y B O I 2</Button></ButtonBase>
+                        </Box>                    
                     </Grid>
                 </Grid>
             </Container>

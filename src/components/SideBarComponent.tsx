@@ -3,6 +3,7 @@ import { Principal } from "../dtos/Principal";
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -130,7 +131,8 @@ export function SideBarComponent(props: INavbarProps) {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h6" noWrap>
+                        <OfflineBoltIcon />
+                        <Typography variant="h6" noWrap>                            
                             Flashback
                         </Typography>
                     </Toolbar>
