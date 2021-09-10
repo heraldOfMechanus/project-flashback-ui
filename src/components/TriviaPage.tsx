@@ -1,7 +1,20 @@
 
+
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
-import {Backdrop, Button, Card, CardActions, CardContent, Fade, makeStyles, Modal, Typography} from "@material-ui/core";
+import {
+    Backdrop,
+    Button,
+    Card,
+    CardActions,
+    CardContent, CardHeader,
+    Fade,
+    Grid,
+    makeStyles,
+    Modal,
+    Typography
+} from "@material-ui/core";
 import React from "react";
+import {render} from "@testing-library/react";
 
 
 interface ITriviaPageProps {
@@ -9,35 +22,38 @@ interface ITriviaPageProps {
 
 }
 
-function TriviaPage(props: ITriviaPageProps) {
-
-
-    let triviaCardSetList: Array<string> | undefined;
-
-
+function TriviaPage( props: ITriviaPageProps) {
     function displayCards(...payload: any[]) {
         let divName = document.getElementById("lol")
 
-        for (let it in payload) {
-            let hr = document.createElement("Card");
-            let hr2 = document.createElement("CardContent");
-            let hr3 = document.createElement("Typography");
-            console.log(payload[it])
-
-            hr2.innerText = payload[it]["question"];
-            hr.innerText = payload[it]["answers"][0];
-            hr3.innerText = "-------"
-
-            // @ts-ignore
-            divName.append(hr)
-            hr.appendChild(hr2)
-            hr2.appendChild(hr3)
 
 
+        for (let item in payload){
+            render(
+                <>
+                    <Card className={classes.root}>
+                        <CardContent>
 
+                            <Typography variant="h3" component="h2">
+                                {payload[item]["topic"] }
+                            </Typography>
 
+                            <Typography  variant="h5" color="textSecondary" gutterBottom>
 
+                                Card Count: {payload[item]["cardCount"] }
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+
+                            <Button href={"/" + payload[item]["topic"] } size="small" >Go to Cards</Button>
+                        </CardActions>
+
+                    </Card>
+                    <br/>
+                </>
+            )
         }
+
 
     }
 
@@ -53,7 +69,8 @@ function TriviaPage(props: ITriviaPageProps) {
     const useStyles = makeStyles({
         root: {
             minWidth: 275,
-            width: "fit-content",
+            width: "50%",
+            backgroundColor: "lightblue",
         },
         bullet: {
             display: 'inline-block',
@@ -68,26 +85,15 @@ function TriviaPage(props: ITriviaPageProps) {
         },
     });
 
+
+
     async function getTriviaCardSets() {
 
         try {
 
             console.log("I am getting all of trivia card sets");
             let Card = await getAllTriviaCardSets()
-
-
-            let resp = await getAllTriviaCardSets();
-            triviaCardSetList = JSON.parse(JSON.stringify(resp.data));
-            
-            
-            if(triviaCardSetList){
-                for(let i = 0; i < triviaCardSetList.length; i++){
-                    console.log(triviaCardSetList[i]);
-                }
-            } else {
-                console.log("nothing happened.")
-            }
-
+            renderAll(Card)
 
         } catch (e: any) {
             console.log(e.message);
@@ -96,75 +102,20 @@ function TriviaPage(props: ITriviaPageProps) {
 
 
 
-
-    return(
-        <>
-            {/* HOW to do this on load, not onclick */}
-            <button id="button-1" onClick={getTriviaCardSets}>GET TRIVIA CARD SETS!!!!!!!</button>
+    const classes = useStyles();
 
 
-            {
-                triviaCardSetList
-                ?
-                    <h1> truthy </h1>
-                :
-                    <h1> falsy </h1>
-            }
-        </>
+    return (
+        <div className={classes.root} >
+
+
+            <div  onClick={getTriviaCardSets} id="lol">
+                <h4>View all the sets </h4>
+            </div>
+
+
+        </div>
     )
-
-
-
-
-        const classes = useStyles();
-        const [open, setOpen] = React.useState(false);
-
-        const handleOpen = () => {
-            setOpen(true);
-        };
-
-        const handleClose = () => {
-            setOpen(false);
-        };
-
-
-        return (
-
-            <>
-
-
-                <div id={"lol"} onClick={getTriviaCardSets}>
-                    click me
-                </div>
-                    <Card className={classes.root}>
-                        <CardContent>
-                            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                Word of the Day
-                            </Typography>
-                            <Typography variant="h5" component="h2">
-                                belent
-                            </Typography>
-                            <Typography className={classes.pos} color="textSecondary">
-                                adjective
-                            </Typography>
-                            <Typography variant="body2" component="p">
-                                well meaning and kindly.
-                                <br/>
-                                {'"a benevolent smile"'}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">D</Button>
-                            <Button size="small">U</Button>
-                        </CardActions>
-                    </Card>
-
-
-
-
-            </>
-        );
-
 
 
 }

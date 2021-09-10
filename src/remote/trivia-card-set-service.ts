@@ -19,7 +19,7 @@ export const addNewTriviaCardSet = async (AddTriviaCardSetRequest: {topic: strin
 export const getAllTriviaCardSets = async () => {
 
 
-    const resp = await flashbackClient.get('trivia/card/getAllCards');
+    const resp = await flashbackClient.get('trivia/set/getAllSets');
     const data = resp.data
 
 
