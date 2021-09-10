@@ -17,11 +17,26 @@ import { Principal } from "../dtos/Principal";
 
 interface ITriviaCardSetProps {
     item: any
+    user: Principal|undefined,
 }
 
 function TriviaCardSet(props: ITriviaCardSetProps) {
 
+    let role;
+    let isAdmin;
 
+    //check to see if a user is logged in. if not, role and isAdmin remain undefined (i.e., falsy)
+    if(props.user){
+        //set role variable = to the role of the user ("admin" or "user")
+        role = props.user.role;
+        //if role is admin, set isAdmin to true, otherwise set to false
+        if(role === "admin"){
+            isAdmin = true;
+        } else {
+            isAdmin = false;
+        }
+    }
+    
     
     const useStyles = makeStyles({
         root: {
@@ -43,7 +58,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     });
 
     const classes = useStyles();
-
+    
     return(
         <>
             <Card className={classes.root}>
@@ -63,15 +78,23 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                     <Button href={"/" + props.item["topic"]} size="small" >Go to Cards</Button>
                 </CardActions>
 
-                <Button>
-                    <AddIcon />
-                </Button>
-                <Button>
-                    <DeleteIcon />
-                </Button>
-                <Button>
-                    <UpdateIcon />
-                </Button>
+                    {isAdmin
+                    ?
+                        <div>
+                            <Button>
+                                <AddIcon />
+                            </Button>
+                            <Button>
+                                <DeleteIcon />
+                            </Button>
+                            <Button>
+                                <UpdateIcon />
+                            </Button>
+                        </div>
+                    :
+                        <div />
+                    }
+
                     
                 
 
