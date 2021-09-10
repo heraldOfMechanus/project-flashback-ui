@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, CssBaseline } from '@material-ui/core';
+import { Container, Typography, CssBaseline, Grid, makeStyles } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -16,19 +16,30 @@ function ForumComponent(props: IForumProps) {
         console.log(props.currentTopic);
     }
 
+    const useStyles = makeStyles(() => ({
+        root: {
+            backgroundColor: 'lavender',
+        },
+    }))
+
+    const classes = useStyles();
+
     // Display the threads from the database matching this topic
     return (
         <>
             <CssBaseline/>
-            <Container>
-            <Typography variant='h1'>{props.currentTopic} forums</Typography>
-            <ButtonBase component={Link} to='/forum'>
-                <Typography variant='h6'>Fuck go back</Typography>
-            </ButtonBase>
-
-            <ButtonBase onClick={() => {displayTopic()}}>
-                <Typography variant='h6'>Display Topic</Typography>
-            </ButtonBase>
+            <Container className={classes.root}>
+                <Typography variant='h1'>{props.currentTopic} forums</Typography>
+                <Grid
+                    direction="column"
+                    spacing={10}
+                >
+                    <Grid item>
+                        <ButtonBase component={Link} to='/forum'>
+                            <Typography variant='h6'>Fuck go back</Typography>
+                        </ButtonBase>
+                    </Grid>
+                </Grid>
             </Container>
         </>
     )
