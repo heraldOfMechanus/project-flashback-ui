@@ -43,7 +43,7 @@ function ForumTopicListComponent(props: IForumTopicProps) {
 
     const columns = [
         {
-            field: 'subforumTopic',
+            field: 'subforumTitle',
             width: 150
         }
     ]
