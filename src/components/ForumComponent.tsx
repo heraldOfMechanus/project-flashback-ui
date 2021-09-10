@@ -11,6 +11,10 @@ interface IForumProps {
 function ForumComponent(props: IForumProps) {
 
     // Get the threads from the database matching this topic
+    
+    function displayTopic() {
+        console.log(props.currentTopic);
+    }
 
     // Display the threads from the database matching this topic
     return (
@@ -20,6 +24,10 @@ function ForumComponent(props: IForumProps) {
             <Typography variant='h1'>{props.currentTopic} forums</Typography>
             <ButtonBase component={Link} to='/forum'>
                 <Typography variant='h6'>Fuck go back</Typography>
+            </ButtonBase>
+
+            <ButtonBase onClick={() => {displayTopic()}}>
+                <Typography variant='h6'>Display Topic</Typography>
             </ButtonBase>
             </Container>
         </>
