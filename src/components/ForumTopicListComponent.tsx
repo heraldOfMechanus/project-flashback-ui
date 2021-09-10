@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import { Box, Container, CssBaseline, Grid, Typography } from '@material-ui/core';
@@ -7,6 +7,7 @@ import { ButtonBase } from '@mui/material';
 import {DataGrid} from '@material-ui/data-grid'
 import {Subforum} from '../dtos/Subforum';
 import {getAllSubForums} from '../remote/sub-forum-service';
+import SubforumRenderComponent from './SubforumRenderComponent';
 
 interface IForumTopicProps {
     currentTopic: string | undefined
@@ -41,17 +42,17 @@ function ForumTopicListComponent(props: IForumTopicProps) {
 
     const classes = useStyles();
 
-    const columns = [
-        {
-            field: 'subforumTitle',
-            width: 150
-        }
-    ]
+    let done: boolean = false;
+    useEffect(() => {
+        
+    })
 
     async function getSubforums() {
         try {
             console.log('I am getting all subforums.');
-            let Subforum = await getAllSubForums();
+            let Subforums = await getAllSubForums();
+            setSubforums(Subforums);
+            console.log(Subforums);
         } catch (e: any) {
             console.log(e.message);
         }
@@ -67,15 +68,14 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                     justifyContent="center"
                     spacing={10}
                 >
-                    <DataGrid 
-                        columns={columns}
-                        rows={subforums}
-                        pagination={true}
-                        pageSize={5}
-                        rowsPerPageOptions={[6]}
-                        checkboxSelection
-                        disableSelectionOnClick
-                    />
+                    <SubforumRenderComponent subforums={subforums} setSubforums={setSubforums} currentTopic={props.currentTopic} setCurrentTopic={props.setCurrentTopic} />
+                    <Grid item className={classes.button}>
+                        <Box color="text.primary">
+                            <ButtonBase onClick={() => {getSubforums();}}>
+                                <Typography variant='h6'>Fetch subforums</Typography>
+                            </ButtonBase>
+                        </Box>
+                    </Grid>
 
                     {/* <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
