@@ -13,12 +13,13 @@ import AddTriviaCardSetComponent from './components/AddTriviaCardSetComponent';
 import TriviaAdminComponent from './components/TriviaCardsAdminComponent';
 import ForumTopicListComponent from './components/ForumTopicListComponent';
 import TriviaPage from './components/TriviaPage';
+import ForumComponent from './components/ForumComponent';
 
 function App() {
 
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
-
+  const [currentTopic, setCurrentTopic] = useState(undefined as string | undefined);
   return (
     <>
     <BrowserRouter>
@@ -32,8 +33,9 @@ function App() {
         <Route path="/add-trivia-set" render={() => <AddTriviaCardSetComponent /> } />
 
         <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
-        <Route path = "/forum" render ={()=> <ForumTopicListComponent/>}/>
-        
+        <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
+        /*routes: java, databases, webservices, spring, react, misc */
+        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
         <Route path="/trivia" render={() => <TriviaPage />} />
       </Switch>
 

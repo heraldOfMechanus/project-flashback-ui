@@ -72,7 +72,7 @@ function LoginComponent(props: ILoginProps) {
 
                 <FormControl>
                     <InputLabel htmlFor="password-input">Password</InputLabel>
-                    <input id="password-input" type="text:" onChange={updatePassword} />
+                    <input id="password-input" type="text" onChange={updatePassword} />
                     <br/>
                 </FormControl>
                 <br/><br/>
