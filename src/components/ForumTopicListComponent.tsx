@@ -1,8 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import { Box, Container, CssBaseline, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
+import {DataGrid} from '@material-ui/data-grid'
+import {Subforum} from '../dtos/Subforum';
+import {getAllSubForums} from '../remote/sub-forum-service';
 
 interface IForumTopicProps {
     currentTopic: string | undefined
@@ -10,6 +14,8 @@ interface IForumTopicProps {
 }
 
 function ForumTopicListComponent(props: IForumTopicProps) {
+
+    let [subforums, setSubforums] = useState([] as Subforum[]);
 
     const theme = useTheme();
 
@@ -35,6 +41,22 @@ function ForumTopicListComponent(props: IForumTopicProps) {
 
     const classes = useStyles();
 
+    const columns = [
+        {
+            field: 'subforumTitle',
+            width: 150
+        }
+    ]
+
+    async function getSubforums() {
+        try {
+            console.log('I am getting all subforums.');
+            let Subforum = await getAllSubForums();
+        } catch (e: any) {
+            console.log(e.message);
+        }
+    }
+
     return (
         <>     
             <CssBaseline />
@@ -45,44 +67,54 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                     justifyContent="center"
                     spacing={10}
                 >
-                    <Grid item className={classes.button}>
+                    <DataGrid 
+                        columns={columns}
+                        rows={subforums}
+                        pagination={true}
+                        pageSize={5}
+                        rowsPerPageOptions={[6]}
+                        checkboxSelection
+                        disableSelectionOnClick
+                    />
+
+                    {/* <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('java')}} component={Link} to='/forum/java'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Java')}} component={Link} to='/forum/java'>
                             <Typography variant='h6'>Core Java</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('database')}} component={Link} to='/forum/databases'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Databases')}} component={Link} to='/forum/databases'>
                             <Typography variant='h6'>Databases</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('web')}} component={Link} to='/forum/webservices'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Web Services')}} component={Link} to='/forum/webservices'>
                             <Typography variant='h6'>Web Services</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('react')}} component={Link} to='/forum/react'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('React')}} component={Link} to='/forum/react'>
                             <Typography variant='h6'>React</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('spring')}}component={Link} to='/forum/spring'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Spring')}}component={Link} to='/forum/spring'>
                             <Typography variant='h6'>Spring</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('misc')}} component={Link} to='/forum/misc'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Misc')}} component={Link} to='/forum/misc'>
                                <Typography variant='h6'>Miscellaneous</Typography>
                             </ButtonBase>
                         </Box>
@@ -93,7 +125,7 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                             <Typography variant='h6'>Return to Dashboard</Typography>
                             </ButtonBase>
                         </Box>                    
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Container>
         </>

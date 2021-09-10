@@ -34,7 +34,7 @@ function ForumComponent(props: IForumProps) {
         <>
             <CssBaseline/>
             <Container className={classes.root} maxWidth='lg'>
-                <Typography variant='h1'>{props.currentTopic} forums</Typography>
+                <Typography variant='h1'>{props.currentTopic} Forum</Typography>
                 <Grid
                     direction="column"
                     spacing={10}
