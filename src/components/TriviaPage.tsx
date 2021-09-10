@@ -1,5 +1,3 @@
-
-
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
 import {
     Backdrop,
