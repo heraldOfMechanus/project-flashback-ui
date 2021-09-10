@@ -56,7 +56,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                 let request = await addNewCard({cardID, question, correctAnswer, answers, points})
                 console.log(RegisterUserRequest)
 
-
             }else{
                 //TODO put error message here
                 console.log("Incorrect information")
@@ -68,7 +67,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     return(
         <>
-
             <div  className={classes.shtoyle} >
 
                 <h1>Trivia Page</h1>

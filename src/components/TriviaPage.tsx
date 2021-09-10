@@ -1,3 +1,5 @@
+
+
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
 import {
     Backdrop,
@@ -13,6 +15,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import {render} from "@testing-library/react";
+import TriviaCardSet from "./TriviaCardSet";
 
 
 interface ITriviaPageProps {
@@ -24,30 +27,12 @@ function TriviaPage( props: ITriviaPageProps) {
     function displayCards(...payload: any[]) {
         let divName = document.getElementById("lol")
 
-
-
+        console.log(payload);
         for (let item in payload){
+            console.log(payload[item]);
             render(
                 <>
-                    <Card className={classes.root}>
-                        <CardContent>
-
-                            <Typography variant="h3" component="h2">
-                                {payload[item]["topic"] }
-                            </Typography>
-
-                            <Typography  variant="h5" color="textSecondary" gutterBottom>
-
-                                Card Count: {payload[item]["cardCount"] }
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-
-                            <Button href={"/" + payload[item]["topic"] } size="small" >Go to Cards</Button>
-                        </CardActions>
-
-                    </Card>
-                    <br/>
+                   <TriviaCardSet item={item} />
                 </>
             )
         }
