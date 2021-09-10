@@ -12,13 +12,18 @@ function ForumComponent(props: IForumProps) {
 
     // Get the threads from the database matching this topic
     
-    function displayTopic() {
+    function showState() {
         console.log(props.currentTopic);
     }
 
     const useStyles = makeStyles(() => ({
         root: {
             backgroundColor: 'lavender',
+            width: '80%',
+        },
+        button: {
+            backgroundColor: 'lightskyblue',
+            width: '15rem',
         },
     }))
 
@@ -28,15 +33,20 @@ function ForumComponent(props: IForumProps) {
     return (
         <>
             <CssBaseline/>
-            <Container className={classes.root}>
+            <Container className={classes.root} maxWidth='lg'>
                 <Typography variant='h1'>{props.currentTopic} forums</Typography>
                 <Grid
                     direction="column"
                     spacing={10}
                 >
-                    <Grid item>
+                    <Grid item className={classes.button}>
                         <ButtonBase component={Link} to='/forum'>
                             <Typography variant='h6'>Fuck go back</Typography>
+                        </ButtonBase>
+                    </Grid>
+                    <Grid item className={classes.button}>
+                        <ButtonBase onClick={() => {showState()}}>
+                            <Typography variant='h6'>Show State</Typography>
                         </ButtonBase>
                     </Grid>
                 </Grid>
