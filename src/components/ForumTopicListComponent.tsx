@@ -47,42 +47,42 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                 >
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('java')}} component={Link} to='/forum/java'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Java')}} component={Link} to='/forum/java'>
                             <Typography variant='h6'>Core Java</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('database')}} component={Link} to='/forum/databases'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Databases')}} component={Link} to='/forum/databases'>
                             <Typography variant='h6'>Databases</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('web')}} component={Link} to='/forum/webservices'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Web Services')}} component={Link} to='/forum/webservices'>
                             <Typography variant='h6'>Web Services</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('react')}} component={Link} to='/forum/react'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('React')}} component={Link} to='/forum/react'>
                             <Typography variant='h6'>React</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('spring')}}component={Link} to='/forum/spring'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Spring')}}component={Link} to='/forum/spring'>
                             <Typography variant='h6'>Spring</Typography>
                             </ButtonBase>
                         </Box>
                     </Grid>
                     <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('misc')}} component={Link} to='/forum/misc'>
+                            <ButtonBase onClick={() => {props.setCurrentTopic('Misc')}} component={Link} to='/forum/misc'>
                                <Typography variant='h6'>Miscellaneous</Typography>
                             </ButtonBase>
                         </Box>
