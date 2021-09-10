@@ -1,20 +1,12 @@
 import React from 'react';
-
-import {Box, Button, Container, CssBaseline} from '@material-ui/core';
-import { Grid } from '@mui/material';
-
-import { Theme, useTheme, makeStyles, createStyles } from '@material-ui/core/styles';
-
-import { Link } from 'react-router-dom';
-import { ButtonBase } from '@mui/material';
-
-
-function ForumTopicListComponent() {
-
+import { useState } from 'react';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import { Box, Container, CssBaseline, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
+import {DataGrid} from '@material-ui/data-grid'
+import {Subforum} from '../dtos/Subforum';
+import {getAllSubForums} from '../remote/sub-forum-service';
 
 interface IForumTopicProps {
     currentTopic: string | undefined
@@ -22,6 +14,8 @@ interface IForumTopicProps {
 }
 
 function ForumTopicListComponent(props: IForumTopicProps) {
+
+    let [subforums, setSubforums] = useState([] as Subforum[]);
 
     const theme = useTheme();
 
@@ -47,6 +41,22 @@ function ForumTopicListComponent(props: IForumTopicProps) {
 
     const classes = useStyles();
 
+    const columns = [
+        {
+            field: 'subforumTopic',
+            width: 150
+        }
+    ]
+
+    async function getSubforums() {
+        try {
+            console.log('I am getting all subforums.');
+            let Subforum = await getAllSubForums();
+        } catch (e: any) {
+            console.log(e.message);
+        }
+    }
+
     return (
         <>     
             <CssBaseline />
@@ -57,7 +67,17 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                     justifyContent="center"
                     spacing={10}
                 >
-                    <Grid item className={classes.button}>
+                    <DataGrid 
+                        columns={columns}
+                        rows={subforums}
+                        pagination={true}
+                        pageSize={5}
+                        rowsPerPageOptions={[6]}
+                        checkboxSelection
+                        disableSelectionOnClick
+                    />
+
+                    {/* <Grid item className={classes.button}>
                         <Box color="text.primary" clone>
                             <ButtonBase onClick={() => {props.setCurrentTopic('Java')}} component={Link} to='/forum/java'>
                             <Typography variant='h6'>Core Java</Typography>
@@ -105,7 +125,7 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                             <Typography variant='h6'>Return to Dashboard</Typography>
                             </ButtonBase>
                         </Box>                    
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Container>
         </>
