@@ -1,5 +1,5 @@
 
-import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
+
 import { addNewTriviaCardSet } from "../remote/trivia-card-set-service";
 import {useState} from "react";
 import {FormControl, InputLabel} from '@material-ui/core';
