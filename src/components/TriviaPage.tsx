@@ -1,53 +1,122 @@
+
+
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
+import {
+    Backdrop,
+    Button,
+    Card,
+    CardActions,
+    CardContent, CardHeader,
+    Fade,
+    Grid,
+    makeStyles,
+    Modal,
+    Typography
+} from "@material-ui/core";
+import React from "react";
+import {render} from "@testing-library/react";
+
 
 interface ITriviaPageProps {
 
+
 }
 
-function TriviaPage(props: ITriviaPageProps) {
+function TriviaPage( props: ITriviaPageProps) {
+    function displayCards(...payload: any[]) {
+        let divName = document.getElementById("lol")
 
-    let triviaCardSetList: Array<string> | undefined;
+
+
+        for (let item in payload){
+            render(
+                <>
+                    <Card className={classes.root}>
+                        <CardContent>
+
+                            <Typography variant="h3" component="h2">
+                                {payload[item]["topic"] }
+                            </Typography>
+
+                            <Typography  variant="h5" color="textSecondary" gutterBottom>
+
+                                Card Count: {payload[item]["cardCount"] }
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+
+                            <Button href={"/" + payload[item]["topic"] } size="small" >Go to Cards</Button>
+                        </CardActions>
+
+                    </Card>
+                    <br/>
+                </>
+            )
+        }
+
+
+    }
+
+
+    function renderAll(payload: any) {
+        if (payload.statusCode === 401) {
+            console.log("Something went wrong")
+            return;
+        }
+        displayCards(...payload);
+    }
+
+    const useStyles = makeStyles({
+        root: {
+            minWidth: 275,
+            width: "50%",
+            backgroundColor: "lightblue",
+        },
+        bullet: {
+            display: 'inline-block',
+            margin: '0 2px',
+            transform: 'scale(0.8)',
+        },
+        title: {
+            fontSize: 14,
+        },
+        pos: {
+            marginBottom: 12,
+        },
+    });
+
 
 
     async function getTriviaCardSets() {
-        try{
+
+        try {
 
             console.log("I am getting all of trivia card sets");
-            let resp = await getAllTriviaCardSets();
-            triviaCardSetList = JSON.parse(JSON.stringify(resp.data));
-            
-            
-            if(triviaCardSetList){
-                for(let i = 0; i < triviaCardSetList.length; i++){
-                    console.log(triviaCardSetList[i]);
-                }
-            } else {
-                console.log("nothing happened.")
-            }
+            let Card = await getAllTriviaCardSets()
+            renderAll(Card)
 
         } catch (e: any) {
             console.log(e.message);
         }
     }
 
-  
-    return(
-        <>
-            {/* HOW to do this on load, not onclick */}
-            <button id="button-1" onClick={getTriviaCardSets}>GET TRIVIA CARD SETS!!!!!!!</button>
 
 
-            {
-                triviaCardSetList
-                ?
-                    <h1> truthy </h1>
-                :
-                    <h1> falsy </h1>
-            }
-        </>
+    const classes = useStyles();
+
+
+    return (
+        <div className={classes.root} >
+
+
+            <div  onClick={getTriviaCardSets} id="lol">
+                <h4>View all the sets </h4>
+            </div>
+
+
+        </div>
     )
 
 
 }
-
 export default TriviaPage;
