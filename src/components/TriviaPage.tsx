@@ -13,17 +13,36 @@ import {
     Modal,
     Typography
 } from "@material-ui/core";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
+import { Principal } from "../dtos/Principal";
+import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
 
 
 interface ITriviaPageProps {
-
-
+    currentUser: Principal | undefined
+    setCurrentUser: (nextUser: Principal | undefined) => void;
 }
 
 function TriviaPage( props: ITriviaPageProps) {
+
+    let [triviaCardSetList, setTriviaCardSetList] = useState([] as AddTriviaCardSetRequest[]);
+
+    useEffect(() => {
+
+        if (triviaCardSetList.length === 0) {
+            getAllTriviaCardSets().then(sets => {
+                setTriviaCardSetList(sets);
+            })
+        }
+
+        return () => {
+            setTriviaCardSetList([]);
+        }
+    })
+
+
     function displayCards(...payload: any[]) {
         let divName = document.getElementById("lol")
 
@@ -32,7 +51,7 @@ function TriviaPage( props: ITriviaPageProps) {
             console.log(payload[item]);
             render(
                 <>
-                   <TriviaCardSet item={item} />
+                   <TriviaCardSet item={payload[item]} user={props.currentUser} />
                 </>
             )
         }
@@ -70,31 +89,32 @@ function TriviaPage( props: ITriviaPageProps) {
 
 
 
-    async function getTriviaCardSets() {
+    // async function getTriviaCardSets() {
 
-        try {
+    //     try {
 
-            console.log("I am getting all of trivia card sets");
-            let Card = await getAllTriviaCardSets()
-            renderAll(Card)
+    //         console.log("I am getting all of trivia card sets");
+    //         let Card = await getAllTriviaCardSets()
+    //         renderAll(Card)
 
-        } catch (e: any) {
-            console.log(e.message);
-        }
-    }
+    //     } catch (e: any) {
+    //         console.log(e.message);
+    //     }
+    // }
 
 
 
     const classes = useStyles();
 
+    
 
     return (
         <div className={classes.root} >
 
 
-            <div  onClick={getTriviaCardSets} id="lol">
+            {/* <div  onClick={getTriviaCardSets} id="lol">
                 <h4>View all the sets </h4>
-            </div>
+            </div> */}
 
 
         </div>

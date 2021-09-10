@@ -33,7 +33,9 @@ function App() {
         <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
         <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
         <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
-        <Route path="/trivia" render={() => <TriviaPage />} />
+        <Route path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} />} />
+        
+        
       </Switch>
 
     </BrowserRouter>
