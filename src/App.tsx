@@ -14,13 +14,14 @@ import ForumTopicListComponent from './components/ForumTopicListComponent';
 import TriviaPage from './components/TriviaPage';
 import ForumComponent from './components/ForumComponent';
 import DashboardComponent from './components/DashboardPageComponent';
+import { Subforum } from './dtos/Subforum';
 
 
 function App() {
 
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
-  const [currentTopic, setCurrentTopic] = useState(undefined as string | undefined);
+  const [currentTopic, setCurrentTopic] = useState(undefined as Subforum | undefined);
   return (
     <>
     <BrowserRouter>

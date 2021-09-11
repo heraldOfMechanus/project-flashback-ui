@@ -10,8 +10,8 @@ import {getAllSubForums} from '../remote/sub-forum-service';
 import SubforumRenderComponent from './SubforumRenderComponent';
 
 interface IForumTopicProps {
-    currentTopic: string | undefined
-    setCurrentTopic: (nextTopic: string | undefined) => void;
+    currentTopic: Subforum | undefined
+    setCurrentTopic: (nextTopic: Subforum | undefined) => void;
 }
 
 function ForumTopicListComponent(props: IForumTopicProps) {

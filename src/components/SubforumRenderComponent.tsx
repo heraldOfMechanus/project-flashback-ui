@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 interface ISubforumRenderProps {
     subforums: Subforum[] | undefined
     setSubforums: (nextSubforums: Subforum[]) => void;
-    currentTopic: string | undefined
-    setCurrentTopic: (nextTopic: string | undefined) => void;
+    currentTopic: Subforum | undefined
+    setCurrentTopic: (nextTopic: Subforum | undefined) => void;
 }
 
 function SubforumRenderComponent(props: ISubforumRenderProps) {
@@ -33,7 +33,7 @@ function SubforumRenderComponent(props: ISubforumRenderProps) {
             {props.subforums?.map((subforum) => {
                 return <Grid item>
                 <Box className={classes.button} color="text.primary">
-                    <ButtonBase onClick={() => {props.setCurrentTopic(subforum.subforumTitle)}} component={Link} to={"/forum/" + subforum.subforumTitle}>
+                    <ButtonBase onClick={() => {props.setCurrentTopic(subforum)}} component={Link} to={"/forum/" + subforum.subforumTitle}>
                         <Typography variant='h6'>{subforum.subforumTitle}</Typography>
                     </ButtonBase>
                 </Box>

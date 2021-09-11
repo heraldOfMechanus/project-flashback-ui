@@ -2,10 +2,11 @@ import React from 'react';
 import { Container, Typography, CssBaseline, Grid, makeStyles } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Subforum } from '../dtos/Subforum';
 
 interface IForumProps {
-    currentTopic: string | undefined
-    setCurrentTopic: (nextTopic: string) => void;
+    currentTopic: Subforum | undefined
+    setCurrentTopic: (nextTopic: Subforum | undefined) => void;
 }
 
 function ForumComponent(props: IForumProps) {
