@@ -9,6 +9,7 @@ import { Principal } from "../dtos/Principal";
 import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
 import AddTriviaCardSetComponent from "./AddTriviaCardSetComponent";
 import { TriviaSet } from "../dtos/TriviaSet";
+import { Button } from "@material-ui/core";
 
 interface ITriviaPageProps {
     currentUser: Principal | undefined;
@@ -57,23 +58,14 @@ function TriviaPage( props: ITriviaPageProps) {
     useEffect(() => {
         let displayTriviaCardSets = async () => {
             try {
-                triviaCardSetList = await getAllTriviaCardSets();
-                // for (let item in triviaCardSetList){
-                //     render(
-                //         <div>
-                //            <TriviaCardSet item={triviaCardSetList[item]} user={props.currentUser} />
-                //         </div>
-                //     )
-                //     // setTriviaCardSetList(triviaCardSetList);
-                // }
-                setTriviaCardSetList(triviaCardSetList);
+                let allTriviaCardSets = await getAllTriviaCardSets();
+                setTriviaCardSetList(allTriviaCardSets);
             } catch (e: any) {
                 console.log(e.message);
             }
-            
         }
         displayTriviaCardSets();
-    });
+    }, []); //, [] prevents infinite loop
 
     const classes = useStyles();
 
@@ -84,7 +76,7 @@ function TriviaPage( props: ITriviaPageProps) {
         <> 
             {isAdmin
             ?
-                <button onClick={AddTriviaCardSetComponent}>Hello there!</button>
+                <Button>Add Trivia Set</Button>
             :
                 <div />
             }
