@@ -1,19 +1,8 @@
 
 
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
-import {
-    Backdrop,
-    Button,
-    Card,
-    CardActions,
-    CardContent, CardHeader,
-    Fade,
-    Grid,
-    makeStyles,
-    Modal,
-    Typography
-} from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core";
+import { useState, useEffect } from "react";
 import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
@@ -28,45 +17,6 @@ interface ITriviaPageProps {
 function TriviaPage( props: ITriviaPageProps) {
 
     let [triviaCardSetList, setTriviaCardSetList] = useState([] as AddTriviaCardSetRequest[]);
-
-    useEffect(() => {
-
-        if (triviaCardSetList.length === 0) {
-            getAllTriviaCardSets().then(sets => {
-                setTriviaCardSetList(sets);
-            })
-        }
-
-        return () => {
-            setTriviaCardSetList([]);
-        }
-    })
-
-
-    function displayCards(...payload: any[]) {
-        let divName = document.getElementById("lol")
-
-        console.log(payload);
-        for (let item in payload){
-            console.log(payload[item]);
-            render(
-                <>
-                   <TriviaCardSet item={payload[item]} user={props.currentUser} />
-                </>
-            )
-        }
-
-
-    }
-
-
-    function renderAll(payload: any) {
-        if (payload.statusCode === 401) {
-            console.log("Something went wrong")
-            return;
-        }
-        displayCards(...payload);
-    }
 
     const useStyles = makeStyles({
         root: {
@@ -87,39 +37,34 @@ function TriviaPage( props: ITriviaPageProps) {
         },
     });
 
-
-
-    // async function getTriviaCardSets() {
-
-    //     try {
-
-    //         console.log("I am getting all of trivia card sets");
-    //         let Card = await getAllTriviaCardSets()
-    //         renderAll(Card)
-
-    //     } catch (e: any) {
-    //         console.log(e.message);
-    //     }
-    // }
-
-
+    useEffect(() => {
+        let displayTriviaCardSets = async () => {
+            try {
+                triviaCardSetList = await getAllTriviaCardSets();
+                for (let item in triviaCardSetList){
+                    render(
+                        <>
+                           <TriviaCardSet item={triviaCardSetList[item]} user={props.currentUser} />
+                        </>
+                    )
+                }
+            } catch (e: any) {
+                console.log(e.message);
+            }
+        }
+        displayTriviaCardSets();
+    });
 
     const classes = useStyles();
 
-    
-
     return (
-        <div className={classes.root} >
-
-
-            {/* <div  onClick={getTriviaCardSets} id="lol">
-                <h4>View all the sets </h4>
-            </div> */}
-
-
-        </div>
+        <>
+            <div className={classes.root} >
+                <h1>Trivia Card Sets</h1>
+            </div>
+        </>
     )
 
-
 }
+
 export default TriviaPage;

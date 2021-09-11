@@ -56,7 +56,6 @@ export default function TransitionsModal() {
                         <h2 id="transition-modal-title">Transition modal</h2>
                         <div id="add trivia body">
 
-
                             <TriviaAdminComponent />
 
                         </div>
