@@ -1,8 +1,11 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Typography, CssBaseline, Grid, makeStyles } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
+import { getAllThreads } from '../remote/thread-service';
+import { Thread } from '../dtos/Thread';
 
 interface IForumProps {
     currentTopic: Subforum | undefined
@@ -11,7 +14,7 @@ interface IForumProps {
 
 function ForumComponent(props: IForumProps) {
 
-    // Get the threads from the database matching this topic
+    let [threads, setThreads] = useState([] as Thread[]);
     
     function showState() {
         console.log(props.currentTopic);
@@ -30,12 +33,29 @@ function ForumComponent(props: IForumProps) {
 
     const classes = useStyles();
 
+    useEffect(() => {
+        if(threads) {
+            fetchThreads();
+        }
+    })
+
+    // Get the threads from the database matching this topic
+    async function fetchThreads() {
+        if(props.currentTopic?.id) {
+            let resp = await getAllThreads({subforumId: props.currentTopic.id});
+            setThreads(resp);
+        } else {
+            console.log("The subforum ID is null!");
+        }
+    }
+
     // Display the threads from the database matching this topic
     return (
         <>
             <CssBaseline/>
             <Container className={classes.root} maxWidth='lg'>
-                <Typography variant='h1'>{props.currentTopic} Forum</Typography>
+                <Typography variant='h1'>{props.currentTopic?.subforumTitle} Forum</Typography>
+                <Typography variant='h2'>{threads?.[0].id}</Typography>
                 <Grid
                     direction="column"
                     spacing={10}
