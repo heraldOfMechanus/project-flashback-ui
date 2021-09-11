@@ -7,6 +7,7 @@ import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
 import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
+import AddTriviaCardSetComponent from "./AddTriviaCardSetComponent";
 
 
 interface ITriviaPageProps {
@@ -16,7 +17,21 @@ interface ITriviaPageProps {
 
 function TriviaPage( props: ITriviaPageProps) {
 
-    let [triviaCardSetList, setTriviaCardSetList] = useState([] as AddTriviaCardSetRequest[]);
+    let [triviaCardSetList, setTriviaCardSetList] = useState([]);
+
+    let role;
+    let isAdmin;
+    //check to see if a user is logged in. if not, role and isAdmin remain undefined (i.e., falsy)
+    if(props.currentUser){
+        //set role variable = to the role of the user ("admin" or "user")
+        role = props.currentUser.role;
+        //if role is admin, set isAdmin to true, otherwise set to false
+        if(role === "admin"){
+            isAdmin = true;
+        } else {
+            isAdmin = false;
+        }
+    }
 
     const useStyles = makeStyles({
         root: {
@@ -43,14 +58,16 @@ function TriviaPage( props: ITriviaPageProps) {
                 triviaCardSetList = await getAllTriviaCardSets();
                 for (let item in triviaCardSetList){
                     render(
-                        <>
+                        <div>
                            <TriviaCardSet item={triviaCardSetList[item]} user={props.currentUser} />
-                        </>
+                        </div>
                     )
+                    // setTriviaCardSetList(triviaCardSetList);
                 }
             } catch (e: any) {
                 console.log(e.message);
             }
+            
         }
         displayTriviaCardSets();
     });
@@ -58,9 +75,15 @@ function TriviaPage( props: ITriviaPageProps) {
     const classes = useStyles();
 
     return (
-        <>
+        <> 
+            {isAdmin
+            ?
+                <button onClick={AddTriviaCardSetComponent}>Hello there!</button>
+            :
+                <div />
+            }
             <div className={classes.root} >
-                <h1>Trivia Card Sets</h1>
+                {triviaCardSetList}
             </div>
         </>
     )

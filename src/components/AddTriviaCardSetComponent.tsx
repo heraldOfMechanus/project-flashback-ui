@@ -51,7 +51,7 @@ function AddTriviaCardSetComponent(){
                 </FormControl>
 
                 <br/><br/>
-                <button id="Register-btn" onClick={addTriviaCardSet}>Add Set</button>
+                <button id="add-btn" onClick={addTriviaCardSet}>Add Set</button>
             </div>
 
         </>

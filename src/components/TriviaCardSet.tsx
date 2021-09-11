@@ -1,12 +1,15 @@
 
 import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
+import { BrowserRouter, Link } from "react-router-dom";
 import {
     Button,
     Card,
     CardActions,
     CardContent,
     makeStyles,
-    Typography
+    Typography,
+    Theme,
+    createStyles
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {render} from "@testing-library/react";
@@ -14,6 +17,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import AddIcon from '@material-ui/icons/Add';
 import { Principal } from "../dtos/Principal";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import { addNewTriviaCardSet, deleteTriviaCardSet, updateTriviaCardSet } from "../remote/trivia-card-set-service";
+
 
 interface ITriviaCardSetProps {
     item: any
@@ -37,7 +45,6 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         }
     }
     
-    
     const useStyles = makeStyles({
         root: {
             minWidth: 275,
@@ -59,8 +66,28 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
     const classes = useStyles();
     
+    function deleteTriviaCardSetModal() {
+        
+    }
+
+    async function deleteTheTriviaCardSet(){
+        try {
+            if(props.item["id"]){
+                console.log(props.item);
+                let request = await deleteTriviaCardSet(props.item);
+                console.log(request);
+            } else {
+                //TODO put error message here!
+                console.log("Invalid info");
+            }
+        } catch (e:any){
+            console.log(e.message)
+        }
+    }
+
+
     return(
-        <>
+        <div>
             <Card className={classes.root}>
                 <CardContent>
 
@@ -74,8 +101,11 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-
-                    <Button href={"/" + props.item["topic"]} size="small" >Go to Cards</Button>
+                    {/* <BrowserRouter>
+                        <Link to={"/trivia/" + props.item["topic"]} >
+                            <Button  size="small" >Go to Cards</Button>
+                        </Link>
+                    </BrowserRouter> */}
                 </CardActions>
 
                     {isAdmin
@@ -85,23 +115,19 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                 <AddIcon />
                             </Button>
                             <Button>
-                                <DeleteIcon />
-                            </Button>
-                            <Button>
                                 <UpdateIcon />
+                            </Button>
+                            <Button onClick={deleteTheTriviaCardSet}>
+                                <DeleteIcon />
                             </Button>
                         </div>
                     :
                         <div />
                     }
 
-                    
-                
-
-
             </Card>
             <br/>
-        </>
+        </div>
     )
 
 }
