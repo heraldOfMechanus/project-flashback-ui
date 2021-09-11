@@ -42,9 +42,11 @@ function ForumTopicListComponent(props: IForumTopicProps) {
 
     const classes = useStyles();
 
-    let done: boolean = false;
+    // Renders if the Subforums list has no entries.
     useEffect(() => {
-        
+        if(!subforums?.[0]) {
+            getSubforums();
+        }
     })
 
     async function getSubforums() {
@@ -68,7 +70,7 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                     justifyContent="center"
                     spacing={10}
                 >
-                    <SubforumRenderComponent subforums={subforums} setSubforums={setSubforums} currentTopic={props.currentTopic} setCurrentTopic={props.setCurrentTopic} />
+                    {subforums[0] ? <SubforumRenderComponent subforums={subforums} setSubforums={setSubforums} currentTopic={props.currentTopic} setCurrentTopic={props.setCurrentTopic} />: <></>}
                     <Grid item className={classes.button}>
                         <Box color="text.primary">
                             <ButtonBase onClick={() => {getSubforums();}}>
@@ -76,56 +78,6 @@ function ForumTopicListComponent(props: IForumTopicProps) {
                             </ButtonBase>
                         </Box>
                     </Grid>
-
-                    {/* <Grid item className={classes.button}>
-                        <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('Java')}} component={Link} to='/forum/java'>
-                            <Typography variant='h6'>Core Java</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>
-                    <Grid item className={classes.button}>
-                        <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('Databases')}} component={Link} to='/forum/databases'>
-                            <Typography variant='h6'>Databases</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>
-                    <Grid item className={classes.button}>
-                        <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('Web Services')}} component={Link} to='/forum/webservices'>
-                            <Typography variant='h6'>Web Services</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>
-                    <Grid item className={classes.button}>
-                        <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('React')}} component={Link} to='/forum/react'>
-                            <Typography variant='h6'>React</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>
-                    <Grid item className={classes.button}>
-                        <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('Spring')}}component={Link} to='/forum/spring'>
-                            <Typography variant='h6'>Spring</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>
-                    <Grid item className={classes.button}>
-                        <Box color="text.primary" clone>
-                            <ButtonBase onClick={() => {props.setCurrentTopic('Misc')}} component={Link} to='/forum/misc'>
-                               <Typography variant='h6'>Miscellaneous</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>                    
-                    <Grid item className={classes.button}>                    
-                        <Box color="text.primary" clone>
-                            <ButtonBase component={Link} to='/'>
-                            <Typography variant='h6'>Return to Dashboard</Typography>
-                            </ButtonBase>
-                        </Box>                    
-                    </Grid> */}
                 </Grid>
             </Container>
         </>
