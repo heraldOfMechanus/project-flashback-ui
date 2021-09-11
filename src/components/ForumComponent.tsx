@@ -34,7 +34,7 @@ function ForumComponent(props: IForumProps) {
     const classes = useStyles();
 
     useEffect(() => {
-        if(threads) {
+        if(!threads[0]) {
             fetchThreads();
         }
     })
@@ -44,18 +44,19 @@ function ForumComponent(props: IForumProps) {
         if(props.currentTopic?.id) {
             let resp = await getAllThreads({subforumId: props.currentTopic.id});
             setThreads(resp);
+            console.log(threads);
         } else {
             console.log("The subforum ID is null!");
         }
     }
 
+    //#TODO: Button/Modal that will allow the user to create new threads on this subforum!
     // Display the threads from the database matching this topic
     return (
         <>
             <CssBaseline/>
             <Container className={classes.root} maxWidth='lg'>
                 <Typography variant='h1'>{props.currentTopic?.subforumTitle} Forum</Typography>
-                <Typography variant='h2'>{threads?.[0].id}</Typography>
                 <Grid
                     direction="column"
                     spacing={10}
