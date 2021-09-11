@@ -63,21 +63,15 @@ function ForumTopicListComponent(props: IForumTopicProps) {
     return (
         <>     
             <CssBaseline />
-            <Container maxWidth="lg" className={classes.root}>       
+            <Container maxWidth="lg" className={classes.root}>
+                <Typography variant='h2'>Forums</Typography>
                 <Grid 
                     className={classes.display}
                     direction="column"
                     justifyContent="center"
                     spacing={10}
                 >
-                    {subforums[0] ? <SubforumRenderComponent subforums={subforums} setSubforums={setSubforums} currentTopic={props.currentTopic} setCurrentTopic={props.setCurrentTopic} />: <></>}
-                    <Grid item className={classes.button}>
-                        <Box color="text.primary">
-                            <ButtonBase onClick={() => {getSubforums();}}>
-                                <Typography variant='h6'>Fetch subforums</Typography>
-                            </ButtonBase>
-                        </Box>
-                    </Grid>
+                    {subforums[0] ? <SubforumRenderComponent subforums={subforums} setSubforums={setSubforums} currentTopic={props.currentTopic} setCurrentTopic={props.setCurrentTopic} />: <></>}                    
                 </Grid>
             </Container>
         </>
