@@ -7,3 +7,10 @@ export const flashbackClient = axios.create({
         'Content-Type': 'application/json'
     }
 });
+
+export const loremPicsum = axios.create({
+    baseURL: 'https://picsum.photos/seed',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
