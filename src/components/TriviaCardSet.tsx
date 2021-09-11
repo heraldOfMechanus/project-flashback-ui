@@ -21,17 +21,18 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { addNewTriviaCardSet, deleteTriviaCardSet, updateTriviaCardSet } from "../remote/trivia-card-set-service";
-
+import {TriviaSet} from '../dtos/TriviaSet'
 
 interface ITriviaCardSetProps {
-    item: any
-    user: Principal|undefined,
+    triviaCardSets: TriviaSet[] | undefined;
+    setTriviaCardSets: (nextTriviaCardSet: TriviaSet[]) => void;
+    user: Principal|undefined;
 }
 
 function TriviaCardSet(props: ITriviaCardSetProps) {
 
     let role;
-    let isAdmin;
+    let isAdmin: boolean;
 
     //check to see if a user is logged in. if not, role and isAdmin remain undefined (i.e., falsy)
     if(props.user){
@@ -66,18 +67,11 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
     const classes = useStyles();
     
-    function deleteTriviaCardSetModal() {
-        
-    }
-
-    async function deleteTheTriviaCardSet(){
+    async function deleteTheTriviaCardSet(set: TriviaSet){
         try {
-            if(props.item["id"]){
-                console.log(props.item);
-                let request = await deleteTriviaCardSet(props.item);
-                console.log(request);
+            if(set){
+                let request = await deleteTriviaCardSet(set);
             } else {
-                //TODO put error message here!
                 console.log("Invalid info");
             }
         } catch (e:any){
@@ -87,47 +81,54 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
 
     return(
-        <div>
-            <Card className={classes.root}>
-                <CardContent>
+        
+        <>
 
-                    <Typography variant="h3" component="h2">
-                        {props.item["topic"]}
-                    </Typography>
+            {props.triviaCardSets?.map((triviaSet) => {
+                return <div>
+                            <Card className={classes.root}>
+                                <CardContent className={classes.root}>
 
-                    <Typography  variant="h5" color="textSecondary" gutterBottom>
+                                    <Typography variant="h3" component="h2">
+                                        {triviaSet.topic}
+                                    </Typography>
 
-                        Card Count: {props.item["cardCount"]}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    {/* <BrowserRouter>
-                        <Link to={"/trivia/" + props.item["topic"]} >
-                            <Button  size="small" >Go to Cards</Button>
-                        </Link>
-                    </BrowserRouter> */}
-                </CardActions>
+                                    <Typography  variant="h5" color="textSecondary" gutterBottom>
 
-                    {isAdmin
-                    ?
-                        <div>
-                            <Button>
-                                <AddIcon />
-                            </Button>
-                            <Button>
-                                <UpdateIcon />
-                            </Button>
-                            <Button onClick={deleteTheTriviaCardSet}>
-                                <DeleteIcon />
-                            </Button>
-                        </div>
-                    :
-                        <div />
-                    }
+                                        Card Count: {triviaSet.cardCount}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    {/* <BrowserRouter>
+                                        <Link to={"/trivia/" + props.item["topic"]} >
+                                            <Button  size="small" >Go to Cards</Button>
+                                        </Link>
+                                    </BrowserRouter> */}
+                                </CardActions>
 
-            </Card>
-            <br/>
-        </div>
+                                {isAdmin
+                                ?
+                                    <div>
+                                        <Button>
+                                            <AddIcon />
+                                        </Button>
+                                        <Button>
+                                            <UpdateIcon />
+                                        </Button>
+                                        <Button onClick={() => {deleteTheTriviaCardSet(triviaSet)}}>
+                                            <DeleteIcon />
+                                        </Button>
+                                    </div>
+                                :
+                                    <></>
+                                }
+                            <br/>
+                        </Card>
+                        <br />
+                    </div>
+                    
+            })}
+        </>
     )
 
 }

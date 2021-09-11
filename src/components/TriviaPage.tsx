@@ -8,16 +8,18 @@ import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
 import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
 import AddTriviaCardSetComponent from "./AddTriviaCardSetComponent";
-
+import { TriviaSet } from "../dtos/TriviaSet";
 
 interface ITriviaPageProps {
-    currentUser: Principal | undefined
+    currentUser: Principal | undefined;
     setCurrentUser: (nextUser: Principal | undefined) => void;
+    currentSet: TriviaSet | undefined;
+    setCurrentSet: (nextTopic: TriviaSet | undefined) => void;
 }
 
 function TriviaPage( props: ITriviaPageProps) {
 
-    let [triviaCardSetList, setTriviaCardSetList] = useState([]);
+    let [triviaCardSetList, setTriviaCardSetList] = useState([] as TriviaSet[]);
 
     let role;
     let isAdmin;
@@ -56,14 +58,15 @@ function TriviaPage( props: ITriviaPageProps) {
         let displayTriviaCardSets = async () => {
             try {
                 triviaCardSetList = await getAllTriviaCardSets();
-                for (let item in triviaCardSetList){
-                    render(
-                        <div>
-                           <TriviaCardSet item={triviaCardSetList[item]} user={props.currentUser} />
-                        </div>
-                    )
-                    // setTriviaCardSetList(triviaCardSetList);
-                }
+                // for (let item in triviaCardSetList){
+                //     render(
+                //         <div>
+                //            <TriviaCardSet item={triviaCardSetList[item]} user={props.currentUser} />
+                //         </div>
+                //     )
+                //     // setTriviaCardSetList(triviaCardSetList);
+                // }
+                setTriviaCardSetList(triviaCardSetList);
             } catch (e: any) {
                 console.log(e.message);
             }
@@ -74,6 +77,9 @@ function TriviaPage( props: ITriviaPageProps) {
 
     const classes = useStyles();
 
+    console.log(triviaCardSetList);
+    console.log(triviaCardSetList[0]);
+
     return (
         <> 
             {isAdmin
@@ -82,8 +88,13 @@ function TriviaPage( props: ITriviaPageProps) {
             :
                 <div />
             }
-            <div className={classes.root} >
-                {triviaCardSetList}
+            <div>
+                {triviaCardSetList[0]
+                    ?
+                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList} user={props.currentUser} />
+                    :
+                    <></>
+                }
             </div>
         </>
     )
