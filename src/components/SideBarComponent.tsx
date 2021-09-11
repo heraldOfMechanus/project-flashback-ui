@@ -15,6 +15,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import ForumIcon from '@material-ui/icons/Forum';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 interface INavbarProps {
     currentUser:Principal|undefined,
@@ -180,6 +182,16 @@ export function SideBarComponent(props: INavbarProps) {
                                 </ListItem>                                    
                             </>
                         }                        
+                    </List>
+                    <List>
+                        <ListItem button component={Link} to={'/trivia'}> 
+                            <ListItemIcon><CreditCardIcon/></ListItemIcon>
+                            <Typography color="inherit" variant="h6">Trivia</Typography>
+                        </ListItem>
+                        <ListItem button component={Link} to={'/forum'}> 
+                            <ListItemIcon><ForumIcon/></ListItemIcon>
+                            <Typography color="inherit" variant="h6">Forum</Typography>
+                        </ListItem>
                     </List>
                 </Drawer>
                 <main className={classes.content}>
