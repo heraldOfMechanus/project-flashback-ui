@@ -115,7 +115,7 @@ function TriviaPage( props: ITriviaPageProps) {
 
     const addsetbody = (
         <div style={modalStyle} className={classes.paper}>
-          <h1>New Thread!</h1>
+          <h1>Create Set</h1>
                 <FormControl>
                     <InputLabel htmlFor="title-input">Topic</InputLabel>
                     <input id="topic-input" type="text" onChange={handleAddSetChange} />
