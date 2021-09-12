@@ -22,6 +22,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { addNewTriviaCardSet, deleteTriviaCardSet, updateTriviaCardSet } from "../remote/trivia-card-set-service";
 import {TriviaSet} from '../dtos/TriviaSet'
+import { typographyVariant } from "@mui/system";
 
 interface ITriviaCardSetProps {
     triviaCardSets: TriviaSet[] | undefined;
@@ -77,6 +78,14 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         } catch (e:any){
             console.log(e.message)
         }
+    }
+
+    async function updateTriviaCardSet(){
+        
+    }
+
+    async function addTriviaCardtoSet(){
+
     }
 
 

@@ -1,7 +1,6 @@
 
 
-import {getAllTriviaCardSets} from "../remote/trivia-card-set-service";
-import { makeStyles } from "@material-ui/core";
+import {addNewTriviaCardSet, getAllTriviaCardSets} from "../remote/trivia-card-set-service";
 import { useState, useEffect } from "react";
 import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
@@ -10,6 +9,8 @@ import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
 import AddTriviaCardSetComponent from "./AddTriviaCardSetComponent";
 import { TriviaSet } from "../dtos/TriviaSet";
 import { Button } from "@material-ui/core";
+import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
+
 
 interface ITriviaPageProps {
     currentUser: Principal | undefined;
@@ -36,6 +37,16 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     }
 
+    function getModalStyle() {
+        return {
+          top: '30%',
+          left: '34%',
+        };
+    }
+
+    const modalStyle = getModalStyle();
+    const theme = useTheme();
+
     const useStyles = makeStyles({
         root: {
             minWidth: 275,
@@ -53,6 +64,17 @@ function TriviaPage( props: ITriviaPageProps) {
         pos: {
             marginBottom: 12,
         },
+        button: {
+            backgroundColor: 'lightskyblue',
+            width: '15rem',
+        },
+        paper: {
+            position: 'absolute',
+            width: 400,
+            backgroundColor: theme.palette.background.paper,
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        }
     });
 
     useEffect(() => {
@@ -69,16 +91,67 @@ function TriviaPage( props: ITriviaPageProps) {
 
     const classes = useStyles();
 
-    console.log(triviaCardSetList);
-    console.log(triviaCardSetList[0]);
+
+    
+    // FOR MODAL FOR ADDING NEW TRIVIA CARD SET
+    const [addSetOpen, setAddSetOpen] = useState(false);
+
+    const [addSetFormData, setAddSetFormData] = useState({
+        topic: '',
+    });
+
+    const handleAddSetOpen = () => {
+        setAddSetOpen(true);
+    };
+
+    const handleAddSetClose = () => {
+        setAddSetOpen(false);
+    };
+
+    let handleAddSetChange = (e: any) => {
+        const {value} = e.target;
+        setAddSetFormData({...addSetFormData, ["topic"]: value });
+    }
+
+    const addsetbody = (
+        <div style={modalStyle} className={classes.paper}>
+          <h1>New Thread!</h1>
+                <FormControl>
+                    <InputLabel htmlFor="title-input">Topic</InputLabel>
+                    <input id="topic-input" type="text" onChange={handleAddSetChange} />
+                    <br/>
+                </FormControl>
+                <br/>
+                <button id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose();}}>Create Set</button>
+        </div>
+    )
+
+    function newTriviaCardSetModal() {
+        if(addSetFormData.topic) {
+            addNewTriviaCardSet({topic: addSetFormData.topic});
+        }
+
+    }
+
 
     return (
         <> 
             {isAdmin
             ?
-                <Button>Add Trivia Set</Button>
+                <div>
+                    <CssBaseline/>
+                    <Button onClick={handleAddSetOpen}>Add Trivia Set</Button>
+                    <Modal
+                        open={addSetOpen}
+                        onClose={handleAddSetClose}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                    >
+                        {addsetbody}
+                    </Modal>
+                </div>
             :
-                <div />
+                <></>
             }
             <div>
                 {triviaCardSetList[0]
