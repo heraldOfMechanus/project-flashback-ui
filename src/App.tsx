@@ -38,7 +38,7 @@ function App() {
 
         <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
         <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
-        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
+        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} />}/>
         <Route exact path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} currentSet={currentSet} setCurrentSet={setCurrentSet}/>} />
         <Route path="/dashboard" render={() => <DashboardComponent currentUser={authUser} setCurrentUser={setAuthUser} />} />
 

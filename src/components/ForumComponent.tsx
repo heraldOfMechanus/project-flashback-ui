@@ -1,15 +1,18 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles } from '@material-ui/core';
+import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
-import { getAllThreads } from '../remote/thread-service';
+import { addNewThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
+import { Principal } from '../dtos/Principal';
 
 interface IForumProps {
     currentTopic: Subforum | undefined
     setCurrentTopic: (nextTopic: Subforum | undefined) => void;
+    currentUser: Principal | undefined
+    setCurrentUser: (nextUser: Principal | undefined) => void;
 }
 
 function ForumComponent(props: IForumProps) {
@@ -17,11 +20,19 @@ function ForumComponent(props: IForumProps) {
     const [threads, setThreads] = useState([] as Thread[]);
     const [open, setOpen] = useState(false);
     const [done, setDone] = useState(false);
+
+    const [formData, setFormData] = useState({
+        userId: '',
+        subforumId: '',
+        threadTitle: '',
+        threadContent: '',
+    })
     
     function showState() {
         console.log(props.currentTopic);
     }
 
+    // Centers the modal on the display
     function getModalStyle() {
         return {
           top: '30%',
@@ -52,21 +63,38 @@ function ForumComponent(props: IForumProps) {
 
     const classes = useStyles();
 
-    const body = (
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Text in a modal</h2>
-          <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
-        </div>
-    );
-
+    // Automatically fetch all threads for user
     useEffect(() => {
         if(!done) {
             fetchThreads();
             setDone(true);
         }
     })
+
+    function newThread() {
+        if(formData.threadContent || formData.threadTitle || props.currentTopic?.id) {
+            if(props.currentUser?.id) {
+                setFormData({...formData, userId: props.currentUser.id});
+            } else {
+                setFormData({...formData, userId: 'Anonymous'});
+            }
+            if(props.currentTopic?.id) {
+                setFormData({...formData, subforumId: props.currentTopic.id})
+            } else {
+                console.log("There was no valid subforum!");
+                return;
+            }
+
+            let newThread = new Thread(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
+            addNewThread(newThread);
+        }
+    }
+
+    // Greatly reduces the amount of space spent changing pieces of state by changing one state json.
+    let handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormData({...formData, [name]: value });
+    }
 
     // Get the threads from the database matching this topic
     async function fetchThreads() {
@@ -78,6 +106,26 @@ function ForumComponent(props: IForumProps) {
             console.log("The subforum ID is null!");
         }
     }
+
+    // Body of the Modal
+    const body = (
+        <div style={modalStyle} className={classes.paper}>
+          <h1>New Thread!</h1>
+                <FormControl>
+                    <InputLabel htmlFor="id-input">Subject</InputLabel>
+                    <input id="title-input" type="text" onChange={handleChange} />
+                    <br/>
+                </FormControl>
+                <br/>
+                <FormControl>
+                    <InputLabel htmlFor="question-input">Content</InputLabel>
+                    <input id="content-input" type="text" onChange={handleChange} />
+                    <br/>
+                </FormControl>
+                <br/>
+                <button id="newCard-btn" onClick={newThread}>Submit</button>
+        </div>
+    );
 
     const handleOpen = () => {
         setOpen(true);
