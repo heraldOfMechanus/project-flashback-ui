@@ -54,7 +54,6 @@ function ForumTopicListComponent(props: IForumTopicProps) {
             console.log('I am getting all subforums.');
             let Subforums = await getAllSubForums();
             setSubforums(Subforums);
-            console.log(Subforums);
         } catch (e: any) {
             console.log(e.message);
         }

@@ -7,6 +7,7 @@ import { Subforum } from '../dtos/Subforum';
 import { addNewThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
+import { ThreadDTO } from '../dtos/ThreadDTO';
 
 interface IForumProps {
     currentTopic: Subforum | undefined
@@ -17,9 +18,9 @@ interface IForumProps {
 
 function ForumComponent(props: IForumProps) {
 
-    const [threads, setThreads] = useState([] as Thread[]);
-    const [open, setOpen] = useState(false);
-    const [done, setDone] = useState(false);
+    let [threads, setThreads] = useState([] as Thread[]);
+    let [open, setOpen] = useState(false);
+    let [done, setDone] = useState(false);
 
     const [formData, setFormData] = useState({
         userId: '',
@@ -29,7 +30,7 @@ function ForumComponent(props: IForumProps) {
     })
     
     function showState() {
-        console.log(props.currentTopic);
+        console.log(threads[0]?.subforumId);
     }
 
     // Centers the modal on the display
@@ -85,7 +86,7 @@ function ForumComponent(props: IForumProps) {
                 return;
             }
 
-            let newThread = new Thread(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
+            let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
         }
     }
@@ -105,9 +106,9 @@ function ForumComponent(props: IForumProps) {
     // Get the threads from the database matching this topic
     async function fetchThreads() {
         if(props.currentTopic?.id) {
-            let resp = await getAllThreads({subforumId: props.currentTopic.id});
-            setThreads(resp);
-            console.log(threads);
+            let Threads = await getAllThreads({subforumId: props.currentTopic.id});
+            console.log(Threads);
+            setThreads(Threads);
         } else {
             console.log("The subforum ID is null!");
         }

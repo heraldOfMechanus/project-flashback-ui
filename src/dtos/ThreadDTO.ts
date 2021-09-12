@@ -1,15 +1,12 @@
-export class Thread {
-
-    id: string;
+export class ThreadDTO {
     userId: string;
     subforumId: string;
     threadTitle: string;
     threadContent: string;
 
-    constructor(id: string, user: string, sId: string, title: string, content: string) {
-        this.id = id;
+    constructor(user: string, subforum: string, title: string, content: string) {
         this.userId = user;
-        this.subforumId = sId;
+        this.subforumId = subforum;
         this.threadTitle = title;
         this.threadContent = content;
     }
