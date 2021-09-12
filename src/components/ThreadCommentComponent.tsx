@@ -7,8 +7,8 @@ import { Thread } from "../dtos/Thread";
 
 
 interface CommentProps {
-    threadcom: ThreadComment[] | undefined
-    setThreadCom: (nextThreadCom: ThreadComment[]) => void;
+    threadcom: ThreadComment | undefined
+    setThreadCom: (nextThreadCom: ThreadComment) => void;
     currentThread: Thread | undefined
     setCurrentThread: (nextThread: Thread | undefined) => void;
 }
