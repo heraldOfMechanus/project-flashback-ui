@@ -125,14 +125,12 @@ function TriviaPage( props: ITriviaPageProps) {
                 <button id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose();}}>Create Set</button>
         </div>
     )
-
     function newTriviaCardSetModal() {
         if(addSetFormData.topic) {
             addNewTriviaCardSet({topic: addSetFormData.topic});
         }
 
     }
-
 
 
     return (

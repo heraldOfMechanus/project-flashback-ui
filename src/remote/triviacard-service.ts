@@ -18,7 +18,10 @@ export const addNewCard = async (RegisterUserRequest: {cardID:string, question:s
 export const getCardsBySetId = async (setId: string | undefined) =>
 {
 
+
     let resp = await flashbackClient.get('/trivia/card/bySetId', {params: {setId: setId}})
+
+
     if (resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
