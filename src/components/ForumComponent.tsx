@@ -190,7 +190,7 @@ function ForumComponent(props: IForumProps) {
                 >
                     {threads?.map((thread) => {
                         return <Grid item>
-                            <ButtonBase onClick={() => {props.setCurrentThread(thread)}} component={Link} to={"/forum/" + props.currentTopic?.subforumTitle + "/" + thread.id}>
+                            <ButtonBase onClick={() => {props.setCurrentThread(thread)}} component={Link} to={"/threads/" + thread.id}>
                                 <Typography variant='h6'>{thread.threadTitle}</Typography>
                             </ButtonBase>
                         </Grid>
