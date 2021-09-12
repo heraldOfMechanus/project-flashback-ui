@@ -32,9 +32,8 @@ function QuestionPage( props: ITriviaQuestionPage){
             console.log(id)
             let allcards = await getCardsBySetId(id);
             console.log(allcards)
-            setCards(allcards);
-            console.log(Cards);
-            return allcards;
+            setCards(allcards)
+
         }catch (e: any){
             console.log(e.message);
         }
@@ -46,6 +45,9 @@ function QuestionPage( props: ITriviaQuestionPage){
         <>
 
 
+            <div>
+
+            </div>
             <h1> Trivia page</h1>
 
 

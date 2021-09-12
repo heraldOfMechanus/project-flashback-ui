@@ -180,11 +180,12 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                {/* <BrowserRouter>
-                                    <Link to={"/trivia/" + props.item["topic"]} >
-                                        <Button  size="small" >Go to Cards</Button>
-                                    </Link>
-                                </BrowserRouter> */}
+
+                                <ListItem button component={Link} to={'/trivia-question'} onClick={() => {props.setCurrentSet(triviaSet)}}>
+                                    <ListItemIcon><ForumIcon/></ListItemIcon>
+                                    <Typography color="inherit" variant="h6">Go to Cards</Typography>
+                                </ListItem>
+
                             </CardActions>
 
                             {isAdmin
