@@ -25,9 +25,11 @@ function ForumComponent(props: IForumProps) {
     let [open, setOpen] = useState(false);
     let [done, setDone] = useState(false);
 
+    
     const [formData, setFormData] = useState({
-        userId: '',
-        subforumId: '',
+        userId: props.currentUser?.id,
+        // @ts-ignore
+        subforumId: props.currentTopic.id,
         threadTitle: '',
         threadContent: '',
     })
