@@ -4,7 +4,6 @@ import { useTheme, makeStyles } from '@material-ui/core/styles';
 import { Box, Container, CssBaseline, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
-import {DataGrid} from '@material-ui/data-grid'
 import {Subforum} from '../dtos/Subforum';
 import {getAllSubForums} from '../remote/sub-forum-service';
 import SubforumRenderComponent from './SubforumRenderComponent';
