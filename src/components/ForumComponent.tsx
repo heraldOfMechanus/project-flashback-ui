@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
 import { getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
-import { SettingsPowerRounded } from '@mui/icons-material';
 
 interface IForumProps {
     currentTopic: Subforum | undefined
