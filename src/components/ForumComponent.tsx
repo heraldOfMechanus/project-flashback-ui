@@ -8,6 +8,7 @@ import { addNewThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
+import { DataGrid } from '@material-ui/data-grid';
 
 interface IForumProps {
     currentTopic: Subforum | undefined
@@ -114,6 +115,20 @@ function ForumComponent(props: IForumProps) {
         }
     }
 
+    // Body of the DataGrid
+    const columns = [
+        {
+            headerName: 'Thread Title',
+            field: 'threadTitle',
+            width: 150
+        },
+        {
+            headerName: 'Content',
+            field: 'threadContent',
+            width: 300
+        }
+    ]
+
     // Body of the Modal
     const body = (
         <div style={modalStyle} className={classes.paper}>
@@ -166,6 +181,17 @@ function ForumComponent(props: IForumProps) {
                     direction="column"
                     spacing={10}
                 >
+                    <div style={{ height: 400, width: '100%' }}>
+                        <DataGrid 
+                            columns={columns}
+                            rows={threads}
+                            pagination={true}
+                            pageSize={5}
+                            rowsPerPageOptions={[5]}
+                            checkboxSelection
+                            disableSelectionOnClick
+                        />
+                    </div>
                     <Grid item className={classes.button}>
                         <ButtonBase component={Link} to='/forum'>
                             <Typography variant='h6'>Fuck go back</Typography>
