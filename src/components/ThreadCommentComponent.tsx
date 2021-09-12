@@ -53,8 +53,6 @@ function ThreadCommentComponent(props: ICommentProps) {
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.banana}>
 
-                <h1>Login page</h1>
-
                 <FormControl>
                     <InputLabel htmlFor="comment-input">Comment</InputLabel>
                     <input id="comment-input" type="text" onChange={updateComment} />
