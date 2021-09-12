@@ -4,18 +4,19 @@ import {makeStyles} from "@material-ui/core/styles";
 import {FormControl, InputLabel} from "@material-ui/core";
 import { ThreadComment } from "../dtos/ThreadComment";
 import { Thread } from "../dtos/Thread";
+import { Principal } from "../dtos/Principal";
 
 
-interface CommentProps {
-    threadcom: ThreadComment[] | undefined
-    setThreadCom: (nextThreadCom: ThreadComment[]) => void;
+interface ICommentProps {
+    currentUser: Principal | undefined
+    setCurrentUser: (nextUser: Principal | undefined) => void;
     currentThread: Thread | undefined
     setCurrentThread: (nextThread: Thread | undefined) => void;
 }
 
 
 
-function threadComment(props: CommentProps) {
+function ThreadCommentComponent(props: ICommentProps) {
 
 
     const useStyles = makeStyles((theme) => ({
@@ -52,8 +53,6 @@ function threadComment(props: CommentProps) {
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.banana}>
 
-                <h1>Login page</h1>
-
                 <FormControl>
                     <InputLabel htmlFor="comment-input">Comment</InputLabel>
                     <input id="comment-input" type="text" onChange={updateComment} />
@@ -71,4 +70,4 @@ function threadComment(props: CommentProps) {
     )
 }
 
-export default ThreadComment;
+export default ThreadCommentComponent;
