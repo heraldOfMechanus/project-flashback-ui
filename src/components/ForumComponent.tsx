@@ -8,12 +8,15 @@ import { addNewThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
+import { DataGrid } from '@material-ui/data-grid';
 
 interface IForumProps {
     currentTopic: Subforum | undefined
     setCurrentTopic: (nextTopic: Subforum | undefined) => void;
     currentUser: Principal | undefined
     setCurrentUser: (nextUser: Principal | undefined) => void;
+    currentThread: Thread | undefined
+    setCurrentThread: (nextThread: Thread | undefined) => void;
 }
 
 function ForumComponent(props: IForumProps) {
@@ -114,6 +117,25 @@ function ForumComponent(props: IForumProps) {
         }
     }
 
+    let redirect = (e: any) => {
+        let click = e.target.parent;
+        console.dir(click);
+    }
+
+    // Body of the DataGrid
+    const columns = [
+        {
+            headerName: 'Thread Title',
+            field: 'threadTitle',
+            width: 150
+        },
+        {
+            headerName: 'Content',
+            field: 'threadContent',
+            width: 300
+        }
+    ]
+
     // Body of the Modal
     const body = (
         <div style={modalStyle} className={classes.paper}>
@@ -166,6 +188,13 @@ function ForumComponent(props: IForumProps) {
                     direction="column"
                     spacing={10}
                 >
+                    {threads?.map((thread) => {
+                        return <Grid item>
+                            <ButtonBase onClick={() => {props.setCurrentThread(thread)}} component={Link} to={"/forum/" + props.currentTopic?.subforumTitle + "/" + thread.id}>
+                                <Typography variant='h6'>{thread.threadTitle}</Typography>
+                            </ButtonBase>
+                        </Grid>
+                    })}
                     <Grid item className={classes.button}>
                         <ButtonBase component={Link} to='/forum'>
                             <Typography variant='h6'>Fuck go back</Typography>
