@@ -13,4 +13,6 @@ export const loremPicsum = axios.create({
     headers: {
         'Content-Type': 'application/json'
     }
-})
+
+});
+

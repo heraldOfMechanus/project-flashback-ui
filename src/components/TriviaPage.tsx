@@ -134,6 +134,7 @@ function TriviaPage( props: ITriviaPageProps) {
     }
 
 
+
     return (
         <> 
             {isAdmin
@@ -156,7 +157,7 @@ function TriviaPage( props: ITriviaPageProps) {
             <div>
                 {triviaCardSetList[0]
                     ?
-                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList} user={props.currentUser} />
+                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList}  currentSet={props.currentSet}  setCurrentSet={props.setCurrentSet} user={props.currentUser} />
                     :
                     <></>
                 }
