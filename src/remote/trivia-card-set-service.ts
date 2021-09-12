@@ -33,7 +33,7 @@ export const addNewTriviaCardSet = async (AddTriviaCardSetRequest: {topic: strin
 
 export const updateTriviaCardSet = async (UpdateTriviaCardSet: {id: string, topic: string, cardCount: number}) => {
 
-    let resp = await flashbackClient.put('trivia/set/create-set', UpdateTriviaCardSet);
+    let resp = await flashbackClient.put('trivia/set/update-set', UpdateTriviaCardSet);
 
     if (resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
