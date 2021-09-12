@@ -12,7 +12,7 @@ import {
     useTheme,
     FormControl,
     InputLabel,
-    createStyles
+    createStyles, ListItemIcon, ListItem
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {render} from "@testing-library/react";
@@ -26,10 +26,15 @@ import Fade from '@material-ui/core/Fade';
 import { addNewTriviaCardSet, deleteTriviaCardSet, updateTriviaCardSet } from "../remote/trivia-card-set-service";
 import {TriviaSet} from '../dtos/TriviaSet'
 import { typographyVariant } from "@mui/system";
+import ForumIcon from "@material-ui/icons/Forum";
+import TriviaQuestionPage from "./TriviaQuestionPage";
+import {Subforum} from "../dtos/Subforum";
 
 interface ITriviaCardSetProps {
     triviaCardSets: TriviaSet[] | undefined;
     setTriviaCardSets: (nextTriviaCardSet: TriviaSet[]) => void;
+    currentSet: TriviaSet |undefined
+    setCurrentSet: (nextSet: TriviaSet | undefined) => void;
     user: Principal|undefined;
 }
 
@@ -50,7 +55,10 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         }
     }
 
+
     const theme = useTheme();
+
+
 
     const useStyles = makeStyles({
         root: {
@@ -82,6 +90,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         }
     });
 
+
     function getModalStyle() {
         return {
           top: '30%',
@@ -90,6 +99,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     }
 
     const modalStyle = getModalStyle();
+
     const classes = useStyles();
 
 
@@ -157,6 +167,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         <>
             {props.triviaCardSets?.map((triviaSet) => {
                 return <div>
+
                         <Card className={classes.root}>
                             <CardContent className={classes.root}>
 
