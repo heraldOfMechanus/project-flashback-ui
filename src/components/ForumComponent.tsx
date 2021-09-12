@@ -92,8 +92,14 @@ function ForumComponent(props: IForumProps) {
 
     // Greatly reduces the amount of space spent changing pieces of state by changing one state json.
     let handleChange = (e: any) => {
-        const { name, value } = e.target;
-        setFormData({...formData, [name]: value });
+        const {value} = e.target;
+        setFormData({...formData, ["threadTitle"]: value });
+        console.log(value);
+    }
+    let handleChange2 = (e: any) => {
+        const {value} = e.target;
+        setFormData({...formData, ["threadContent"]: value });
+        console.log(value);
     }
 
     // Get the threads from the database matching this topic
@@ -112,14 +118,14 @@ function ForumComponent(props: IForumProps) {
         <div style={modalStyle} className={classes.paper}>
           <h1>New Thread!</h1>
                 <FormControl>
-                    <InputLabel htmlFor="id-input">Subject</InputLabel>
+                    <InputLabel htmlFor="title-input">Subject</InputLabel>
                     <input id="title-input" type="text" onChange={handleChange} />
                     <br/>
                 </FormControl>
                 <br/>
                 <FormControl>
-                    <InputLabel htmlFor="question-input">Content</InputLabel>
-                    <input id="content-input" type="text" onChange={handleChange} />
+                    <InputLabel htmlFor="content-input">Content</InputLabel>
+                    <input id="content-input" type="text" onChange={handleChange2} />
                     <br/>
                 </FormControl>
                 <br/>

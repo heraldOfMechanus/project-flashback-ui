@@ -12,7 +12,6 @@ export const getAllThreads = async (req: {subforumId: string}) => {
     return resp.data;
 }
 
-// TODO: This results in a 500 error! let's fix this!
 export const addNewThread = async (newThread: Thread) => {
     let body = {
         userId: newThread.userId,
