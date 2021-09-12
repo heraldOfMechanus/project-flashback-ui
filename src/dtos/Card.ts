@@ -1,17 +1,21 @@
 export class Card {
-    
-    cardID: string;
-    question: string;
-    correctAnswer: string;
+
+
+
     answers: string[];
-    points: number;
+    cardID: string;
+    correctAnswer: string;
+    question: string;
+    points: string;
+    setID: string;
     
-    // TODO: Make sure this matches the card object in the API!
-    constructor(id: string, que: string, correct: string, ans: string[], points: number) {
+
+    constructor(id: string,  SetID: string, que: string, correct: string, ans: string[], points: string) {
         this.cardID = id;
         this.question = que;
         this.correctAnswer = correct;
         this.answers = ans;
         this.points = points;
+        this.setID = SetID;
     }
 }

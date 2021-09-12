@@ -19,6 +19,8 @@ import { Subforum } from './dtos/Subforum';
 import ThreadCommentComponent from './components/ThreadCommentComponent';
 import ThreadComment from './components/ThreadCommentComponent';
 import { Thread } from './dtos/Thread';
+import TriviaQuestionPage from "./components/TriviaQuestionPage";
+import {Card} from "./dtos/Card";
 
 
 function App() {
@@ -27,11 +29,13 @@ function App() {
   const [User] = useState(undefined as RegisterUserRequest | undefined);
   const [currentTopic, setCurrentTopic] = useState(undefined as Subforum | undefined);
   const [currentSet, setCurrentSet] = useState(undefined as TriviaSet | undefined);
+  const [currentCard, setCurrentCard] = useState(undefined as  Card | undefined);
   
   return (
     <>
     <BrowserRouter>
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
+
       
       <Switch>
         <Route exact path="/" render={() => <LandingPageComponent />} />
@@ -44,6 +48,8 @@ function App() {
         <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} />}/>
         <Route exact path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} currentSet={currentSet} setCurrentSet={setCurrentSet}/>} />
         <Route path="/dashboard" render={() => <DashboardComponent currentUser={authUser} setCurrentUser={setAuthUser} />} />
+        <Route exact path="/trivia-question" render={() => <TriviaQuestionPage currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard}/>} />
+
 
 
       </Switch>
