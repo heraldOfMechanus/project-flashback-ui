@@ -15,6 +15,8 @@ interface IForumProps {
     setCurrentTopic: (nextTopic: Subforum | undefined) => void;
     currentUser: Principal | undefined
     setCurrentUser: (nextUser: Principal | undefined) => void;
+    currentThread: Thread | undefined
+    setCurrentThread: (nextThread: Thread | undefined) => void;
 }
 
 function ForumComponent(props: IForumProps) {
@@ -115,6 +117,11 @@ function ForumComponent(props: IForumProps) {
         }
     }
 
+    let redirect = (e: any) => {
+        let click = e.target.parent;
+        console.dir(click);
+    }
+
     // Body of the DataGrid
     const columns = [
         {
@@ -181,17 +188,13 @@ function ForumComponent(props: IForumProps) {
                     direction="column"
                     spacing={10}
                 >
-                    <div style={{ height: 400, width: '100%' }}>
-                        <DataGrid 
-                            columns={columns}
-                            rows={threads}
-                            pagination={true}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
-                            checkboxSelection
-                            disableSelectionOnClick
-                        />
-                    </div>
+                    {threads?.map((thread) => {
+                        return <Grid item>
+                            <ButtonBase onClick={() => {props.setCurrentThread(thread)}} component={Link} to={"/forum/" + props.currentTopic?.subforumTitle + "/" + thread.id}>
+                                <Typography variant='h6'>{thread.threadTitle}</Typography>
+                            </ButtonBase>
+                        </Grid>
+                    })}
                     <Grid item className={classes.button}>
                         <ButtonBase component={Link} to='/forum'>
                             <Typography variant='h6'>Fuck go back</Typography>
