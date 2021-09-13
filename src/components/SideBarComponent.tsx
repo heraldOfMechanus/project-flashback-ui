@@ -1,24 +1,20 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import { Principal } from "../dtos/Principal";
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import React from 'react';
+import { ButtonBase, AppBar, Toolbar, Drawer, 
+    List, Typography, CssBaseline, Divider, 
+    IconButton, makeStyles, useTheme, ListItem,
+    ListItemIcon } from '@material-ui/core';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+
 
 interface INavbarProps {
     currentUser:Principal|undefined,
@@ -130,9 +126,12 @@ export function SideBarComponent(props: INavbarProps) {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h6" noWrap>
-                            Flashback
-                        </Typography>
+                        <ButtonBase component={Link} to='/'>
+                            <OfflineBoltIcon />
+                            <Typography variant="h6" noWrap>                            
+                                Flashback
+                            </Typography>
+                        </ButtonBase>
                     </Toolbar>
                 </AppBar>
                 <Drawer

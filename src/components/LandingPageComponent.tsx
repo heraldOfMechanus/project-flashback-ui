@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 
 function LandingPageComponent() {
@@ -115,6 +116,7 @@ function LandingPageComponent() {
                 {images.map((image) => (
                     <ButtonBase
                     focusRipple
+                    component={Link} to='/forum'
                     key={image.title}
                     className={classes.image}
                     focusVisibleClassName={classes.focusVisible}
