@@ -44,25 +44,18 @@ function QuestionPage( props: ITriviaQuestionPage){
             console.log(id)
             let allcards = await getCardsBySetId(id);
             console.log(allcards)
-            console.log(allcards[0])
-            setCard1(allcards[0])
             setCards(allcards)
         }catch (e: any){
             console.log(e.message);
         }
 
     }
-    function currentQuestion(){
-        x = x+1
-        setX(x)
 
-
-    }
 
   function isAnswerCorrect(correctAnswer: string, selectedAnswer: string){
         if(correctAnswer === selectedAnswer){
             console.log("true")
-            console.log(Cards)
+            console.log(Card1)
 
         }else{
             console.log("false")
@@ -101,7 +94,13 @@ function QuestionPage( props: ITriviaQuestionPage){
     // )
 
 
+    function updateX(){
+        x+=1
+        setX(x)
+        console.log(x)
+        allCardsBySetId()
 
+    }
 
 
 
@@ -115,11 +114,12 @@ function QuestionPage( props: ITriviaQuestionPage){
             <h1> Trivia page</h1>
 
 
-            {Cards.map((Cards) =>{
+            {Cards.slice(x,x+1).map((Cards,index, n) =>{
 
                 return <div>
 
-                    <h2>{Cards.question.toUpperCase()}</h2>
+                    <h2>{n[index]["question"]}</h2>
+                    <h3>{index}</h3>
                     <br/>
 
                     <Button onClick={() =>{ isAnswerCorrect(Cards.correctAnswer, Cards.answers[0]) }} variant="contained">{Cards.answers[0]} </Button>
@@ -133,7 +133,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                     <br/>
 
 
-                    <Button  variant="contained" color="primary">
+                    <Button  onClick={ () =>{updateX()}} variant="contained" color="primary">
                         next question
                     </Button>
                     <br/>
