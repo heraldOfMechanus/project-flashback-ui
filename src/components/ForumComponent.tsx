@@ -2,9 +2,10 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
-import { addNewThread, getAllThreads } from '../remote/thread-service';
+import { addNewThread, deleteThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
@@ -24,6 +25,7 @@ function ForumComponent(props: IForumProps) {
     let [threads, setThreads] = useState([] as Thread[]);
     let [open, setOpen] = useState(false);
     let [done, setDone] = useState(false);
+    let [isAdmin, setAdmin] = useState(false);
 
     
     const [formData, setFormData] = useState({
@@ -81,7 +83,7 @@ function ForumComponent(props: IForumProps) {
         text: {
             paddingLeft: '.2rem',
             color: 'steel',
-        }
+        },
     }))
 
     const classes = useStyles();
@@ -91,6 +93,9 @@ function ForumComponent(props: IForumProps) {
         if(!done) {
             fetchThreads();
             setDone(true);
+        }
+        if(props.currentUser?.role === 'admin') {
+            setAdmin(true);
         }
     })
 
@@ -173,7 +178,7 @@ function ForumComponent(props: IForumProps) {
             <CssBaseline/>
             <div>
                 <button type="button" onClick={handleOpen}>
-                    Open Modal
+                    Create New Thread
                 </button>
                 <Modal
                     open={open}
@@ -189,15 +194,24 @@ function ForumComponent(props: IForumProps) {
                     direction="column"
                     spacing={10}
                 >
-                    {threads?.map((thread) => {
+                    {isAdmin ? threads?.map((thread) =>  {
                         return <Grid item className={classes.threadItem}>
-                            <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
-                                <Box className={classes.threadItem} color="text.primary">
+                            <Box className={classes.threadItem} color="text.primary">
+                                <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
                                     <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
-                                </Box>
-                            </ButtonBase>
-                        </Grid>
-                    })}
+                                </ButtonBase>
+                                <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => {deleteThread({id: thread.id})}}>
+                                    Delete Thread
+                                </Button>
+                            </Box>
+                        </Grid>}): threads?.map((thread) => {
+                        return <Grid item className={classes.threadItem}>
+                        <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
+                            <Box className={classes.threadItem} color="text.primary">
+                                <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
+                            </Box>
+                        </ButtonBase>
+                        </Grid>})}
                     <Grid item className={classes.button}>
                         <ButtonBase component={Link} to='/forum'>
                             <Typography variant='h6'>Fuck go back</Typography>
