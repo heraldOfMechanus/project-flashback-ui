@@ -28,7 +28,20 @@ function QuestionPage( props: ITriviaQuestionPage){
 
     const useStyles = makeStyles((theme) => ({
 
+        root: {
+           textAlign: "center",
+            backgroundColor: "lightgrey",
+            width: "50%",
+            display: "inline-grid",
+            border: "inset",
+        },
+
+        buttons: {
+            width: "100%",
+        }
+
     }));
+    const classes = useStyles();
 
 
     let [Cards, setCards] = useState([] as Card[] );
@@ -116,34 +129,37 @@ function QuestionPage( props: ITriviaQuestionPage){
 
             {Cards.slice(x,x+1).map((Cards,index, n) =>{
 
-                return <div>
+                return <div className={classes.root}>
 
-                    <h2>{n[index]["question"]}</h2>
-                    <h3>{index}</h3>
+                     <h2>{index}.) {n[index]["question"]}</h2>
+
                     <br/>
 
-                    <Button onClick={() =>{ isAnswerCorrect(Cards.correctAnswer, Cards.answers[0]) }} variant="contained">{Cards.answers[0]} </Button>
+                    <Button className={classes.buttons} onClick={() =>{ isAnswerCorrect(Cards.correctAnswer, Cards.answers[0]) }} variant="contained">{Cards.answers[0]} </Button>
                     <br/>
 
-                    <Button onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[1])}} variant="contained">{Cards.answers[1]}</Button>
+                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[1])}} variant="contained">{Cards.answers[1]}</Button>
                     <br/>
-                    <Button onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[2])}} variant="contained">{Cards.answers[2]}</Button>
+                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[2])}} variant="contained">{Cards.answers[2]}</Button>
                     <br/>
-                    <Button onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[3])}} variant="contained">{Cards.answers[3]}</Button>
+                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[3])}} variant="contained">{Cards.answers[3]}</Button>
                     <br/>
 
 
-                    <Button  onClick={ () =>{updateX()}} variant="contained" color="primary">
+                    <Button className={classes.buttons} onClick={ () =>{updateX()}} variant="contained" color="primary">
                         next question
                     </Button>
                     <br/>
-                    -------------------
+
+
                     <br/>
                 </div>
 
             })}
 
-
+                    <div>
+                        There are {Cards.length} questions total
+                        </div>
 
 
 

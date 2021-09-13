@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Principal } from "../dtos/Principal";
 import ErrorMessageComponent from "./ErrorMessage";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {getProfilePicture} from '../remote/user-service'
-import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import {Avatar, Icon, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText} from "@material-ui/core";
 import classes from "*.module.css";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import PeopleIcon from '@material-ui/icons/People';
+import GamesOutlinedIcon from '@material-ui/icons/GamesOutlined';
+import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
+import EventAvailableOutlinedIcon from '@material-ui/icons/EventAvailableOutlined';
 
 interface IDashboardComponent {
     currentUser: Principal | undefined;
     setCurrentUser: (nextUser: Principal | undefined) => void;
 }
 
-function WorkIcon() {
-    return null;
-}
 
-function BeachAccessIcon() {
-    return null;
-}
 
 function DashboardComponent(props: IDashboardComponent) {
 
@@ -58,7 +58,7 @@ function DashboardComponent(props: IDashboardComponent) {
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
-
+                            <GamesOutlinedIcon/>
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary="Total Score" secondary= {props.currentUser?.totalScore}/>
@@ -66,7 +66,7 @@ function DashboardComponent(props: IDashboardComponent) {
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
-                            <WorkIcon />
+                            <AlternateEmailIcon/>
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary="Email" secondary={props.currentUser?.email} />
@@ -74,7 +74,7 @@ function DashboardComponent(props: IDashboardComponent) {
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
-                            <BeachAccessIcon />
+                           <PersonOutlinedIcon/>
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary="Username" secondary={props.currentUser?.username} />
@@ -82,7 +82,7 @@ function DashboardComponent(props: IDashboardComponent) {
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
-                            <BeachAccessIcon />
+                            <EventAvailableOutlinedIcon/>
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary="Member Since" secondary="July 20, 2014" />
