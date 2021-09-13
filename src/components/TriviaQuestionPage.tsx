@@ -1,7 +1,7 @@
 import {Card} from "../dtos/Card";
 import {useEffect, useState} from "react";
 import ForumTopicListComponent from "./ForumTopicListComponent";
-import QuestionComponent from "./QuestionComponent";
+
 import {getCardsBySetId} from "../remote/triviacard-service";
 import {TriviaSet} from "../dtos/TriviaSet";
 import {Button, makeStyles} from "@material-ui/core";

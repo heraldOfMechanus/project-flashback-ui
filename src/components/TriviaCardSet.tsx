@@ -15,7 +15,7 @@ import {
     createStyles,
     ListItemIcon,
     ListItem,
-    ButtonBase
+    ButtonBase, Tooltip
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {render} from "@testing-library/react";
@@ -126,7 +126,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
     
     // FOR THE MODAL FOR UPDATING A TRIVIA CARD SET
-    const [updateSetOpen, setUpdateSetOpen] = useState(false);
+    const [updateSetOpen, setUpdateSetOpen] = React.useState(false);
 
     const [updateSetFormData, setUpdateSetFormData] = useState({
         topic: '',
@@ -193,6 +193,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                     </Button>
                                     <Button onClick={handleUpdateSetOpen}>
                                         <UpdateIcon />
+
                                         <Modal
                                             open={updateSetOpen}
                                             onClose={handleUpdateSetClose}
