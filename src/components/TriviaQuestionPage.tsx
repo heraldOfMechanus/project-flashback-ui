@@ -4,7 +4,8 @@ import ForumTopicListComponent from "./ForumTopicListComponent";
 import QuestionComponent from "./QuestionComponent";
 import {getCardsBySetId} from "../remote/triviacard-service";
 import {TriviaSet} from "../dtos/TriviaSet";
-import {Button} from "@material-ui/core";
+import {Button, makeStyles} from "@material-ui/core";
+import internal from "stream";
 
 
 
@@ -19,11 +20,20 @@ interface ITriviaQuestionPage{
 
 }
 
+
 function QuestionPage( props: ITriviaQuestionPage){
+
+    let [x,setX] = useState(0)
+    let [y, setY] = useState(1)
+
+    const useStyles = makeStyles((theme) => ({
+
+    }));
 
 
     let [Cards, setCards] = useState([] as Card[] );
-    let id = props.currentSet?.id
+    let [Card1, setCard1] = useState('');
+    let id = props.currentSet?.id;
 
     useEffect(() => {      allCardsBySetId();
     }, []);
@@ -41,9 +51,11 @@ function QuestionPage( props: ITriviaQuestionPage){
 
     }
 
+
   function isAnswerCorrect(correctAnswer: string, selectedAnswer: string){
         if(correctAnswer === selectedAnswer){
             console.log("true")
+            console.log(Card1)
 
         }else{
             console.log("false")
@@ -53,14 +65,61 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
 
+    // let questions = Cards.slice(x1,y2).map(cards =>{
+    //     console.log(x1)
+    //     console.log(y2)
+    //     console.log("inside Q")
+    //
+    //    return( <div>
+    //         <h2>{cards.question}</h2>
+    //     <br/>
+    //
+    //     <Button onClick={() =>{ isAnswerCorrect(cards.correctAnswer, cards.answers[0]) }} variant="contained">{cards.answers[0]} </Button>
+    //     <br/>
+    //
+    //     <Button onClick={ () =>{isAnswerCorrect(cards.correctAnswer, cards.answers[1])}} variant="contained">{cards.answers[1]}</Button>
+    //     <br/>
+    //     <Button onClick={ () =>{isAnswerCorrect(cards.correctAnswer, cards.answers[2])}} variant="contained">{cards.answers[2]}</Button>
+    //     <br/>
+    //     <Button onClick={ () =>{isAnswerCorrect(cards.correctAnswer, cards.answers[3])}} variant="contained">{cards.answers[3]}</Button>
+    //     <br/>
+    //
+    //
+    //     <Button  onClick={() =>{nextQuestion()}} variant="contained" color="primary">
+    //         next question
+    //     </Button>
+    // </div>
+    //    )}
+    //
+    // )
+
+
+    function updateX(){
+        x+=1
+        setX(x)
+        console.log(x)
+        allCardsBySetId()
+
+    }
+
+
+
+
     return(
+
+
         <>
 
-            {allCardsBySetId}
-            {Cards?.map((Cards) =>{
+
+            <h1> Trivia page</h1>
+
+
+            {Cards.slice(x,x+1).map((Cards,index, n) =>{
 
                 return <div>
-                    <h2>{Cards.question}</h2>
+
+                    <h2>{n[index]["question"]}</h2>
+                    <h3>{index}</h3>
                     <br/>
 
                     <Button onClick={() =>{ isAnswerCorrect(Cards.correctAnswer, Cards.answers[0]) }} variant="contained">{Cards.answers[0]} </Button>
@@ -74,24 +133,24 @@ function QuestionPage( props: ITriviaQuestionPage){
                     <br/>
 
 
-                    <Button variant="contained" color="primary">
-                        Primary
+                    <Button  onClick={ () =>{updateX()}} variant="contained" color="primary">
+                        next question
                     </Button>
                     <br/>
                     -------------------
                     <br/>
                 </div>
 
-                }
-            )}
+            })}
 
 
 
-            <h1> Trivia page</h1>
+
 
 
 
         </>
+
     )
 
 
