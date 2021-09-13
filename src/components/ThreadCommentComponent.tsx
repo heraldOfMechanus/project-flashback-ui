@@ -25,9 +25,9 @@ function ThreadCommentComponent(props: ICommentProps) {
     const useStyles = makeStyles((theme) => ({
         //Where banana is, this can named whatever you want.
         banana: {
-            textAlign: "center",
-            color: "blue",
-            alignItems: 'center',
+            textAlign: "left",
+            alignItems: 'left',
+            paddingLeft: 250
         },
     }));
     const classes = useStyles();
@@ -63,6 +63,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 }
                 // @ts-ignore
                 let newComment = new ThreadComment(formData.threadId, formData.userId, comment);
+                setDone(false);
                 addNewComment(newComment);
             } else {
                 setErrorMessage('Invalid Input');
@@ -77,7 +78,8 @@ function ThreadCommentComponent(props: ICommentProps) {
         if(props.currentThread?.id) {
             let comms = await getAllComments();
             console.log(comms);
-            setThreadComm(comms);
+            const commsReverse = comms.reverse();
+            setThreadComm(commsReverse);
         } else {
             console.log("The subforum ID is null!");
         }
@@ -85,28 +87,27 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     return (
         <>
+        
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.banana}>
-    
-                    {threadComm?.map((ThreadComment) => {
-                        return <Grid item>
-                            <Typography variant='h6'>{ThreadComment.content}</Typography>
-                        </Grid>
-                    })}
                 <FormControl>
                     <InputLabel htmlFor="comment-input">Comment</InputLabel>
                     <input id="comment-input" type="text" onChange={updateComment} />
                     <br/>
                 </FormControl>
                 <br/><br/>
-
-
                 <button id="comment-btn" onClick={newComment}>Send</button>
                 <br/><br/>
+                {threadComm?.map((ThreadComment) => {
+                return <Grid item>
+                {ThreadComment.content}
+                </Grid>
+                })}
             </div>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
 
         </>
+        
     )
 }
 
