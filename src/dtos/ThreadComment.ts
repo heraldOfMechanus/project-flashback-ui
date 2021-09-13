@@ -4,13 +4,10 @@ export class ThreadComment {
     threadId: string;
     userId: string;
     content: string;
-    timestamp: string;
 
-    constructor(id: string, tId: string, usId: string, content: string, ts: string) {
-        this.id = id;
+    constructor(tId: string, usId: string, content: string) {
         this.threadId = tId;
         this.userId = usId;
         this.content = content;
-        this.timestamp = ts;
     }
 }

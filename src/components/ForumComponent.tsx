@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
+import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
@@ -64,6 +64,20 @@ function ForumComponent(props: IForumProps) {
             backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
+        },
+        threadItem: {
+            justifyContent: 'left',
+            backgroundColor: 'lightgray',
+            textAlign: 'left',
+            borderLeftStyle: 'solid',
+            borderWidth: '1px',
+            borderColor: 'steel',
+            borderBottomStyle: 'solid',
+            borderTopStyle: 'solid',
+        },
+        text: {
+            paddingLeft: '.2rem',
+            color: 'steel',
         }
     }))
 
@@ -79,18 +93,15 @@ function ForumComponent(props: IForumProps) {
 
     function newThread() {
         if(formData.threadContent || formData.threadTitle || props.currentTopic?.id) {
-            if(props.currentUser?.id) {
-                setFormData({...formData, userId: props.currentUser.id});
-            } else {
-                setFormData({...formData, userId: 'Anonymous'});
+            if(!props.currentUser?.id) {
+                setFormData({...formData, ["userId"]: 'Anonymous'});
             }
-            if(props.currentTopic?.id) {
-                setFormData({...formData, subforumId: props.currentTopic.id})
-            } else {
+            if(!props.currentTopic?.id) {
                 console.log("There was no valid subforum!");
                 return;
             }
 
+            //@ts-ignore
             let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
         }
@@ -118,25 +129,6 @@ function ForumComponent(props: IForumProps) {
             console.log("The subforum ID is null!");
         }
     }
-
-    let redirect = (e: any) => {
-        let click = e.target.parent;
-        console.dir(click);
-    }
-
-    // Body of the DataGrid
-    const columns = [
-        {
-            headerName: 'Thread Title',
-            field: 'threadTitle',
-            width: 150
-        },
-        {
-            headerName: 'Content',
-            field: 'threadContent',
-            width: 300
-        }
-    ]
 
     // Body of the Modal
     const body = (
@@ -177,7 +169,6 @@ function ForumComponent(props: IForumProps) {
                 </button>
                 <Modal
                     open={open}
-                    onClick={handleClose}
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                 >
@@ -191,9 +182,11 @@ function ForumComponent(props: IForumProps) {
                     spacing={10}
                 >
                     {threads?.map((thread) => {
-                        return <Grid item>
-                            <ButtonBase onClick={() => {props.setCurrentThread(thread)}} component={Link} to={"/threads/" + thread.id}>
-                                <Typography variant='h6'>{thread.threadTitle}</Typography>
+                        return <Grid item className={classes.threadItem}>
+                            <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
+                                <Box className={classes.threadItem} color="text.primary">
+                                    <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
+                                </Box>
                             </ButtonBase>
                         </Grid>
                     })}
@@ -204,7 +197,7 @@ function ForumComponent(props: IForumProps) {
                     </Grid>
                     <Grid item className={classes.button}>
                         <ButtonBase onClick={() => {showState()}}>
-                            <Typography variant='h6'>Show State</Typography>
+                            <Typography className={classes.text} variant='h6'>Show State</Typography>
                         </ButtonBase>
                     </Grid>
                 </Grid>
