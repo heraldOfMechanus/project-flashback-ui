@@ -76,7 +76,7 @@ function ThreadCommentComponent(props: ICommentProps) {
     async function fetchComments() {
         
         if(props.currentThread?.id) {
-            let comms = await getAllComments();
+            let comms = await getAllComments({threadId: props.currentThread.id});
             console.log(comms);
             const commsReverse = comms.reverse();
             setThreadComm(commsReverse);
