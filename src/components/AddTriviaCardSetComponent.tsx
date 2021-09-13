@@ -1,5 +1,5 @@
 
-import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
+
 import { addNewTriviaCardSet } from "../remote/trivia-card-set-service";
 import {useState} from "react";
 import {FormControl, InputLabel} from '@material-ui/core';
@@ -51,7 +51,7 @@ function AddTriviaCardSetComponent(){
                 </FormControl>
 
                 <br/><br/>
-                <button id="Register-btn" onClick={addTriviaCardSet}>Add Set</button>
+                <button id="add-btn" onClick={addTriviaCardSet}>Add Set</button>
             </div>
 
         </>

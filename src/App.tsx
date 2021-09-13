@@ -8,36 +8,52 @@ import LoginComponent from './components/LoginComponent';
 import RegisterComponent from "./components/RegisterComponent";
 import LandingPageComponent from './components/LandingPageComponent';
 import {RegisterUserRequest} from "./dtos/register-user-request";
-import FloatingActionButtonZoom from "./components/AdminDashboardComponent";
+import {TriviaSet} from "./dtos/TriviaSet";
 import AddTriviaCardSetComponent from './components/AddTriviaCardSetComponent';
-import {AddTriviaCardSetRequest} from "./dtos/add-trivia-card-set-request";
 import TriviaAdminComponent from './components/TriviaCardsAdminComponent';
 import ForumTopicListComponent from './components/ForumTopicListComponent';
 import TriviaPage from './components/TriviaPage';
 import ForumComponent from './components/ForumComponent';
+import DashboardComponent from './components/DashboardPageComponent';
+import { Subforum } from './dtos/Subforum';
+import ThreadCommentComponent from './components/ThreadCommentComponent';
+import ThreadComment from './components/ThreadCommentComponent';
+import { Thread } from './dtos/Thread';
+import TriviaQuestionPage from "./components/TriviaQuestionPage";
+import {Card} from "./dtos/Card";
+
 
 function App() {
 
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
-  const [currentTopic, setCurrentTopic] = useState(undefined as string | undefined);
+  const [currentTopic, setCurrentTopic] = useState(undefined as Subforum | undefined);
+  const [currentThread, setCurrentThread] = useState(undefined as Thread | undefined);
+  const [currentSet, setCurrentSet] = useState(undefined as TriviaSet | undefined);
+  const [currentCard, setCurrentCard] = useState(undefined as  Card | undefined);
+  
   return (
     <>
     <BrowserRouter>
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
+
       
       <Switch>
         <Route exact path="/" render={() => <LandingPageComponent />} />
         <Route path="/login" render={() => <LoginComponent currentUser={authUser} setCurrentUser={setAuthUser} /> }/>
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
-        <Route path="/admin-dashboard" render={() => <FloatingActionButtonZoom/>} />
         <Route path="/add-trivia-set" render={() => <AddTriviaCardSetComponent /> } />
 
         <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
         <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
-        /*routes: java, databases, webservices, spring, react, misc */
-        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
-        <Route path="/trivia" render={() => <TriviaPage />} />
+        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
+        <Route exact path = "/threads/*" render = {()=> <ThreadCommentComponent currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
+        <Route exact path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} currentSet={currentSet} setCurrentSet={setCurrentSet}/>} />
+        <Route path="/dashboard" render={() => <DashboardComponent currentUser={authUser} setCurrentUser={setAuthUser} />} />
+        <Route exact path="/trivia-question" render={() => <TriviaQuestionPage currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard}/>} />
+
+
+
       </Switch>
 
     </BrowserRouter>

@@ -16,17 +16,21 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
         shtoyle: {
             textAlign: "center",
             color: "blue",
+            backgroundColor: "grey"
         },
 
     }));
 
     const classes = useStyles();
 
+    // Why do we have state here for pre-existing cards when this creates cards?!
     let [cardID, setCardID] = useState('');
     let [question, setQuestion] = useState('');
     let [correctAnswer, setCorrectAnswer] = useState('');
     let [answers, setAnswers] = useState(['']);
     let [points, setPoints] = useState('');
+
+
 
     function updateID(e:any){
         setCardID(e.currentTarget.value)
@@ -52,7 +56,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                 let request = await addNewCard({cardID, question, correctAnswer, answers, points})
                 console.log(RegisterUserRequest)
 
-
             }else{
                 //TODO put error message here
                 console.log("Incorrect information")
@@ -64,7 +67,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     return(
         <>
-
             <div  className={classes.shtoyle} >
 
                 <h1>Trivia Page</h1>
