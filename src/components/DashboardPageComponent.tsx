@@ -1,45 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Principal } from "../dtos/Principal";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
-import {FormControl, InputLabel} from "@material-ui/core";
-// import {getProfilePicture} from '../remote/user-service'
+import {getProfilePicture} from '../remote/user-service'
 
 interface IDashboardComponent {
-    currentUser: Principal | undefined
+    currentUser: Principal | undefined;
     setCurrentUser: (nextUser: Principal | undefined) => void;
 }
 
 function DashboardComponent(props: IDashboardComponent) {
 
-    // let un: string;
-    // let isDefined: boolean;
+    const[pfp, setPfp] = useState('');
 
-    // async function displayProfilePicture() {
-
-    //     let pfp: any;
-
-    //     if(props.currentUser){
-    //         un = props.currentUser.username;
-    //         isDefined = true;
-    //     } else {
-    //         isDefined = false;
-    //     }
-        
-    //     console.log(isDefined);
-    //     if(isDefined){
-    //         pfp = await getProfilePicture(un, 200);
-    //     }
-
-    //     console.log(pfp.url);
-    //     return pfp;
-    
-    // }
+    useEffect(() => {
+        let displayProfilePicture = async () => {
+            try{
+                if(props.currentUser){
+                    setPfp(await getProfilePicture(props.currentUser.username, 200));
+                } else {
+                    setPfp(await getProfilePicture("undefined", 100));
+                }
+            } catch (e: any){
+                console.log(e.message);
+            }
+        }
+        displayProfilePicture();
+    }, []);
 
     return (
         <>
             <h1>Welcome, {props.currentUser?.username} </h1>
-            <img src={`https://picsum.photos/seed/${props.currentUser?.username}/200`} />
+            <img src={pfp}></img>
         </>
     )
 }
