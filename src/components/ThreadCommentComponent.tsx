@@ -42,7 +42,7 @@ function ThreadCommentComponent(props: ICommentProps) {
     const [formData, setFormData] = useState({
         threadId: props.currentThread?.id,
         // @ts-ignore
-        userId: props.currentUser?.id,
+        userId: props.currentUser?.username,
         content: ''
     })
 
@@ -56,8 +56,9 @@ function ThreadCommentComponent(props: ICommentProps) {
     async function newComment() {
         try {
             if (comment) {
-                if(props.currentUser?.id) {
-                    setFormData({...formData, userId: props.currentUser.id});
+                if(props.currentUser?.username) {
+                    setFormData({...formData, userId: props.currentUser.username});
+                    console.log(props.currentUser.username);
                 } else {
                     setFormData({...formData, userId: 'Anonymous'});
                 }
@@ -99,9 +100,17 @@ function ThreadCommentComponent(props: ICommentProps) {
                 <button id="comment-btn" onClick={newComment}>Send</button>
                 <br/><br/>
                 {threadComm?.map((ThreadComment) => {
-                return <Grid item>
-                {ThreadComment.content}
-                </Grid>
+                if(ThreadComment.userId){
+                    return <Grid item>
+                    {ThreadComment.userId + ": "}{" " + ThreadComment.content}
+                    </Grid>
+                }
+                else{
+                    return <Grid item>
+                    {"Anonymous: " + ThreadComment.content}
+                    </Grid>
+                }
+                
                 })}
             </div>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
