@@ -8,7 +8,7 @@ import { addNewThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
-import { DataGrid } from '@material-ui/data-grid';
+
 
 interface IForumProps {
     currentTopic: Subforum | undefined
