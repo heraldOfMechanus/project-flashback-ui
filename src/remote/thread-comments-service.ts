@@ -6,7 +6,6 @@ export const addNewComment = async (newThreadComment: ThreadComment) => {
         threadId: newThreadComment.threadId,
         userId: newThreadComment.userId,
         content: newThreadComment.content,
-        timestamp: newThreadComment.timestamp
     }
     let resp = await flashbackClient.post('threads/comment', body);
 

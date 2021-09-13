@@ -91,6 +91,7 @@ function ForumComponent(props: IForumProps) {
                 return;
             }
 
+            // @ts-ignore
             let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
         }
