@@ -21,11 +21,15 @@ function ForumTopicListComponent(props: IForumTopicProps) {
     const useStyles = makeStyles((theme) => ({
         root: {
             width: '70%',
+            backgroundColor: 'skyblue',
+            paddingBottom: '1rem',
+            borderRadius: '1rem',
         },
         display: {
             backgroundColor: 'lavender',
             borderRadius: '.7rem',
             padding: '1.7rem',
+            justifySelf: 'left',
         },
         button: {
             margin: '2rem',
