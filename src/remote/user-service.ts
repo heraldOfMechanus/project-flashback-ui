@@ -1,5 +1,6 @@
 import {flashbackClient, loremPicsum} from "./flashback-client";
 import {RegisterUserRequest} from "../dtos/register-user-request";
+import axios from "axios";
 
 
 export const getAllUser = async () => {
@@ -15,14 +16,17 @@ export const registerNewUser = async (RegisterUserRequest: {firstName:string, la
     }
 }
 
-// export const getProfilePicture = async(username: string, size: number) => {
+export const getProfilePicture = async(username: string, size: number) => {
 
-//     let resp = await loremPicsum.get(`${username}/${size}`);
+    let resp = await loremPicsum.get(`${username}/${size}`, {responseType: "blob"});
 
-//     console.log(resp);
-//     if (resp.status >= 400 && resp.status <= 599) {
-//         throw resp.data;
-//     }
+    let url = URL.createObjectURL(resp.data);
 
-//     return resp;
-// };
+    if (resp.status >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+
+    console.log(url);
+
+    return url;
+};
