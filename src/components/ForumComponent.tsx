@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box } from '@material-ui/core';
+import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button } from '@material-ui/core';
 import { ButtonBase } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
@@ -65,6 +65,9 @@ function ForumComponent(props: IForumProps) {
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
         },
+        modalButton: {
+            justifyContent: 'right',
+        },
         threadItem: {
             justifyContent: 'left',
             backgroundColor: 'lightgray',
@@ -91,21 +94,6 @@ function ForumComponent(props: IForumProps) {
         }
     })
 
-    function newThread() {
-        if(formData.threadContent || formData.threadTitle || props.currentTopic?.id) {
-            if(!props.currentUser?.id) {
-                setFormData({...formData, ["userId"]: 'Anonymous'});
-            }
-            if(!props.currentTopic?.id) {
-                console.log("There was no valid subforum!");
-                return;
-            }
-
-            let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
-            addNewThread(newThread);
-        }
-    }
-
     // Greatly reduces the amount of space spent changing pieces of state by changing one state json.
     let handleChange = (e: any) => {
         const {value} = e.target;
@@ -129,9 +117,38 @@ function ForumComponent(props: IForumProps) {
         }
     }
 
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    function newThread() {
+        if(formData.threadContent || formData.threadTitle || props.currentTopic?.id) {
+            if(!props.currentUser?.id) {
+                setFormData({...formData, ["userId"]: 'Anonymous'});
+            }
+            if(!props.currentTopic?.id) {
+                console.log("There was no valid subforum!");
+                return;
+            }
+
+            let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
+            addNewThread(newThread);
+            handleClose()
+        }
+    }
+
     // Body of the Modal
     const body = (
         <div style={modalStyle} className={classes.paper}>
+            <Box className={classes.modalButton}>
+                <Button onClick={handleClose}>
+                    Exit
+                </Button>
+            </Box>
           <h1>New Thread!</h1>
                 <FormControl>
                     <InputLabel htmlFor="title-input">Subject</InputLabel>
@@ -149,15 +166,7 @@ function ForumComponent(props: IForumProps) {
         </div>
     );
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    //#TODO: Button/Modal that will allow the user to create new threads on this subforum!
+    // TODO: conditionally render a button for administrators to delete threads, threads must delete all comments before they are deleted.
     // Display the threads from the database matching this topic
     return (
         <>
