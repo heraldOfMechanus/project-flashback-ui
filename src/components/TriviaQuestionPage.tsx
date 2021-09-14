@@ -8,6 +8,7 @@ import {Button, makeStyles} from "@material-ui/core";
 
 import {useHistory} from 'react-router-dom';
 import {Principal} from "../dtos/Principal";
+import {updateUserScore} from "../remote/user-service";
 
 
 
@@ -56,9 +57,10 @@ function QuestionPage( props: ITriviaQuestionPage){
 
     let [Cards, setCards] = useState([] as Card[] );
     let id = props.currentSet?.id;
-
-    useEffect(() => {      allCardsBySetId();
-    }, []);
+    let username = props.currentUser?.username
+    //
+    // useEffect(() => {      allCardsBySetId();
+    // }, []);
 
 
     let allCardsBySetId = async () =>{
@@ -70,6 +72,16 @@ function QuestionPage( props: ITriviaQuestionPage){
             console.log(e.message);
         }
 
+    }
+
+    let updateScore = async (score: string) =>{
+
+        try {
+            return await updateUserScore(username, score);
+
+        } catch (e: any) {
+            console.log(e.message)
+        }
     }
 
 
@@ -105,27 +117,22 @@ function QuestionPage( props: ITriviaQuestionPage){
         setX(x)
         console.log(Cards.length)
         updateAnswer(0);
-        allCardsBySetId()
+        // allCardsBySetId()
 
     }
 
 
-    let updateScore = async (s: string, s1: string) =>{
 
-        try {
-           let updated = await updateScore(s1, s);
-
-        } catch (e: any) {
-            console.log(e.message)
-        }
-    }
 
 
     function endGame(e: any){
         if(props.currentUser?.username){
             try {
-                console.log("This is the total score " , e)
-                let u = updateScore(props.currentUser?.username, "0");
+                console.log("This is the total score " , e["total"])
+                console.log(e.total)
+                console.log(props.currentUser?.username)
+                updateScore(e.total);
+
                 history.push("/trivia");
                 return;
             }catch (e:any){

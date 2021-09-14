@@ -30,10 +30,10 @@ export const getProfilePicture = async(username: string, size: number) => {
     return url;
 };
 
-export const updateUserScore = async(username: string, score: string) =>{
+export const updateUserScore = async (username: string | undefined, score: string) =>{
 
-    let resp =  await flashbackClient.put('/user/update-total', {params: {username: username, score: score}})
-
+    let resp =  await flashbackClient.put('/users/update-total',  {config:{params: [{username: username}, {score: score}] }})
+    console.log(resp)
     if (resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
@@ -42,3 +42,4 @@ export const updateUserScore = async(username: string, score: string) =>{
     return resp.data
 
 }
+
