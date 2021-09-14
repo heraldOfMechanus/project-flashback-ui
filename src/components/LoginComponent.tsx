@@ -4,6 +4,7 @@ import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
 import {authenticate} from '../remote/auth-service'
 import {FormControl, InputLabel} from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 
 
 interface ILoginProps {
@@ -56,6 +57,8 @@ function LoginComponent(props: ILoginProps) {
     }
 
     return (
+        !props.currentUser?.id
+        ?
         <>
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.banana}>
@@ -84,6 +87,8 @@ function LoginComponent(props: ILoginProps) {
             { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
 
         </>
+        :
+        <Redirect to="/" />
     )
 }
 
