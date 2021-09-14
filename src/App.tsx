@@ -31,6 +31,8 @@ function App() {
   const [currentThread, setCurrentThread] = useState(undefined as Thread | undefined);
   const [currentSet, setCurrentSet] = useState(undefined as TriviaSet | undefined);
   const [currentCard, setCurrentCard] = useState(undefined as  Card | undefined);
+  // This is for cheesy auto-updating
+  const [value, setValue] = useState(0);
   
   return (
     <>
@@ -46,7 +48,7 @@ function App() {
 
         <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
         <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
-        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
+        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} value={value} setValue={setValue} />}/>
         <Route exact path = "/threads/*" render = {()=> <ThreadCommentComponent currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
         <Route exact path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} currentSet={currentSet} setCurrentSet={setCurrentSet}/>} />
         <Route path="/dashboard" render={() => <DashboardComponent currentUser={authUser} setCurrentUser={setAuthUser} />} />
