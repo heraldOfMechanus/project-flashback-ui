@@ -67,7 +67,7 @@ function ForumTopicListComponent(props: IForumTopicProps) {
         <>     
             <CssBaseline />
             <Container maxWidth="lg" className={classes.root}>
-                <Typography variant='h2'>Forums</Typography>
+                <Typography variant='h2'>Recall Forums</Typography>
                 <Grid 
                     className={classes.display}
                     direction="column"
