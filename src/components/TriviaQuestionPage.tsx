@@ -125,7 +125,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         if(props.currentUser?.username){
             try {
                 console.log("This is the total score " , e)
-                let u = updateScore(props.currentUser?.username, "0");
+                updateScore(props.currentUser?.username, e);
                 history.push("/trivia");
                 return;
             }catch (e:any){
