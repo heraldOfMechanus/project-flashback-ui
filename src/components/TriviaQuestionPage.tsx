@@ -29,14 +29,21 @@ interface ITriviaQuestionPage{
 
 
 function QuestionPage( props: ITriviaQuestionPage){
-    const history = useHistory();
-    let currentSelected = -1;
 
+
+    const history = useHistory();
+
+    let currentSelected = -1;
 
     let [total,setTotal] =useState(0)
 
-
     let [x,setX] = useState(0)
+
+    let [Cards, setCards] = useState([] as Card[] );
+
+    let id = props.currentSet?.id;
+
+    let username = props.currentUser?.username
 
     const useStyles = makeStyles((theme) => ({
 
@@ -57,12 +64,8 @@ function QuestionPage( props: ITriviaQuestionPage){
     const classes = useStyles();
 
 
-    let [Cards, setCards] = useState([] as Card[] );
-    let id = props.currentSet?.id;
-    let username = props.currentUser?.username
-    //
-    // useEffect(() => {      allCardsBySetId();
-    // }, []);
+    useEffect(() => {      allCardsBySetId();
+    }, []);
 
 
     let allCardsBySetId = async () =>{
@@ -79,6 +82,7 @@ function QuestionPage( props: ITriviaQuestionPage){
     let updateScore = async (score: string) =>{
 
         try {
+
             return await updateUserScore(username, score);
 
         } catch (e: any) {
@@ -127,16 +131,6 @@ function QuestionPage( props: ITriviaQuestionPage){
 
 
 
-    let updateScore = async (s: string, s1: string) =>{
-
-        try {
-            console.log("I made it here")
-            return await updateUserScore(s1, s);
-        } catch (e: any) {
-            console.log("this one")
-            console.log(e.message)
-        }
-    }
 
 
 

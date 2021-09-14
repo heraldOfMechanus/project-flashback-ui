@@ -3,9 +3,7 @@ import {RegisterUserRequest} from "../dtos/register-user-request";
 import axios from "axios";
 
 
-export const getAllUser = async () => {
 
-};
 
 export const registerNewUser = async (RegisterUserRequest: {firstName:string, lastName:string, email:string, username:string, password:string}) => {
 
@@ -32,10 +30,11 @@ export const getProfilePicture = async(username: string, size: number) => {
 
 
 export const updateUserScore = async (username: string | undefined, score: string) =>{
+    console.log("inside the service")
 
-
-    let resp =  await flashbackClient.put('/users/update-total',  {config:{params: [{username: username}, {score: score}] }})
+    let resp =  await flashbackClient.put('/users/update-total',null,  {params: {username, score}})
     console.log(resp)
+
     if (resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
