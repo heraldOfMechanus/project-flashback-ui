@@ -12,6 +12,8 @@ import {updateUserScore} from "../remote/user-service";
 
 
 
+
+
 interface ITriviaQuestionPage{
 
     currentSet: TriviaSet | undefined
@@ -116,12 +118,25 @@ function QuestionPage( props: ITriviaQuestionPage){
         x+=1
         setX(x)
         console.log(Cards.length)
-        updateAnswer(0);
-        // allCardsBySetId()
+
+        updateAnswer(-1);
+
+
 
     }
 
 
+
+    let updateScore = async (s: string, s1: string) =>{
+
+        try {
+            console.log("I made it here")
+            return await updateUserScore(s1, s);
+        } catch (e: any) {
+            console.log("this one")
+            console.log(e.message)
+        }
+    }
 
 
 

@@ -30,7 +30,9 @@ export const getProfilePicture = async(username: string, size: number) => {
     return url;
 };
 
+
 export const updateUserScore = async (username: string | undefined, score: string) =>{
+
 
     let resp =  await flashbackClient.put('/users/update-total',  {config:{params: [{username: username}, {score: score}] }})
     console.log(resp)
