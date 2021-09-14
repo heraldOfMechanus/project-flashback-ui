@@ -8,6 +8,7 @@ import {Button, makeStyles} from "@material-ui/core";
 
 import {useHistory} from 'react-router-dom';
 import {Principal} from "../dtos/Principal";
+import { updateUserScore } from "../remote/user-service";
 
 
 
@@ -104,7 +105,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         x+=1
         setX(x)
         console.log(Cards.length)
-        updateAnswer(0);
+        updateAnswer(-1);
         allCardsBySetId()
 
     }
@@ -113,9 +114,10 @@ function QuestionPage( props: ITriviaQuestionPage){
     let updateScore = async (s: string, s1: string) =>{
 
         try {
-           let updated = await updateScore(s1, s);
-
+            console.log("I made it here")
+            return await updateUserScore(s1, s);
         } catch (e: any) {
+            console.log("this one")
             console.log(e.message)
         }
     }
