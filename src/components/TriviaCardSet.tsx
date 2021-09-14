@@ -230,9 +230,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         }
     }
 
-    function refreshPage() {
-        <Link to="/trivia" />
-    }
+
 
     return(
         <>
@@ -347,7 +345,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                 <h1>Delete Set</h1>
                                                 <p> Are you sure you want to delete this set? </p>
                                                 <br/>
-                                                <button id="deleteSet-btn" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose(); refreshPage();}}>Confirm</button>
+                                                <button id="deleteSet-btn" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose();}}>Confirm</button>
                                             </div>
                                         </Modal>
                                     </Button>

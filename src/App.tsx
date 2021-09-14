@@ -52,7 +52,7 @@ function App() {
         <Route exact path = "/threads/*" render = {()=> <ThreadCommentComponent currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
         <Route exact path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} currentSet={currentSet} setCurrentSet={setCurrentSet}/>} />
         <Route path="/dashboard" render={() => <DashboardComponent currentUser={authUser} setCurrentUser={setAuthUser} />} />
-        <Route exact path="/trivia-question" render={() => <TriviaQuestionPage currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard}/>} />
+        <Route exact path="/trivia-question" render={() => <TriviaQuestionPage currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard} currentUser={authUser} setCurrentUser={setAuthUser}/>} />
 
 
 
