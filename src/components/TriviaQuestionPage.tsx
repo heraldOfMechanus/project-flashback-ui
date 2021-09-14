@@ -24,6 +24,7 @@ interface ITriviaQuestionPage{
 
 function QuestionPage( props: ITriviaQuestionPage){
     const history = useHistory();
+    let currentSelected = -1;
 
 
     let [total,setTotal] =useState(0)
@@ -72,16 +73,19 @@ function QuestionPage( props: ITriviaQuestionPage){
   function isAnswerCorrect(correctAnswer: string, selectedAnswer: string, points: string){
         if(correctAnswer === selectedAnswer){
             console.log("true")
-            updateX()
             add(Number(points))
 
 
         }else{
             console.log("false")
-            updateX()
 
         }
 
+    }
+
+    function updateAnswer(a: number){
+        currentSelected = a;
+        console.log("Currently Selected: " + currentSelected);
     }
 
 
@@ -96,8 +100,8 @@ function QuestionPage( props: ITriviaQuestionPage){
     function updateX(){
         x+=1
         setX(x)
-        console.log(x)
         console.log(Cards.length)
+        updateAnswer(0);
         allCardsBySetId()
 
     }
@@ -130,18 +134,18 @@ function QuestionPage( props: ITriviaQuestionPage){
 
                     <br/>
 
-                    <Button className={classes.buttons} onClick={() =>{ isAnswerCorrect(Cards.correctAnswer, Cards.answers[0], Cards.points) }} variant="contained">{Cards.answers[0]} </Button>
+                    <Button className={classes.buttons} onClick={() =>{updateAnswer(0)}} variant="contained">{Cards.answers[0]} </Button>
                     <br/>
 
-                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[1], Cards.points)}} variant="contained">{Cards.answers[1]}</Button>
+                    <Button className={classes.buttons} onClick={ () =>{updateAnswer(1)}} variant="contained">{Cards.answers[1]}</Button>
                     <br/>
-                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[2], Cards.points)}} variant="contained">{Cards.answers[2]}</Button>
+                    <Button className={classes.buttons} onClick={ () =>{updateAnswer(2)}} variant="contained">{Cards.answers[2]}</Button>
                     <br/>
-                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[3], Cards.points)}} variant="contained">{Cards.answers[3]}</Button>
+                    <Button className={classes.buttons} onClick={ () =>{updateAnswer(3)}} variant="contained">{Cards.answers[3]}</Button>
                     <br/>
 
 
-                    <Button className={classes.buttons} onClick={ () =>{updateX()}} variant="contained" color="primary">
+                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[currentSelected], Cards.points); updateX()}} variant="contained" color="primary">
                         next question
                     </Button>
                     <br/>
