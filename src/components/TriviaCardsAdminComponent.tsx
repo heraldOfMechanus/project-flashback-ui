@@ -24,50 +24,50 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     const classes = useStyles();
 
     // Why do we have state here for pre-existing cards when this creates cards?!
-    let [cardID, setCardID] = useState('');
-    let [question, setQuestion] = useState('');
-    let [correctAnswer, setCorrectAnswer] = useState('');
-    let [answers, setAnswers] = useState(['']);
-    let [points, setPoints] = useState('');
+    // let [triviaCardSetId, setT] = useState('');
+    // let [question, setQuestion] = useState('');
+    // let [correctAnswer, setCorrectAnswer] = useState('');
+    // let [answers, setAnswers] = useState(['']);
+    // let [points, setPoints] = useState(0);
 
 
 
-    function updateID(e:any){
-        setCardID(e.currentTarget.value)
-    }
-    function updateQuestion(e:any){
-        setQuestion(e.currentTarget.value)
-    }
-    function updateCorrectAnswer(e:any){
-        setCorrectAnswer(e.currentTarget.value)
-    }
-    function updateAnswers(e:any){
-        setAnswers(e.currentTarget.value)
-    }
-    function updatePoints(e:any){
-        setPoints(e.currentTarget.value)
-    }
+    // function updateID(e:any){
+    //     setCardID(e.currentTarget.value)
+    // }
+    // function updateQuestion(e:any){
+    //     setQuestion(e.currentTarget.value)
+    // }
+    // function updateCorrectAnswer(e:any){
+    //     setCorrectAnswer(e.currentTarget.value)
+    // }
+    // function updateAnswers(e:any){
+    //     setAnswers(e.currentTarget.value)
+    // }
+    // function updatePoints(e:any){
+    //     setPoints(e.currentTarget.value)
+    // }
 
-    async function newTrivia(){
-        console.log("Card Added")
-        try {
-            if(cardID && question && correctAnswer && answers && points){
+    // async function newTrivia(){
+    //     console.log("Card Added")
+    //     try {
+    //         if(triviaCardSetId && question && correctAnswer && answers && points){
 
-                let request = await addNewCard({cardID, question, correctAnswer, answers, points})
-                console.log(RegisterUserRequest)
+    //             let request = await addNewCard({triviaCardSetId, question, correctAnswer, answers, points})
+    //             console.log(RegisterUserRequest)
 
-            }else{
-                //TODO put error message here
-                console.log("Incorrect information")
-            }
-        }catch (e:any){
-            console.log(e.message)
-        }
-    }
+    //         }else{
+    //             //TODO put error message here
+    //             console.log("Incorrect information")
+    //         }
+    //     }catch (e:any){
+    //         console.log(e.message)
+    //     }
+    // }
 
     return(
         <>
-            <div  className={classes.shtoyle} >
+            {/* <div  className={classes.shtoyle} >
 
                 <h1>Trivia Page</h1>
                 <FormControl>
@@ -127,7 +127,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                 <br/><br/>
                 <button id="newCard-btn" onClick={newTrivia}>Add Card</button>
             </div>
-
+ */}
 
         </>
     )
