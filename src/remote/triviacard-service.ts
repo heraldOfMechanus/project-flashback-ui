@@ -1,17 +1,12 @@
 import {flashbackClient} from "./flashback-client";
 
-export const addNewCard = async (RegisterUserRequest: {cardID:string, question:string, correctAnswer:string, answers:Array<string>, points:string}) => {
+export const addNewCard = async (RegisterUserRequest: {triviaCardSetId:string, question:string, correctAnswer:string, answers:string[], points: number}) => {
 
-
-    let resp = await flashbackClient.post('/trivia/create-trivia', RegisterUserRequest);
-
+    let resp = await flashbackClient.post('/trivia/card/create-trivia', RegisterUserRequest);
 
     if (resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
-
-
-
 
 }
 

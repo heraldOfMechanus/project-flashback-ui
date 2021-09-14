@@ -32,6 +32,7 @@ import { typographyVariant } from "@mui/system";
 import ForumIcon from "@material-ui/icons/Forum";
 import TriviaQuestionPage from "./TriviaQuestionPage";
 import {Subforum} from "../dtos/Subforum";
+import {addNewCard} from "../remote/triviacard-service";
 
 
 
@@ -155,8 +156,78 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         }
     }
 
-    async function addTriviaCardtoSet(){
+    //FOR THE MODAL FOR ADDING A TRIVIA CARD TO THE SET
+    const [addCardOpen, addCardSetOpen] = React.useState(false);
 
+    const [addCardFormData, setAddCardFormData] = useState({
+        question: '',
+        correctAnswer: '',
+        answerOne: '',
+        answerTwo: '',
+        answerThree: '',
+        answerFour: '',
+        points: 0,
+    });
+
+    const handleAddCardSetOpen = () => {
+        addCardSetOpen(true);
+    };
+
+    const handleAddCardSetClose = () => {
+        addCardSetOpen(false);
+    };
+
+    let handleAddCardChangeQuestion = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["question"]: value });
+    }
+
+    let handleAddCardChangeCorrectAnswer = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["correctAnswer"]: value });
+    }
+
+    let handleAddCardChangeAnswerOne = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerOne"]: value });
+    }
+
+    let handleAddCardChangeAnswerTwo = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerTwo"]: value });
+    }
+
+    let handleAddCardChangeAnswerThree = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerThree"]: value });
+    }
+
+    let handleAddCardChangeAnswerFour = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerFour"]: value });
+    }
+
+    let handleAddCardChangePoints = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["points"]: value });
+    }
+
+    async function addTriviaCardtoSet(){
+        try{
+            if(props.currentSet?.id && addCardFormData.question && addCardFormData.question &&
+                addCardFormData.answerOne && addCardFormData.answerTwo && 
+                addCardFormData.answerThree && addCardFormData.answerFour && 
+                addCardFormData.correctAnswer) {
+                addNewCard({triviaCardSetId: props.currentSet.id,
+                    question: addCardFormData.question,
+                    correctAnswer: addCardFormData.question,
+                    answers: [addCardFormData.answerOne, addCardFormData.answerTwo, addCardFormData.answerThree, addCardFormData.answerFour],
+                    points: addCardFormData.points});
+                    console.log(props.currentSet.id);
+                } 
+        } catch (e: any) {
+            console.log(e.message);
+        }
     }
 
     function refreshPage() {
@@ -188,12 +259,64 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                             {isAdmin
                             ?
                                 <div>
-                                    <Button>
+                                    <Button onClick={() => {handleAddCardSetOpen(); {props.setCurrentSet(triviaSet)}}}>
                                         <AddIcon />
+                                        <Modal
+                                            open={addCardOpen}
+                                            onClose={handleAddCardSetClose}
+                                            aria-labelledby="simple-modal-title"
+                                            aria-describedby="simple-modal-description"
+                                            >
+                                                <div style={modalStyle} className={classes.paper}>
+                                                    <h1>Add Card to set: {props.currentSet?.topic}</h1>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="question-input">Question</InputLabel>
+                                                        <input id="question-input" type="text" onChange={handleAddCardChangeQuestion} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="correctAnswer-input">Correct Answer</InputLabel>
+                                                        <input id="correctAnswer-input" type="text" onChange={handleAddCardChangeCorrectAnswer} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer1-input">Option One</InputLabel>
+                                                        <input id="answers1-input" type="text:" onChange={handleAddCardChangeAnswerOne} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer2-input">Option Two</InputLabel>
+                                                        <input id="answers2-input" type="text:" onChange={handleAddCardChangeAnswerTwo} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer3-input">Option Three</InputLabel>
+                                                        <input id="answers3-input" type="text:" onChange={handleAddCardChangeAnswerThree} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer4-input">Option Four</InputLabel>
+                                                        <input id="answers4-input" type="text:" onChange={handleAddCardChangeAnswerFour} />
+                                                        <br/><br/>
+                                                    </FormControl>
+                                                    <br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="points-input">Points</InputLabel>
+                                                        <input id="points-input" type="text:" onChange={handleAddCardChangePoints} />
+                                                        <br/><br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <button id="newCard-btn" onClick={() => { {console.log(addCardFormData)}; {console.log(addCardFormData)}; addTriviaCardtoSet(); handleAddCardSetClose(); }}> Add Card </button>
+                                                </div>
+                                        </Modal>
                                     </Button>
                                     <Button onClick={handleUpdateSetOpen}>
                                         <UpdateIcon />
-
                                         <Modal
                                             open={updateSetOpen}
                                             onClose={handleUpdateSetClose}
