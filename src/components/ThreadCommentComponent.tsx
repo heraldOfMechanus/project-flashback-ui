@@ -23,7 +23,6 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [done, setDone] = useState(false);
 
     const useStyles = makeStyles((theme) => ({
-        //Where banana is, this can named whatever you want.
         root: {
             textAlign: "left",
             alignItems: 'left',

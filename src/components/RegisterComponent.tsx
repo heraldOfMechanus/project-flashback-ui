@@ -4,6 +4,7 @@ import {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 interface IRegisterProps{
     currentUser: RegisterUserRequest | undefined
@@ -118,7 +119,7 @@ function RegisterComponent(props: IRegisterProps){
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={register}>Register!</Button>
+                        <Button className={classes.button} onClick={register} component = {Link} to={'/'}>Register!</Button>
                     </Grid>
             </Container>
         </>

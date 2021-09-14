@@ -160,7 +160,7 @@ export function SideBarComponent(props: INavbarProps) {
                         props.currentUser
                         ?
                             <>                                    
-                                <ListItem button onClick={logout}>
+                                <ListItem button onClick={logout} component = {Link} to={'/'}>
                                     <ListItemIcon><LogoutIcon/></ListItemIcon>
                                     <Typography color="inherit" variant="h6">Logout</Typography>
                                 </ListItem>  
