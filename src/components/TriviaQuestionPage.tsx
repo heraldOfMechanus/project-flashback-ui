@@ -7,6 +7,7 @@ import {TriviaSet} from "../dtos/TriviaSet";
 import {Button, makeStyles} from "@material-ui/core";
 
 import {useHistory} from 'react-router-dom';
+import {Principal} from "../dtos/Principal";
 
 
 
@@ -16,6 +17,8 @@ interface ITriviaQuestionPage{
     setCurrentSet: (nextTriviaCardSet: TriviaSet) => void;
     currentCard: Card | undefined;
     setCurrentCard: (nextCard: Card) => void;
+    currentUser: Principal | undefined
+    setCurrentUser: (nextUser: Principal | undefined) => void;
 
 
 
@@ -40,6 +43,7 @@ function QuestionPage( props: ITriviaQuestionPage){
             width: "50%",
             display: "inline-grid",
             border: "inset",
+            borderColor: "63, 81, 101"
         },
 
         buttons: {
@@ -61,7 +65,6 @@ function QuestionPage( props: ITriviaQuestionPage){
         try {
             console.log(id)
             let allcards = await getCardsBySetId(id);
-            console.log(allcards)
             setCards(allcards)
         }catch (e: any){
             console.log(e.message);
@@ -93,7 +96,7 @@ function QuestionPage( props: ITriviaQuestionPage){
     function add(e: any){
 
         setTotal((total + e) );
-        console.log("This is the total score " , total)
+
     }
 
 
@@ -106,9 +109,37 @@ function QuestionPage( props: ITriviaQuestionPage){
 
     }
 
+
+    let updateScore = async (s: string, s1: string) =>{
+
+        try {
+           let updated = await updateScore(s1, s);
+
+        } catch (e: any) {
+            console.log(e.message)
+        }
+    }
+
+
     function endGame(e: any){
-        console.log(e)
-        history.push("/trivia");
+        if(props.currentUser?.username){
+            try {
+                console.log("This is the total score " , e)
+                let u = updateScore(props.currentUser?.username, "0");
+                history.push("/trivia");
+                return;
+            }catch (e:any){
+                console.log(e)
+            }
+
+
+        }else{
+            console.log("This is the total score " , e)
+            history.push("/trivia");
+            return;
+        }
+
+
 
 
 
@@ -130,7 +161,7 @@ function QuestionPage( props: ITriviaQuestionPage){
 
                 return <div className={classes.root}>
 
-                    <span><h3>{x})</h3> <h2> {n[index]["question"]}</h2></span>
+                    <span> <h2> {x + ") "+  n[index]["question"]}</h2></span>
 
                     <br/>
 
@@ -143,6 +174,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                     <br/>
                     <Button className={classes.buttons} onClick={ () =>{updateAnswer(3)}} variant="contained">{Cards.answers[3]}</Button>
                     <br/>
+
 
 
                     <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[currentSelected], Cards.points); updateX()}} variant="contained" color="primary">
@@ -159,7 +191,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                     <div>
                         <h5> There are {Cards.length} questions total </h5>
                         <h4> Total Score: {total}</h4>
-                        <Button onClick={ () =>{endGame({total})}} color="secondary">End Game</Button>
+                        <Button onClick={ () =>{endGame({total}); }} color="secondary">End Game</Button>
                         </div>
 
 
