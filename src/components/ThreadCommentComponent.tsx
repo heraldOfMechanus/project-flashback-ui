@@ -24,7 +24,7 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     const useStyles = makeStyles((theme) => ({
         //Where banana is, this can named whatever you want.
-        banana: {
+        root: {
             textAlign: "left",
             alignItems: 'left',
             paddingLeft: 250
@@ -90,7 +90,7 @@ function ThreadCommentComponent(props: ICommentProps) {
         <>
         
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
-            <div className={classes.banana}>
+            <div className={classes.root}>
                 <FormControl>
                     <InputLabel htmlFor="comment-input">Comment</InputLabel>
                     <input id="comment-input" type="text" onChange={updateComment} />

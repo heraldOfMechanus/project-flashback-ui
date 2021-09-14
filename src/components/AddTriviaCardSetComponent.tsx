@@ -12,7 +12,7 @@ function AddTriviaCardSetComponent(){
 
     const useStyles = makeStyles((theme) => ({
         //Where banana is, this can be named whatever you want.
-        banana: {
+        root: {
             textAlign: "center",
             color: "blue",
         },
@@ -41,7 +41,7 @@ function AddTriviaCardSetComponent(){
 
     return(
         <>
-            <div  className={classes.banana} >
+            <div  className={classes.root} >
 
                 <h1>Create Trivia Card Set</h1>
                 <FormControl>
