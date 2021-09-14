@@ -58,6 +58,9 @@ function ForumComponent(props: IForumProps) {
             paddingBottom: '2rem',
             paddingTop: '1rem',
             borderRadius: '.4rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
+            borderWidth: '.2rem',
         },
         button: {
             backgroundColor: 'cornflowerblue',
