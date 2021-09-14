@@ -107,10 +107,14 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
 
     // FOR THE MODAL FOR DELETING A TRIVIA CARD SET
+
+    let [deleteId, setDeleteId] = useState('');
+
     const [deleteSetOpen, setDeleteSetOpen] = useState(false);
 
-    const handleDeleteSetOpen = () => {
+    function handleDeleteSetOpen (req: TriviaSet) {
         setDeleteSetOpen(true);
+        setDeleteId(req.id);
     };
 
     const handleDeleteSetClose = () => {
@@ -118,9 +122,10 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     };
 
     function deleteTriviaCardSetModal(set: TriviaSet) {
+        let id = deleteId;
         try {
             if(set){
-                deleteTriviaCardSet({id: set.id,
+                deleteTriviaCardSet({id: id,
                                     topic: set.topic,
                                     cardCount: set.cardCount
                                     });
@@ -133,7 +138,6 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     
 
     // FOR THE MODAL FOR UPDATING A TRIVIA CARD SET
-
     let [updateId, setUpdateId] = useState('');
 
     const [updateSetOpen, setUpdateSetOpen] = useState(false);
@@ -143,13 +147,11 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     });
 
     function handleUpdateSetOpen (req: TriviaSet) {
-        // props.setUpdateModal(true);
         setUpdateSetOpen(true);
         setUpdateId(req.id);
     };
 
     const handleUpdateSetClose = () => {
-        // props.setUpdateModal(false);
         setUpdateSetOpen(false);
     };
 
@@ -168,7 +170,10 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
             console.log(e.message)
         }
     }
+
     //FOR THE MODAL FOR ADDING A TRIVIA CARD TO THE SET
+    let [addId, setAddId] = useState('');
+
     const [addCardOpen, addCardSetOpen] = React.useState(false);
 
     const [addCardFormData, setAddCardFormData] = useState({
@@ -181,8 +186,9 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         points: 0,
     });
 
-    const handleAddCardSetOpen = () => {
+    function handleAddCardSetOpen (req: TriviaSet) {
         addCardSetOpen(true);
+        setAddId(req.id);
     };
 
     const handleAddCardSetClose = () => {
@@ -269,7 +275,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                             {isAdmin
                             ?
                                 <div>
-                                    <Button onClick={() => {console.log(triviaSet); handleAddCardSetOpen()}}>
+                                    <Button onClick={() => {console.log(triviaSet); handleAddCardSetOpen(triviaSet)}}>
                                         <AddIcon />
                                     </Button>
                                         <Modal
@@ -322,7 +328,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                         <br/><br/>
                                                     </FormControl>
                                                     <br/><br/>
-                                                    <button id="newCard-btn" onClick={() => {console.log(triviaSet); addTriviaCardtoSet(); handleAddCardSetClose(); }}> Add Card </button>
+                                                    <button id="newCard-btn" onClick={() => {addTriviaCardtoSet(); handleAddCardSetClose(); }}> Add Card </button>
                                                 </div>
                                         </Modal>
                                     <Button onClick={() => {handleUpdateSetOpen(triviaSet)}}>
@@ -342,10 +348,10 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                         <br/>
                                                     </FormControl>
                                                     <br/>
-                                                    <ButtonBase id="updateSet-btn" onClick={() => {console.log(triviaSet); updateTriviaCardSetModal(updateSetFormData.topic, triviaSet.cardCount); handleUpdateSetClose();}}>Submit</ButtonBase>
+                                                    <ButtonBase id="updateSet-btn" onClick={() => {updateTriviaCardSetModal(updateSetFormData.topic, triviaSet.cardCount); handleUpdateSetClose();}}>Submit</ButtonBase>
                                                 </div>
                                         </Modal>
-                                    <Button onClick={() => {console.log(triviaSet); handleDeleteSetOpen();}}>
+                                    <Button onClick={() => {handleDeleteSetOpen(triviaSet);}}>
                                         <DeleteIcon />
                                     </Button>
                                         <Modal
@@ -358,7 +364,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                 <h1>Delete Set: {triviaSet.topic}</h1>
                                                 <p> Are you sure you want to delete this set? </p>
                                                 <br/>
-                                                <ButtonBase id="deleteSet-btn" onClick={() => {{console.log(triviaSet)}; deleteTriviaCardSetModal(triviaSet); }}>Confirm</ButtonBase>
+                                                <ButtonBase id="deleteSet-btn" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose();}}>Confirm</ButtonBase>
                                             </div>
                                         </Modal>
                                 </div>
