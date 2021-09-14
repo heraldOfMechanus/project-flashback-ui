@@ -26,6 +26,8 @@ function ForumComponent(props: IForumProps) {
     let [open, setOpen] = useState(false);
     let [done, setDone] = useState(false);
     let [isAdmin, setAdmin] = useState(false);
+    // Integer state for forceUpdate function
+    const [value, setValue] = useState(0);
 
     
     const [formData, setFormData] = useState({
@@ -35,6 +37,11 @@ function ForumComponent(props: IForumProps) {
         threadTitle: '',
         threadContent: '',
     })
+
+    function forceUpdate() {
+        // Update the state to force render, that is the idea
+        return () => setValue(value => ++value);
+    }
     
     function showState() {
         console.log(threads[0]?.subforumId);
@@ -50,6 +57,7 @@ function ForumComponent(props: IForumProps) {
     
     const modalStyle = getModalStyle();
     const theme = useTheme();
+    const forceRefresh = forceUpdate();
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -152,7 +160,8 @@ function ForumComponent(props: IForumProps) {
 
             let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
-            handleClose()
+            handleClose();
+            forceUpdate();
         }
     }
 
@@ -210,7 +219,7 @@ function ForumComponent(props: IForumProps) {
                                 <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
                                     <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
                                 </ButtonBase>
-                                <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => {deleteThread({id: thread.id})}}>
+                                <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => {deleteThread({id: thread.id}); forceUpdate();} }>
                                     Delete Thread
                                 </Button>
                             </Box>
