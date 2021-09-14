@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button, Snackbar } from '@material-ui/core';
 import { Alert, ButtonBase } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
 import { addNewThread, deleteThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
@@ -38,7 +38,7 @@ function ForumComponent(props: IForumProps) {
     const [formData, setFormData] = useState({
         userId: props.currentUser?.id,
         // @ts-ignore
-        subforumId: props.currentTopic.id,
+        subforumId: props.currentTopic?.id,
         threadTitle: '',
         threadContent: '',
     })
@@ -152,10 +152,9 @@ function ForumComponent(props: IForumProps) {
     }
 
     function performDelete() {
-        // Update the state to force render, that is the idea
         deleteThread({id: deletionId});
+        performClose();
         setDone(false);
-        props.setValue(count++);
     }
 
     const performClose = () => {
@@ -172,6 +171,7 @@ function ForumComponent(props: IForumProps) {
                 return;
             }
 
+            // @ts-ignore
             let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
             handleClose();
@@ -207,6 +207,8 @@ function ForumComponent(props: IForumProps) {
     // TODO: conditionally render a button for administrators to delete threads, threads must delete all comments before they are deleted.
     // Display the threads from the database matching this topic
     return (
+        props.currentTopic?.id
+        ?
         <>
             <CssBaseline/>
             <Snackbar className={classes.snackbar} open={toastOpen} autoHideDuration={6000} onClose={performClose}>
@@ -261,6 +263,8 @@ function ForumComponent(props: IForumProps) {
                 </Grid>
             </Container>
         </>
+        :
+        <Redirect to="/forum" />
     )
 }
 

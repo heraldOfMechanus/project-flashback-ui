@@ -37,6 +37,4 @@ export const deleteThread = async (req: {id: string}) => {
     if(resp.data >= 400 && resp.status <= 599) {
         throw resp.data;
     }
-
-    return resp.data;
 }
