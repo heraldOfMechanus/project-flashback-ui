@@ -26,12 +26,13 @@ function ForumComponent(props: IForumProps) {
 
     let [threads, setThreads] = useState([] as Thread[]);
     let [open, setOpen] = useState(false);
+    let [toastOpen, setToastOpen] = useState(false);
     let [done, setDone] = useState(false);
     let [isAdmin, setAdmin] = useState(false);
-    // Integer state for forceUpdate function
-    let [toastOpen, setToastOpen] = useState(false);
+    
     let [deletionId, setDeletionId] = useState('');
 
+    // Integer state for forceUpdate function
     let count = 0;
     
     const [formData, setFormData] = useState({
@@ -93,6 +94,11 @@ function ForumComponent(props: IForumProps) {
             position: 'absolute',
             top: '-65%',
             left: '30%',
+        },
+        toastButton: {
+            height: '1.5rem',
+            marginLeft: '1rem',
+            backgroundColor: '#e49b0f',
         }
     }))
 
@@ -149,7 +155,7 @@ function ForumComponent(props: IForumProps) {
         // Update the state to force render, that is the idea
         deleteThread({id: deletionId});
         setDone(false);
-        setToastOpen(false);
+        props.setValue(count++);
     }
 
     const performClose = () => {
@@ -205,8 +211,8 @@ function ForumComponent(props: IForumProps) {
             <CssBaseline/>
             <Snackbar className={classes.snackbar} open={toastOpen} autoHideDuration={6000} onClose={performClose}>
                 <Alert onClose={performClose} severity="warning">
-                    Are you sure you want to delete that thread?
-                    <Button variant="contained" color="primary" onClick={() => {performDelete();} }>
+                    Are you sure you want to delete that thread? 
+                    <Button className={classes.toastButton} variant="contained" color="primary" onClick={() => {performDelete();} }>
                         Yes
                     </Button>
                 </Alert>
