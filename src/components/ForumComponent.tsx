@@ -53,12 +53,22 @@ function ForumComponent(props: IForumProps) {
 
     const useStyles = makeStyles((theme) => ({
         root: {
-            backgroundColor: 'lavender',
+            backgroundColor: 'lightskyblue',
             width: '80%',
+            paddingBottom: '2rem',
+            paddingTop: '1rem',
+            borderRadius: '.4rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
+            borderWidth: '.2rem',
         },
         button: {
-            backgroundColor: 'lightskyblue',
+            backgroundColor: 'cornflowerblue',
             width: '15rem',
+            borderRadius: '.7rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
+            marginTop: '1.2rem',
         },
         paper: {
             position: 'absolute',
@@ -72,7 +82,7 @@ function ForumComponent(props: IForumProps) {
         },
         threadItem: {
             justifyContent: 'left',
-            backgroundColor: 'lightgray',
+            backgroundColor: 'skyblue',
             textAlign: 'left',
             borderLeftStyle: 'solid',
             borderWidth: '1px',

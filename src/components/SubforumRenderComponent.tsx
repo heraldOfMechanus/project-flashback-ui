@@ -19,6 +19,8 @@ function SubforumRenderComponent(props: ISubforumRenderProps) {
             margin: '2rem',
             backgroundColor: 'lightskyblue',
             justifyContent: 'center',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
             borderRadius: '.7rem',
             textAlign: 'center',
             width: '20rem',
