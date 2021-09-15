@@ -152,6 +152,7 @@ function ForumComponent(props: IForumProps) {
     }
 
     function performDelete() {
+        console.log(deletionId)
         deleteThread({id: deletionId});
         performClose();
         setDone(false);
@@ -214,7 +215,7 @@ function ForumComponent(props: IForumProps) {
             <Snackbar className={classes.snackbar} open={toastOpen} autoHideDuration={6000} onClose={performClose}>
                 <Alert onClose={performClose} severity="warning">
                     Are you sure you want to delete that thread? 
-                    <Button className={classes.toastButton} variant="contained" color="primary" onClick={() => {performDelete();} }>
+                    <Button className={classes.toastButton} variant="contained" color="primary" onClick={() => {performDelete();} } component = {Link} to={'/forum'}>
                         Yes
                     </Button>
                 </Alert>

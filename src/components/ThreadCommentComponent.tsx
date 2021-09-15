@@ -25,8 +25,6 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [done, setDone] = useState(false);
     const[pfp, setPfp] = useState('');
 
-    document.body.style.backgroundColor = 'lightgrey';
-
     const useStyles = makeStyles((theme) => ({
         root: {
             backgroundColor: 'lightskyblue',

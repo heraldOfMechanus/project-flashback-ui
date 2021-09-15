@@ -114,7 +114,7 @@ function RegisterComponent(props: IRegisterProps){
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">password</InputLabel>
-                            <input id="password-input" type="text" onChange={updatepassword} />
+                            <input id="password-input" type="password" onChange={updatepassword} />
                             <br/>
                         </FormControl>
                     </Grid>
