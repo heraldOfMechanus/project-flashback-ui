@@ -25,11 +25,17 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [done, setDone] = useState(false);
     const[pfp, setPfp] = useState('');
 
+    document.body.style.backgroundColor = 'lightgrey';
+
     const useStyles = makeStyles((theme) => ({
         root: {
+            backgroundColor: 'lightskyblue',
             textAlign: "left",
             alignItems: 'left',
-            paddingLeft: 250
+            paddingLeft: 240,
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
+            borderWidth: '.12rem',
         },
     }));
     const classes = useStyles();
@@ -105,7 +111,6 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     return (
         <>
-        
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
                 <FormControl>
@@ -127,8 +132,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 
                 })}
             </div>
-            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
-
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }      
         </>
         
     )
