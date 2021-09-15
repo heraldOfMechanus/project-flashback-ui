@@ -25,3 +25,15 @@ export const getCardsBySetId = async (setId: string | undefined) =>
     return resp.data;
 
 }
+
+export const deleteCardById = async (id: string | undefined) => {
+
+    console.log("card id: " + id);
+    let resp = await flashbackClient.delete('/trivia/card/delete-card-byId', {params: {id}})
+
+    if (resp.status >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+
+
+}

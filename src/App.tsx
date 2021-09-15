@@ -47,7 +47,7 @@ function App() {
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
         <Route path="/add-trivia-set" render={() => <AddTriviaCardSetComponent /> } />
 
-        <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
+        <Route path ="/trivia-admin" render={() => <TriviaAdminComponent currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard} currentUser={authUser} setCurrentUser={setAuthUser}/>} />
         <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
         <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} value={value} setValue={setValue} />}/>
         <Route exact path = "/threads/*" render = {()=> <ThreadCommentComponent currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
