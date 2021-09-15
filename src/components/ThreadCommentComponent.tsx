@@ -25,8 +25,6 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [done, setDone] = useState(false);
     const[pfp, setPfp] = useState('');
 
-    document.body.style.backgroundColor = 'lightgrey';
-
     const useStyles = makeStyles((theme) => ({
         root: {
             backgroundColor: 'lightskyblue',
@@ -37,7 +35,11 @@ function ThreadCommentComponent(props: ICommentProps) {
             borgderColor: 'royalblue',
             borderWidth: '.12rem',
         },
+        pic: {
+            borderRadius: '.7rem',
+        }
     }));
+
     const classes = useStyles();
 
     useEffect(() => {
@@ -121,7 +123,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId){
                     return <Grid item>
-                    <img src={pfp}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
+                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
                     </Grid>
                 }
                 else{

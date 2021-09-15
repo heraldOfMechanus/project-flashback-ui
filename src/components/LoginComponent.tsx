@@ -93,7 +93,7 @@ function LoginComponent(props: ILoginProps) {
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
-                            <input id="password-input" type="text" onChange={updatePassword} />
+                            <input id="password-input" type="password" onChange={updatePassword} />
                             <br/>
                         </FormControl>
                     </Grid>
@@ -102,7 +102,7 @@ function LoginComponent(props: ILoginProps) {
                     </Grid>
                 </Grid>
             </Container>
-            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {"Invalid Credentials"} /> : <></> }
 
         </>
         :

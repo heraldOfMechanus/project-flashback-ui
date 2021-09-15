@@ -5,6 +5,7 @@ import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
 import { Link } from "react-router-dom";
+import ErrorMessageComponent from "./ErrorMessage";
 
 interface IRegisterProps{
     currentUser: RegisterUserRequest | undefined
@@ -38,6 +39,7 @@ function RegisterComponent(props: IRegisterProps){
     let [email, setemail] = useState('')
     let [username, setusername] = useState('')
     let [password, setpassword] = useState('')
+    let [errorMessage, setErrorMessage] = useState('');
 
     function updatefirstName(e:any){
         setfirstName(e.currentTarget.value)
@@ -64,12 +66,11 @@ function RegisterComponent(props: IRegisterProps){
                 console.log(RegisterUserRequest)
 
 
-            }else{
-                //TODO put error message here
-                console.log("Incorrect information")
+            }else {
+                setErrorMessage('You must fill in all the fields.');
             }
-        }catch (e:any){
-            console.log(e.message)
+        } catch (e: any) {
+            setErrorMessage(e.message);
         }
     }
 
@@ -113,15 +114,16 @@ function RegisterComponent(props: IRegisterProps){
                     </Grid>              
                     <Grid item>
                         <FormControl className={classes.field}>
-                            <InputLabel htmlFor="password-input">password</InputLabel>
-                            <input id="password-input" type="text" onChange={updatepassword} />
+                            <InputLabel htmlFor="password-input">Password</InputLabel>
+                            <input id="password-input" type="password" onChange={updatepassword} />
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={register} component = {Link} to={'/'}>Register!</Button>
+                        <Button className={classes.button} onClick={register} component = {Link} to={'/'}>Register</Button>
                     </Grid>
             </Container>
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {"You must fill in all the fields!"} /> : <></> }
         </>
     )
 
