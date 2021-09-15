@@ -27,7 +27,6 @@ interface ITriviaAdminProps{
 function TriviaAdminComponent(props: ITriviaAdminProps){
 
     let [Cards, setCards] = useState([] as Card[] );
-    let id = props.currentSet?.id;
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -59,9 +58,9 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     let allCardsBySetId = async () =>{
         try {
-            console.log(id)
-            let allcards = await getCardsBySetId(id);
+            let allcards = await getCardsBySetId(props.currentSet?.id);
             setCards(allcards)
+            console.log(allcards);
         }catch (e: any){
             console.log(e.message);
         }
@@ -88,8 +87,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     };
     
     function deleteTriviaCardModal(card: Card) {
-        let id = card.cardID;
-        console.log(id);
         try {
             deleteCardById(card.cardID);
         } catch (e:any){
@@ -101,15 +98,17 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     return(
         <>
             <h1> Trivia page</h1>
-            <h1> {Cards[0]?.question}</h1>
 
             {Cards.map((card) =>{
 
                 return <div>
+                    <h1>{"id: " + card.cardID}</h1>
+                    <h1>{"question: " + card.question}</h1>
+                    <h1>{"points: " + card.points}</h1>
                         <div className={classes.root}>
 
                         <span> <h2>{card.question}</h2></span>
-                        {console.log(card.cardID)}
+                        {console.log(card)}
                         <br />
 
                         <Button variant="contained">{card.answers[0]}</Button>
