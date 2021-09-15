@@ -5,6 +5,21 @@ import axios from "axios";
 
 
 
+export const getAllUsers = async () =>{
+
+    let resp = await flashbackClient.get('users/getAllUsers');;
+
+    if (resp.status >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+
+    console.log(resp.data)
+    return resp.data
+}
+
+
+
+
 export const registerNewUser = async (RegisterUserRequest: {firstName:string, lastName:string, email:string, username:string, password:string}) => {
 
     let resp = await flashbackClient.post('users/register', RegisterUserRequest);
