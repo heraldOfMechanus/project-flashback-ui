@@ -7,6 +7,7 @@ import { Thread } from "../dtos/Thread";
 import { Principal } from "../dtos/Principal";
 import { addNewComment, getAllComments } from "../remote/thread-comments-service";
 import { getProfilePicture } from "../remote/user-service";
+import { color, typography } from "@mui/system";
 
 
 interface ICommentProps {
@@ -51,6 +52,7 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [errorMessage, setErrorMessage] = useState('');
 
     function updateComment(e: any) {
+        console.log(e.currentTarget.value);
         setNewComment(e.currentTarget.value);
     }
 
@@ -67,6 +69,8 @@ function ThreadCommentComponent(props: ICommentProps) {
                 let newComment = new ThreadComment(formData.threadId, formData.userId, comment);
                 setDone(false);
                 addNewComment(newComment);
+                //@ts-ignore
+                document.getElementById("comment-input").value = "";
             } else {
                 setErrorMessage('Invalid Input');
             }
@@ -105,24 +109,19 @@ function ThreadCommentComponent(props: ICommentProps) {
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
                 <FormControl>
-                    <InputLabel htmlFor="comment-input">Comment</InputLabel>
                     <input id="comment-input" type="text" onChange={updateComment} />
-                    <br/>
                 </FormControl>
-                <br/><br/>
                 <button id="comment-btn" onClick={newComment}>Send</button>
-                <br/><br/>
+
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId){
-                    // getPFP(ThreadComment.userId)
                     return <Grid item>
-                        test
-                    <img src={pfp}></img>{ThreadComment.userId + ": "}{" " + ThreadComment.content}
+                    <img src={pfp}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
                     </Grid>
                 }
                 else{
                     return <Grid item>
-                    {"Anonymous: " + ThreadComment.content}
+                    <Typography variant='caption' color = 'secondary'>{"Anonymous: "}</Typography>{ThreadComment.content}
                     </Grid>
                 }
                 
