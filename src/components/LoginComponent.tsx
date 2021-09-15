@@ -102,7 +102,7 @@ function LoginComponent(props: ILoginProps) {
                     </Grid>
                 </Grid>
             </Container>
-            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {"Invalid Credentials"} /> : <></> }
 
         </>
         :
