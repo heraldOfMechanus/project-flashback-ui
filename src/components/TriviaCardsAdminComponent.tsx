@@ -1,132 +1,153 @@
 
 import {RegisterUserRequest} from "../dtos/register-user-request";
-import {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import {useEffect, useState} from "react";
 import {FormControl, InputLabel} from '@material-ui/core';
 import { addNewCard } from "../remote/triviacard-service";
+import {getCardsBySetId, deleteCardById} from "../remote/triviacard-service";
+
+import {TriviaSet} from "../dtos/TriviaSet";
+import {Card} from "../dtos/Card";
+import {Principal} from "../dtos/Principal";
+import {Button, makeStyles} from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import UpdateIcon from '@material-ui/icons/Update';
+import Modal from '@material-ui/core/Modal';
+
 
 interface ITriviaAdminProps{
-    
-
+    currentSet: TriviaSet | undefined
+    setCurrentSet: (nextTriviaCardSet: TriviaSet) => void;
+    currentCard: Card | undefined;
+    setCurrentCard: (nextCard: Card) => void;
+    currentUser: Principal | undefined
+    setCurrentUser: (nextUser: Principal | undefined) => void;
 }
 
 
 function TriviaAdminComponent(props: ITriviaAdminProps){
-    const useStyles = makeStyles((theme) => ({
-        shtoyle: {
-            textAlign: "center",
-            color: "blue",
-            backgroundColor: "grey"
-        },
 
+    let [Cards, setCards] = useState([] as Card[] );
+
+    const useStyles = makeStyles((theme) => ({
+        root: {
+           textAlign: "center",
+            backgroundColor: "lightgrey",
+            width: "60%",
+            display: "inline-grid",
+            border: "inset",
+            borderColor: "63, 81, 101"
+        },
+        paper: {
+            position: 'absolute',
+            width: 400,
+            backgroundColor: theme.palette.background.paper,
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        }
     }));
 
+    function getModalStyle() {
+        return {
+          top: '30%',
+          left: '34%',
+        };
+    }
+
+    const modalStyle = getModalStyle();
     const classes = useStyles();
 
-    // Why do we have state here for pre-existing cards when this creates cards?!
-    let [triviaCardSetId, setCardID] = useState('');
-    let [question, setQuestion] = useState('');
-    let [correctAnswer, setCorrectAnswer] = useState('');
-    let [answers, setAnswers] = useState(['']);
-    let [points, setPoints] = useState(0);
-
-
-
-    function updateID(e:any){
-        setCardID(e.currentTarget.value)
-    }
-    function updateQuestion(e:any){
-        setQuestion(e.currentTarget.value)
-    }
-    function updateCorrectAnswer(e:any){
-        setCorrectAnswer(e.currentTarget.value)
-    }
-    function updateAnswers(e:any){
-        setAnswers(e.currentTarget.value)
-    }
-    function updatePoints(e:any){
-        setPoints(e.currentTarget.value)
-    }
-
-    async function newTrivia(){
-        console.log("Card Added")
+    let allCardsBySetId = async () =>{
         try {
-            if(triviaCardSetId && question && correctAnswer && answers && points){
+            let allcards = await getCardsBySetId(props.currentSet?.id);
+            setCards(allcards)
+            console.log(allcards);
+        }catch (e: any){
+            console.log(e.message);
+        }
 
-                let request = await addNewCard({triviaCardSetId, question, correctAnswer, answers, points})
-                console.log(RegisterUserRequest)
+    }
 
-            }else{
-                //TODO put error message here
-                console.log("Incorrect information")
-            }
-        }catch (e:any){
+    useEffect(() => {
+        allCardsBySetId();
+    }, []);
+
+    // FOR THE MODAL FOR DELETING A TRIVIA CARD SET
+
+    let [deleteId, setDeleteId] = useState('');
+
+    const [deleteCardOpen, setDeleteCardOpen] = useState(false);
+    
+    function handleDeleteCardOpen (req: Card) {
+        setDeleteCardOpen(true);
+        setDeleteId(req.cardID);
+    };
+    
+    const handleDeleteCardClose = () => {
+        setDeleteCardOpen(false);
+    };
+    
+    function deleteTriviaCardModal(card: Card) {
+        try {
+            deleteCardById(card.cardID);
+        } catch (e:any){
             console.log(e.message)
         }
     }
+    
 
     return(
         <>
-             <div  className={classes.shtoyle} >
+            <h1> Trivia page</h1>
 
-                <h1>Trivia Page</h1>
-                <FormControl>
-                    <InputLabel htmlFor="id-input">Set ID</InputLabel>
-                    <input id="id-input" type="text" onChange={updateID} />
-                    <br/>
-                </FormControl>
+            {Cards.map((card) =>{
 
-                <br/><br/>
+                return <div>
+                    <h1>{"id: " + card.cardID}</h1>
+                    <h1>{"question: " + card.question}</h1>
+                    <h1>{"points: " + card.points}</h1>
+                        <div className={classes.root}>
 
-                <FormControl>
-                    <InputLabel htmlFor="question-input">Question</InputLabel>
-                    <input id="question-input" type="text" onChange={updateQuestion} />
-                    <br/>
-                </FormControl>
+                        <span> <h2>{card.question}</h2></span>
+                        {console.log(card)}
+                        <br />
 
-                <br/><br/>
+                        <Button variant="contained">{card.answers[0]}</Button>
+                        <br/>
+                        <Button variant="contained">{card.answers[1]}</Button>
+                        <br/>
+                        <Button variant="contained">{card.answers[2]}</Button>
+                        <br/>
+                        <Button variant="contained">{card.answers[3]}</Button>
+                        <br/>
+                        <br/>
+                        <Button> 
+                            <UpdateIcon />
+                        </Button>
+                        <Button onClick={() => {handleDeleteCardOpen(card);}}> 
+                            <DeleteIcon />
+                        </Button>
+                            <Modal
+                                open={deleteCardOpen}
+                                onClose={handleDeleteCardClose}
+                                aria-labelledby="simple-modal-title-3"
+                                aria-describedby="simple-modal-description-3"
+                                >
+                                <div style={modalStyle} className={classes.paper}>
+                                    <h1>Delete Set</h1>
+                                    <p> Are you sure you want to delete this set? </p>
+                                    <br/>
+                                    <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardModal(card); handleDeleteCardClose();}}>Confirm</Button>
+                                    <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteCardClose();}}>Close</Button>
+                                  </div>
+                            </Modal>
+                    </div>
+                    <br/><br/><br/><br/>
+                </div>
 
-                <FormControl>
-                    <InputLabel htmlFor="correctAnswer-input">Correct Answer</InputLabel>
-                    <input id="correctAnswer-input" type="text" onChange={updateCorrectAnswer} />
-                    <br/>
-                </FormControl>
+                })}
 
-                <br/><br/>
-
-                <FormControl>
-                    <InputLabel htmlFor="answer2-input">Incorrect Answer 1</InputLabel>
-                    <input id="answers2-input" type="text:" onChange={updateAnswers} />
-                    <br/>
-                </FormControl>
-
-                <br/><br/>
-
-                <FormControl>
-                    <InputLabel htmlFor="answer3-input">Incorrect Answer 2</InputLabel>
-                    <input id="answers3-input" type="text:" onChange={updateAnswers} />
-                    <br/>
-                </FormControl>
-
-                <br/><br/>
-
-                <FormControl>
-                    <InputLabel htmlFor="answer4-input">Incorrect Answer 3</InputLabel>
-                    <input id="answers4-input" type="text:" onChange={updateAnswers} />
-                    <br/>
-                </FormControl>
-
-                <br/><br/>
-
-                <FormControl>
-                    <InputLabel htmlFor="points-input">Points</InputLabel>
-                    <input id="points-input" type="text:" onChange={updatePoints} />
-                    <br/>
-                </FormControl>
-
-                <br/><br/>
-                <button id="newCard-btn" onClick={newTrivia}>Add Card</button>
-            </div>
+            <br/>
+            <br/>
 
         </>
     )

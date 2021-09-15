@@ -77,17 +77,24 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     });
 
-    useEffect(() => {
-        let displayTriviaCardSets = async () => {
-            try {
-                let allTriviaCardSets = await getAllTriviaCardSets();
-                setTriviaCardSetList(allTriviaCardSets);
-            } catch (e: any) {
-                console.log(e.message);
-            }
+    let [done, setDone] = useState(false);
+
+
+    async function displayTriviaCardSets() {
+        try {
+            let allTriviaCardSets = await getAllTriviaCardSets();
+            setTriviaCardSetList(allTriviaCardSets);
+        } catch (e: any) {
+            console.log(e.message);
         }
-        displayTriviaCardSets();
-    }, []); //, [] prevents infinite loop
+    }
+
+    useEffect(() => {
+        if(!done) {
+            displayTriviaCardSets();
+            setDone(true);
+        }
+    })
 
     const classes = useStyles();
 
@@ -122,7 +129,7 @@ function TriviaPage( props: ITriviaPageProps) {
                     <br/>
                 </FormControl>
                 <br/>
-                <button id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose();}}>Create Set</button>
+                <button id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose(); setDone(false)}}>Create Set</button>
         </div>
     )
     function newTriviaCardSetModal() {
