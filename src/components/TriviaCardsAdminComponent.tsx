@@ -79,7 +79,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     
     function handleDeleteCardOpen (req: Card) {
         setDeleteCardOpen(true);
-        setDeleteId(req.cardID);
+        setDeleteId(req.id);
     };
     
     const handleDeleteCardClose = () => {
@@ -88,7 +88,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     
     function deleteTriviaCardModal(card: Card) {
         try {
-            deleteCardById(card.cardID);
+            deleteCardById(card.id);
         } catch (e:any){
             console.log(e.message)
         }
@@ -102,7 +102,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
             {Cards.map((card) =>{
 
                 return <div>
-                    <h1>{"id: " + card.cardID}</h1>
+                    <h1>{"id: " + card.id}</h1>
                     <h1>{"question: " + card.question}</h1>
                     <h1>{"points: " + card.points}</h1>
                         <div className={classes.root}>

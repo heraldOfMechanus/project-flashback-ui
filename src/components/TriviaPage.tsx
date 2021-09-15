@@ -138,7 +138,6 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     }
 
-
     return (
         <> 
             {isAdmin

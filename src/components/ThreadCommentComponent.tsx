@@ -34,7 +34,7 @@ function ThreadCommentComponent(props: ICommentProps) {
             alignItems: 'left',
             paddingLeft: 240,
             borderStyle: 'solid',
-            borderColor: 'royalblue',
+            borgderColor: 'royalblue',
             borderWidth: '.12rem',
         },
     }));
