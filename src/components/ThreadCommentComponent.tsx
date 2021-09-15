@@ -6,6 +6,7 @@ import { ThreadComment } from "../dtos/ThreadComment";
 import { Thread } from "../dtos/Thread";
 import { Principal } from "../dtos/Principal";
 import { addNewComment, getAllComments } from "../remote/thread-comments-service";
+import { getProfilePicture } from "../remote/user-service";
 
 
 interface ICommentProps {
@@ -21,6 +22,7 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     let [threadComm, setThreadComm] = useState([] as ThreadComment[]);
     let [done, setDone] = useState(false);
+    const[pfp, setPfp] = useState('');
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -85,6 +87,18 @@ function ThreadCommentComponent(props: ICommentProps) {
         }
     }
 
+    async function getPFP(t: ThreadComment["userId"]){
+            try{
+                if(props.currentUser){
+                    setPfp(await getProfilePicture(t, 15));
+                } else {
+                    setPfp(await getProfilePicture("undefined", 15));
+                }
+            } catch (e: any){
+                console.log(e.message);
+            }
+        }
+
     return (
         <>
         
@@ -100,8 +114,10 @@ function ThreadCommentComponent(props: ICommentProps) {
                 <br/><br/>
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId){
+                    // getPFP(ThreadComment.userId)
                     return <Grid item>
-                    {ThreadComment.userId + ": "}{" " + ThreadComment.content}
+                        test
+                    <img src={pfp}></img>{ThreadComment.userId + ": "}{" " + ThreadComment.content}
                     </Grid>
                 }
                 else{
