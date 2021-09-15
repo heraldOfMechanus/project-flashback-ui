@@ -69,7 +69,8 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         root: {
             minWidth: 275,
             width: "50%",
-            backgroundColor: "lightblue",
+            backgroundColor: "#abb3e2",
+            
         },
         bullet: {
             display: 'inline-block',
@@ -83,7 +84,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
             marginBottom: 12,
         },
         button: {
-            backgroundColor: 'lightskyblue',
+            backgroundColor: 'lightblue',
             width: '15rem',
         },
         paper: {
