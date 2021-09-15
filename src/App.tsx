@@ -26,6 +26,7 @@ import LeaderboardComponent from "./components/LeaderboardComponent";
 
 function App() {
 
+  document.body.style.backgroundColor = 'lightgrey';
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
   const [currentTopic, setCurrentTopic] = useState(undefined as Subforum | undefined);

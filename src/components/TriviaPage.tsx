@@ -129,7 +129,8 @@ function TriviaPage( props: ITriviaPageProps) {
                     <br/>
                 </FormControl>
                 <br/>
-                <button id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose(); setDone(false)}}>Create Set</button>
+                <Button color="primary" id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose(); setDone(false)}}>Create Set</Button>
+                <Button color="secondary" id="newCard-btn" onClick={() => {handleAddSetClose(); setDone(false)}}>Cancel</Button>
         </div>
     )
     function newTriviaCardSetModal() {
@@ -138,14 +139,15 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     }
 
-
     return (
         <> 
+            <h1>TRIVIA PAGE</h1>
             {isAdmin
             ?
                 <div>
                     <CssBaseline/>
-                    <Button onClick={handleAddSetOpen}>Add Trivia Set</Button>
+                    <Button variant="contained" color="primary" onClick={handleAddSetOpen}>Add Trivia Set</Button>
+                    <br /><br />
                     <Modal
                         open={addSetOpen}
                         onClose={handleAddSetClose}

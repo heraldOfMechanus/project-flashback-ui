@@ -31,7 +31,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     const useStyles = makeStyles((theme) => ({
         root: {
            textAlign: "center",
-            backgroundColor: "lightgrey",
+            backgroundColor: "#abb3e2",
             width: "60%",
             display: "inline-grid",
             border: "inset",
@@ -79,7 +79,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     
     function handleDeleteCardOpen (req: Card) {
         setDeleteCardOpen(true);
-        setDeleteId(req.cardID);
+        setDeleteId(req.id);
     };
     
     const handleDeleteCardClose = () => {
@@ -88,7 +88,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     
     function deleteTriviaCardModal(card: Card) {
         try {
-            deleteCardById(card.cardID);
+            deleteCardById(card.id);
         } catch (e:any){
             console.log(e.message)
         }
@@ -97,27 +97,43 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     return(
         <>
-            <h1> Trivia page</h1>
+            <h1>TRIVIA ADMIN PAGE</h1>
 
             {Cards.map((card) =>{
 
                 return <div>
-                    <h1>{"id: " + card.cardID}</h1>
-                    <h1>{"question: " + card.question}</h1>
-                    <h1>{"points: " + card.points}</h1>
                         <div className={classes.root}>
 
                         <span> <h2>{card.question}</h2></span>
                         {console.log(card)}
                         <br />
-
-                        <Button variant="contained">{card.answers[0]}</Button>
+                        {card.answers[0] === card.correctAnswer
+                        ?
+                        <Button variant="contained" color="primary">{card.answers[0]}</Button>
+                        :
+                        <Button variant="contained" color="secondary">{card.answers[0]}</Button>
+                        }
                         <br/>
-                        <Button variant="contained">{card.answers[1]}</Button>
+                        {card.answers[1] === card.correctAnswer
+                        ?
+                        <Button variant="contained" color="primary">{card.answers[1]}</Button>
+                        :
+                        <Button variant="contained" color="secondary">{card.answers[1]}</Button>
+                        }
                         <br/>
-                        <Button variant="contained">{card.answers[2]}</Button>
+                        {card.answers[2] === card.correctAnswer
+                        ?
+                        <Button variant="contained" color="primary">{card.answers[2]}</Button>
+                        :
+                        <Button variant="contained" color="secondary">{card.answers[2]}</Button>
+                        }
                         <br/>
-                        <Button variant="contained">{card.answers[3]}</Button>
+                        {card.answers[3] === card.correctAnswer
+                        ?
+                        <Button variant="contained" color="primary">{card.answers[3]}</Button>
+                        :
+                        <Button variant="contained" color="secondary">{card.answers[3]}</Button>
+                        }
                         <br/>
                         <br/>
                         <Button> 
