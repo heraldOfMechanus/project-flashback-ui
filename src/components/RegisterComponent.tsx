@@ -6,7 +6,6 @@ import {makeStyles} from "@material-ui/core/styles";
 
 import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
 import { Link } from "react-router-dom";
-import {FormControl, InputLabel} from '@material-ui/core';
 import ErrorMessageComponent from "./ErrorMessage";
 
 interface IRegisterProps{
@@ -71,18 +70,12 @@ function RegisterComponent(props: IRegisterProps){
 
 
 
-            }else {
+            } else {
                 setErrorMessage('You must fill in all the fields.');
             }
         } catch (e: any) {
-            setErrorMessage(e.message);
-            }else{
-                setErrorMessage('You need to input valid information for the user detailings')
-                console.log("Incorrect information")
-            }
-        }catch (e:any){
-            setErrorMessage(e.message)
-            console.log(e.message)
+            setErrorMessage('You need to input valid information for the user detailings')
+            console.log("Incorrect information")
         }
     }
 
