@@ -8,17 +8,24 @@ import { Link } from 'react-router-dom';
 
 function LandingPageComponent() {
 
-    const images = [
+    const image1 = [
         {
           url: '/static/images/image-list/breakfast.jpg',
           title: 'Forum Page',
           width: '100%',
-        },
+        }
+        // {
+        //   url: '/static/images/image-list/camera.jpg',
+        //   title: 'Camera',
+        //   width: '30%',
+        // },
+      ];
+      const image2 = [
         {
           url: '/static/images/image-list/burgers.jpg',
           title: 'Trivia Page',
           width: '100%',
-        },
+        }
         // {
         //   url: '/static/images/image-list/camera.jpg',
         //   title: 'Camera',
@@ -113,10 +120,41 @@ function LandingPageComponent() {
             </div>
 
             <div className={classes.root}>
-                {images.map((image) => (
+                {image1.map((image) => (
                     <ButtonBase
                     focusRipple
                     component={Link} to='/forum'
+                    key={image.title}
+                    className={classes.image}
+                    focusVisibleClassName={classes.focusVisible}
+                    style={{
+                        width: image.width,
+                    }}
+                    >
+                        <span
+                            className={classes.imageSrc}
+                            style={{
+                            backgroundImage: `url(${image.url})`,
+                            }}
+                        />
+                        <span className={classes.imageBackdrop} />
+                        <span className={classes.imageButton}>
+                            <Typography
+                            component="span"
+                            variant="subtitle1"
+                            color="inherit"
+                            className={classes.imageTitle}
+                            >
+                            {image.title}
+                            <span className={classes.imageMarked} />
+                            </Typography>
+                        </span>
+                    </ButtonBase>
+                ))}
+                {image2.map((image) => (
+                    <ButtonBase
+                    focusRipple
+                    component={Link} to='/trivia'
                     key={image.title}
                     className={classes.image}
                     focusVisibleClassName={classes.focusVisible}

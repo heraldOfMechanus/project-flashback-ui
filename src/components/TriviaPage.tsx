@@ -77,17 +77,24 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     });
 
-    useEffect(() => {
-        let displayTriviaCardSets = async () => {
-            try {
-                let allTriviaCardSets = await getAllTriviaCardSets();
-                setTriviaCardSetList(allTriviaCardSets);
-            } catch (e: any) {
-                console.log(e.message);
-            }
+    let [done, setDone] = useState(false);
+
+
+    async function displayTriviaCardSets() {
+        try {
+            let allTriviaCardSets = await getAllTriviaCardSets();
+            setTriviaCardSetList(allTriviaCardSets);
+        } catch (e: any) {
+            console.log(e.message);
         }
-        displayTriviaCardSets();
-    }, []); //, [] prevents infinite loop
+    }
+
+    useEffect(() => {
+        if(!done) {
+            displayTriviaCardSets();
+            setDone(true);
+        }
+    })
 
     const classes = useStyles();
 
@@ -122,24 +129,25 @@ function TriviaPage( props: ITriviaPageProps) {
                     <br/>
                 </FormControl>
                 <br/>
-                <button id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose();}}>Create Set</button>
+                <Button color="primary" id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose(); setDone(false)}}>Create Set</Button>
+                <Button color="secondary" id="newCard-btn" onClick={() => {handleAddSetClose(); setDone(false)}}>Cancel</Button>
         </div>
     )
     function newTriviaCardSetModal() {
         if(addSetFormData.topic) {
             addNewTriviaCardSet({topic: addSetFormData.topic});
         }
-
     }
-
 
     return (
         <> 
+            <h1>TRIVIA PAGE</h1>
             {isAdmin
             ?
                 <div>
                     <CssBaseline/>
-                    <Button onClick={handleAddSetOpen}>Add Trivia Set</Button>
+                    <Button variant="contained" color="primary" onClick={handleAddSetOpen}>Add Trivia Set</Button>
+                    <br /><br />
                     <Modal
                         open={addSetOpen}
                         onClose={handleAddSetClose}

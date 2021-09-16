@@ -21,16 +21,22 @@ function ForumTopicListComponent(props: IForumTopicProps) {
     const useStyles = makeStyles((theme) => ({
         root: {
             width: '70%',
+            backgroundColor: 'cornflowerblue',
+            paddingBottom: '1rem',
+            borderRadius: '1rem',
         },
         display: {
-            backgroundColor: 'lavender',
+            backgroundColor: 'skyblue',
             borderRadius: '.7rem',
             padding: '1.7rem',
+            justifySelf: 'left',
         },
         button: {
             margin: '2rem',
-            backgroundColor: 'lightskyblue',
+            backgroundColor: 'cornflowerblue',
             justifyContent: 'center',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
             borderRadius: '.7rem',
             textAlign: 'center',
             width: '20rem',
@@ -61,7 +67,7 @@ function ForumTopicListComponent(props: IForumTopicProps) {
         <>     
             <CssBaseline />
             <Container maxWidth="lg" className={classes.root}>
-                <Typography variant='h2'>Forums</Typography>
+                <Typography variant='h2'>Recall Forums</Typography>
                 <Grid 
                     className={classes.display}
                     direction="column"

@@ -29,3 +29,12 @@ export const addNewThread = async (newThread: ThreadDTO) => {
 
     return resp.data;
 }
+
+export const deleteThread = async (req: {id: string}) => {
+
+    let resp = await flashbackClient.post('forum/remove-thread', req);
+
+    if(resp.data >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+}

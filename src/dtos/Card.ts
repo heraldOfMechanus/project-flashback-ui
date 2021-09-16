@@ -1,9 +1,8 @@
 export class Card {
 
 
-
     answers: string[];
-    cardID: string;
+    id: string;
     correctAnswer: string;
     question: string;
     points: string;
@@ -11,7 +10,7 @@ export class Card {
     
 
     constructor(id: string,  SetID: string, que: string, correct: string, ans: string[], points: string) {
-        this.cardID = id;
+        this.id = id;
         this.question = que;
         this.correctAnswer = correct;
         this.answers = ans;

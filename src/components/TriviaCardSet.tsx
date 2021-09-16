@@ -15,7 +15,7 @@ import {
     createStyles,
     ListItemIcon,
     ListItem,
-    ButtonBase
+    ButtonBase, Tooltip
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {render} from "@testing-library/react";
@@ -32,6 +32,7 @@ import { typographyVariant } from "@mui/system";
 import ForumIcon from "@material-ui/icons/Forum";
 import TriviaQuestionPage from "./TriviaQuestionPage";
 import {Subforum} from "../dtos/Subforum";
+import {addNewCard} from "../remote/triviacard-service";
 
 
 
@@ -41,6 +42,8 @@ interface ITriviaCardSetProps {
     currentSet: TriviaSet |undefined
     setCurrentSet: (nextSet: TriviaSet | undefined) => void;
     user: Principal|undefined;
+    // updateModal: boolean;
+    // setUpdateModal: (isOpen: boolean) => void;
 }
 
 function TriviaCardSet(props: ITriviaCardSetProps) {
@@ -66,7 +69,8 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         root: {
             minWidth: 275,
             width: "50%",
-            backgroundColor: "lightblue",
+            backgroundColor: "#abb3e2",
+            
         },
         bullet: {
             display: 'inline-block',
@@ -80,7 +84,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
             marginBottom: 12,
         },
         button: {
-            backgroundColor: 'lightskyblue',
+            backgroundColor: 'lightblue',
             width: '15rem',
         },
         paper: {
@@ -104,10 +108,14 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
 
     // FOR THE MODAL FOR DELETING A TRIVIA CARD SET
+
+    let [deleteId, setDeleteId] = useState('');
+
     const [deleteSetOpen, setDeleteSetOpen] = useState(false);
 
-    const handleDeleteSetOpen = () => {
+    function handleDeleteSetOpen (req: TriviaSet) {
         setDeleteSetOpen(true);
+        setDeleteId(req.id);
     };
 
     const handleDeleteSetClose = () => {
@@ -115,9 +123,13 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     };
 
     function deleteTriviaCardSetModal(set: TriviaSet) {
+        let id = deleteId;
         try {
             if(set){
-                deleteTriviaCardSet(set);
+                deleteTriviaCardSet({id: id,
+                                    topic: set.topic,
+                                    cardCount: set.cardCount
+                                    });
             }
         } catch (e:any){
             console.log(e.message)
@@ -125,15 +137,19 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
     }
 
     
+
     // FOR THE MODAL FOR UPDATING A TRIVIA CARD SET
+    let [updateId, setUpdateId] = useState('');
+
     const [updateSetOpen, setUpdateSetOpen] = useState(false);
 
     const [updateSetFormData, setUpdateSetFormData] = useState({
         topic: '',
     });
 
-    const handleUpdateSetOpen = () => {
+    function handleUpdateSetOpen (req: TriviaSet) {
         setUpdateSetOpen(true);
+        setUpdateId(req.id);
     };
 
     const handleUpdateSetClose = () => {
@@ -145,8 +161,9 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         setUpdateSetFormData({...updateSetFormData, ["topic"]: value });
     }
 
-    function updateTriviaCardSetModal(id: string, topic: string, cardCount: number){
+    function updateTriviaCardSetModal(topic: string, cardCount: number){
         try {
+            let id = updateId;
             if(id && topic){
                 updateTriviaCardSet({id, topic, cardCount});
             }
@@ -155,13 +172,84 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         }
     }
 
+    //FOR THE MODAL FOR ADDING A TRIVIA CARD TO THE SET
+    let [addId, setAddId] = useState('');
+
+    const [addCardOpen, addCardSetOpen] = React.useState(false);
+
+    const [addCardFormData, setAddCardFormData] = useState({
+        question: '',
+        correctAnswer: '',
+        answerOne: '',
+        answerTwo: '',
+        answerThree: '',
+        answerFour: '',
+        points: 0,
+    });
+
+    function handleAddCardSetOpen (req: TriviaSet) {
+        addCardSetOpen(true);
+        setAddId(req.id);
+    };
+
+    const handleAddCardSetClose = () => {
+        addCardSetOpen(false);
+    };
+
+    let handleAddCardChangeQuestion = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["question"]: value });
+    }
+
+    let handleAddCardChangeCorrectAnswer = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["correctAnswer"]: value });
+    }
+
+    let handleAddCardChangeAnswerOne = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerOne"]: value });
+    }
+
+    let handleAddCardChangeAnswerTwo = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerTwo"]: value });
+    }
+
+    let handleAddCardChangeAnswerThree = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerThree"]: value });
+    }
+
+    let handleAddCardChangeAnswerFour = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["answerFour"]: value });
+    }
+
+    let handleAddCardChangePoints = (e: any) => {
+        const {value} = e.target;
+        setAddCardFormData({...addCardFormData, ["points"]: value });
+    }
+
     async function addTriviaCardtoSet(){
-
+        try{
+            if(props.currentSet?.id && addCardFormData.question && addCardFormData.question &&
+                addCardFormData.answerOne && addCardFormData.answerTwo && 
+                addCardFormData.answerThree && addCardFormData.answerFour && 
+                addCardFormData.correctAnswer) {
+                addNewCard({triviaCardSetId: props.currentSet.id,
+                    question: addCardFormData.question,
+                    correctAnswer: addCardFormData.correctAnswer,
+                    answers: [addCardFormData.answerOne, addCardFormData.answerTwo, addCardFormData.answerThree, addCardFormData.answerFour],
+                    points: addCardFormData.points});
+                    console.log(props.currentSet.id);
+                } 
+        } catch (e: any) {
+            console.log(e.message);
+        }
     }
 
-    function refreshPage() {
-        <Link to="/trivia" />
-    }
+
 
     return(
         <>
@@ -179,25 +267,88 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                            <ListItem button component={Link} to={'/trivia-question'} onClick={() => {props.setCurrentSet(triviaSet)}}>
-                                    <ListItemIcon><ForumIcon/></ListItemIcon>
-                                    <Typography color="inherit" variant="h6">Go to Cards</Typography>
-                                </ListItem>
+                                {isAdmin
+                                ?
+                                    <ListItem button component={Link} to={'/trivia-admin'} onClick={() => {props.setCurrentSet(triviaSet)}}>
+                                        <ListItemIcon><ForumIcon/></ListItemIcon>
+                                        <Typography color="inherit" variant="h6">Go to Cards</Typography>
+                                    </ListItem>
+                                :
+                                    <ListItem button component={Link} to={'/trivia-question'} onClick={() => {props.setCurrentSet(triviaSet)}}>
+                                        <ListItemIcon><ForumIcon/></ListItemIcon>
+                                        <Typography color="inherit" variant="h6">Go to Cards</Typography>
+                                    </ListItem>
+                                }
                             </CardActions>
 
                             {isAdmin
                             ?
                                 <div>
-                                    <Button>
+                                    <Button onClick={() => {console.log(triviaSet); handleAddCardSetOpen(triviaSet)}}>
                                         <AddIcon />
                                     </Button>
-                                    <Button onClick={handleUpdateSetOpen}>
+                                        <Modal
+                                            open={addCardOpen}
+                                            onClose={handleAddCardSetClose}
+                                            aria-labelledby="simple-modal-title-1"
+                                            aria-describedby="simple-modal-description-1"
+                                            >
+                                                <div style={modalStyle} className={classes.paper}>
+                                                    <h1>Add Card</h1>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="question-input">Question</InputLabel>
+                                                        <input id="question-input" type="text" onChange={handleAddCardChangeQuestion} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="correctAnswer-input">Correct Answer</InputLabel>
+                                                        <input id="correctAnswer-input" type="text" onChange={handleAddCardChangeCorrectAnswer} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer1-input">Option One</InputLabel>
+                                                        <input id="answers1-input" type="text:" onChange={handleAddCardChangeAnswerOne} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer2-input">Option Two</InputLabel>
+                                                        <input id="answers2-input" type="text:" onChange={handleAddCardChangeAnswerTwo} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer3-input">Option Three</InputLabel>
+                                                        <input id="answers3-input" type="text:" onChange={handleAddCardChangeAnswerThree} />
+                                                        <br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="answer4-input">Option Four</InputLabel>
+                                                        <input id="answers4-input" type="text:" onChange={handleAddCardChangeAnswerFour} />
+                                                        <br/><br/>
+                                                    </FormControl>
+                                                    <br/>
+                                                    <FormControl>
+                                                        <InputLabel htmlFor="points-input">Points</InputLabel>
+                                                        <input id="points-input" type="text:" onChange={handleAddCardChangePoints} />
+                                                        <br/><br/>
+                                                    </FormControl>
+                                                    <br/><br/>
+                                                    <Button id="newCard-btn" color="primary" onClick={() => {addTriviaCardtoSet(); handleAddCardSetClose(); }}>Add Card</Button>
+                                                    <Button id="newCard-btn-nvm" color="secondary" onClick={() => {handleAddCardSetClose();}}>Close</Button>
+                                                </div>
+                                        </Modal>
+                                    <Button onClick={() => {handleUpdateSetOpen(triviaSet)}}>
                                         <UpdateIcon />
+                                    </Button>
                                         <Modal
                                             open={updateSetOpen}
                                             onClose={handleUpdateSetClose}
-                                            aria-labelledby="simple-modal-title"
-                                            aria-describedby="simple-modal-description"
+                                            aria-labelledby="simple-modal-title-2"
+                                            aria-describedby="simple-modal-description-2"
                                             >
                                                 <div style={modalStyle} className={classes.paper}>
                                                     <h1>Update Set</h1>
@@ -207,26 +358,28 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                         <br/>
                                                     </FormControl>
                                                     <br/>
-                                                    <ButtonBase id="updateSet-btn" onClick={() => {updateTriviaCardSetModal(triviaSet.id, updateSetFormData.topic, triviaSet.cardCount); handleUpdateSetClose(); }} component={Link} to="">Submit</ButtonBase>
+                                                    <Button id="updateSet-btn" color="primary" onClick={() => {updateTriviaCardSetModal(updateSetFormData.topic, triviaSet.cardCount); handleUpdateSetClose();}}>Submit</Button>
+                                                    <Button id="updateSet-btn-nvm" color="secondary" onClick={() => {handleUpdateSetClose();}}>Close</Button>
+
                                                 </div>
                                         </Modal>
-                                    </Button>
-                                    <Button onClick={handleDeleteSetOpen}>
+                                    <Button onClick={() => {handleDeleteSetOpen(triviaSet);}}>
                                         <DeleteIcon />
+                                    </Button>
                                         <Modal
                                             open={deleteSetOpen}
                                             onClose={handleDeleteSetClose}
-                                            aria-labelledby="simple-modal-title"
-                                            aria-describedby="simple-modal-description"
+                                            aria-labelledby="simple-modal-title-3"
+                                            aria-describedby="simple-modal-description-3"
                                             >
                                             <div style={modalStyle} className={classes.paper}>
                                                 <h1>Delete Set</h1>
                                                 <p> Are you sure you want to delete this set? </p>
                                                 <br/>
-                                                <button id="deleteSet-btn" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose(); refreshPage();}}>Confirm</button>
+                                                <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose();}}>Confirm</Button>
+                                                <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteSetClose();}}>Close</Button>
                                             </div>
                                         </Modal>
-                                    </Button>
                                 </div>
                             :
                                 <></>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button } from '@material-ui/core';
-import { ButtonBase } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button, Snackbar } from '@material-ui/core';
+import { Alert, ButtonBase } from '@mui/material';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Link, Redirect } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
-import { addNewThread, getAllThreads } from '../remote/thread-service';
+import { addNewThread, deleteThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
@@ -17,49 +18,56 @@ interface IForumProps {
     setCurrentUser: (nextUser: Principal | undefined) => void;
     currentThread: Thread | undefined
     setCurrentThread: (nextThread: Thread | undefined) => void;
+    value: number
+    setValue: (nextNum: number) => void;
 }
 
 function ForumComponent(props: IForumProps) {
 
     let [threads, setThreads] = useState([] as Thread[]);
     let [open, setOpen] = useState(false);
+    let [toastOpen, setToastOpen] = useState(false);
     let [done, setDone] = useState(false);
+    let [isAdmin, setAdmin] = useState(false);
+    
+    let [deletionId, setDeletionId] = useState('');
 
+    // Integer state for forceUpdate function
+    let count = 0;
     
     const [formData, setFormData] = useState({
         userId: props.currentUser?.id,
         // @ts-ignore
-        subforumId: props.currentTopic.id,
+        subforumId: props.currentTopic?.id,
         threadTitle: '',
         threadContent: '',
     })
     
-    function showState() {
-        console.log(threads[0]?.subforumId);
-    }
-
-    // Centers the modal on the display
-    function getModalStyle() {
-        return {
-          top: '30%',
-          left: '34%',
-        };
-    }
-    
-    const modalStyle = getModalStyle();
     const theme = useTheme();
 
     const useStyles = makeStyles((theme) => ({
         root: {
-            backgroundColor: 'lavender',
+            backgroundColor: 'lightskyblue',
             width: '80%',
+            paddingBottom: '2rem',
+            paddingTop: '1rem',
+            borderRadius: '.4rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
+            borderWidth: '.2rem',
         },
         button: {
-            backgroundColor: 'lightskyblue',
+            backgroundColor: 'cornflowerblue',
             width: '15rem',
+            borderRadius: '.7rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
+            marginTop: '1.2rem',
         },
         paper: {
             position: 'absolute',
+            top: '30%',
+            left: '34%',
             width: 400,
             backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[5],
@@ -70,7 +78,7 @@ function ForumComponent(props: IForumProps) {
         },
         threadItem: {
             justifyContent: 'left',
-            backgroundColor: 'lightgray',
+            backgroundColor: 'skyblue',
             textAlign: 'left',
             borderLeftStyle: 'solid',
             borderWidth: '1px',
@@ -81,6 +89,16 @@ function ForumComponent(props: IForumProps) {
         text: {
             paddingLeft: '.2rem',
             color: 'steel',
+        },
+        snackbar: {
+            position: 'absolute',
+            top: '-65%',
+            left: '30%',
+        },
+        toastButton: {
+            height: '1.5rem',
+            marginLeft: '1rem',
+            backgroundColor: '#e49b0f',
         }
     }))
 
@@ -91,6 +109,9 @@ function ForumComponent(props: IForumProps) {
         if(!done) {
             fetchThreads();
             setDone(true);
+        }
+        if(props.currentUser?.role === 'admin') {
+            setAdmin(true);
         }
     })
 
@@ -125,6 +146,22 @@ function ForumComponent(props: IForumProps) {
         setOpen(false);
     };
 
+    function performOpen(req: Thread) {
+        setDeletionId(req.id);
+        setToastOpen(true);
+    }
+
+    function performDelete() {
+        console.log(deletionId)
+        deleteThread({id: deletionId});
+        performClose();
+        setDone(false);
+    }
+
+    const performClose = () => {
+        setToastOpen(false);
+    }
+
     function newThread() {
         if(formData.threadContent || formData.threadTitle || props.currentTopic?.id) {
             if(!props.currentUser?.id) {
@@ -135,15 +172,17 @@ function ForumComponent(props: IForumProps) {
                 return;
             }
 
+            // @ts-ignore
             let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
-            handleClose()
+            handleClose();
+            setDone(false);
         }
     }
 
     // Body of the Modal
     const body = (
-        <div style={modalStyle} className={classes.paper}>
+        <div className={classes.paper}>
             <Box className={classes.modalButton}>
                 <Button onClick={handleClose}>
                     Exit
@@ -169,11 +208,21 @@ function ForumComponent(props: IForumProps) {
     // TODO: conditionally render a button for administrators to delete threads, threads must delete all comments before they are deleted.
     // Display the threads from the database matching this topic
     return (
+        props.currentTopic?.id
+        ?
         <>
             <CssBaseline/>
+            <Snackbar className={classes.snackbar} open={toastOpen} autoHideDuration={6000} onClose={performClose}>
+                <Alert onClose={performClose} severity="warning">
+                    Are you sure you want to delete that thread? 
+                    <Button className={classes.toastButton} variant="contained" color="primary" onClick={() => {performDelete();} } component = {Link} to={'/forum'}>
+                        Yes
+                    </Button>
+                </Alert>
+            </Snackbar>
             <div>
                 <button type="button" onClick={handleOpen}>
-                    Open Modal
+                    Create New Thread
                 </button>
                 <Modal
                     open={open}
@@ -189,28 +238,34 @@ function ForumComponent(props: IForumProps) {
                     direction="column"
                     spacing={10}
                 >
-                    {threads?.map((thread) => {
+                    {isAdmin ? threads?.map((thread) =>  {
                         return <Grid item className={classes.threadItem}>
-                            <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
-                                <Box className={classes.threadItem} color="text.primary">
+                            <Box className={classes.threadItem} color="text.primary">
+                                <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
                                     <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
-                                </Box>
-                            </ButtonBase>
-                        </Grid>
-                    })}
+                                </ButtonBase>
+                                <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => {performOpen(thread);} }>
+                                    Delete Thread
+                                </Button>
+                            </Box>
+                        </Grid>}): threads?.map((thread) => {
+                        return <Grid item className={classes.threadItem}>
+                        <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
+                            <Box className={classes.threadItem} color="text.primary">
+                                <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
+                            </Box>
+                        </ButtonBase>
+                        </Grid>})}
                     <Grid item className={classes.button}>
                         <ButtonBase component={Link} to='/forum'>
-                            <Typography variant='h6'>Fuck go back</Typography>
-                        </ButtonBase>
-                    </Grid>
-                    <Grid item className={classes.button}>
-                        <ButtonBase onClick={() => {showState()}}>
-                            <Typography className={classes.text} variant='h6'>Show State</Typography>
+                            <Typography variant='h6'>Back</Typography>
                         </ButtonBase>
                     </Grid>
                 </Grid>
             </Container>
         </>
+        :
+        <Redirect to="/forum" />
     )
 }
 

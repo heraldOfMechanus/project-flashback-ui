@@ -3,6 +3,7 @@ import {Principal} from '../dtos/Principal'
 
 export const authenticate = async (credentials: {username: string, password: string}) => {
         let resp = await flashbackClient.post('/auth', credentials);
+        console.log(resp.data)
 
         if (resp.status === 401) {
             throw resp.data;

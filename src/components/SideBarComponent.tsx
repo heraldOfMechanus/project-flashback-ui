@@ -11,12 +11,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import LoginIcon from '@mui/icons-material/Login';
+import { Leaderboard } from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ForumIcon from '@material-ui/icons/Forum';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import ClearAllRoundedIcon from '@material-ui/icons/ClearAllRounded';
 
 interface INavbarProps {
     currentUser:Principal|undefined,
@@ -160,7 +162,7 @@ export function SideBarComponent(props: INavbarProps) {
                         props.currentUser
                         ?
                             <>                                    
-                                <ListItem button onClick={logout}>
+                                <ListItem button onClick={logout} component = {Link} to={'/'}>
                                     <ListItemIcon><LogoutIcon/></ListItemIcon>
                                     <Typography color="inherit" variant="h6">Logout</Typography>
                                 </ListItem>  
@@ -191,7 +193,13 @@ export function SideBarComponent(props: INavbarProps) {
                         <ListItem button component={Link} to={'/forum'}> 
                             <ListItemIcon><ForumIcon/></ListItemIcon>
                             <Typography color="inherit" variant="h6">Forum</Typography>
+
                         </ListItem>
+                        <ListItem button component={Link} to={'/leaderboards'}>
+                        <ListItemIcon><Leaderboard/></ListItemIcon>
+                        
+                        <Typography color="inherit" variant="h6">Leaderboard</Typography>
+                    </ListItem>
                     </List>
                 </Drawer>
                 <main className={classes.content}>

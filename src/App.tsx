@@ -21,16 +21,20 @@ import ThreadComment from './components/ThreadCommentComponent';
 import { Thread } from './dtos/Thread';
 import TriviaQuestionPage from "./components/TriviaQuestionPage";
 import {Card} from "./dtos/Card";
+import LeaderboardComponent from "./components/LeaderboardComponent";
 
 
 function App() {
 
+  document.body.style.backgroundColor = 'lightsteelblue';
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
   const [currentTopic, setCurrentTopic] = useState(undefined as Subforum | undefined);
   const [currentThread, setCurrentThread] = useState(undefined as Thread | undefined);
   const [currentSet, setCurrentSet] = useState(undefined as TriviaSet | undefined);
   const [currentCard, setCurrentCard] = useState(undefined as  Card | undefined);
+  // This is for cheesy auto-updating
+  const [value, setValue] = useState(0);
   
   return (
     <>
@@ -44,14 +48,14 @@ function App() {
         <Route path="/register" render={() => <RegisterComponent currentUser={User} /> }/>
         <Route path="/add-trivia-set" render={() => <AddTriviaCardSetComponent /> } />
 
-        <Route path ="/admintrivia" render={() => <TriviaAdminComponent />}/>
+        <Route path ="/trivia-admin" render={() => <TriviaAdminComponent currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard} currentUser={authUser} setCurrentUser={setAuthUser}/>} />
         <Route exact path = "/forum" render ={()=> <ForumTopicListComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />}/>
-        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
+        <Route exact path = "/forum/*" render ={() => <ForumComponent currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} value={value} setValue={setValue} />}/>
         <Route exact path = "/threads/*" render = {()=> <ThreadCommentComponent currentUser={authUser} setCurrentUser={setAuthUser} currentThread={currentThread} setCurrentThread={setCurrentThread} />}/>
         <Route exact path="/trivia" render={() => <TriviaPage currentUser={authUser} setCurrentUser={setAuthUser} currentSet={currentSet} setCurrentSet={setCurrentSet}/>} />
         <Route path="/dashboard" render={() => <DashboardComponent currentUser={authUser} setCurrentUser={setAuthUser} />} />
-        <Route exact path="/trivia-question" render={() => <TriviaQuestionPage currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard}/>} />
-
+        <Route path="/trivia-question" render={() => <TriviaQuestionPage currentSet={currentSet} setCurrentSet={setCurrentSet} currentCard={currentCard} setCurrentCard={setCurrentCard} currentUser={authUser} setCurrentUser={setAuthUser}/>} />
+        <Route path="/leaderboards"  render={() => <LeaderboardComponent />} />
 
 
       </Switch>
