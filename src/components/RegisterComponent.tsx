@@ -3,8 +3,10 @@ import {RegisterUserRequest} from "../dtos/register-user-request";
 import {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
+
 import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
 import { Link } from "react-router-dom";
+import {FormControl, InputLabel} from '@material-ui/core';
 import ErrorMessageComponent from "./ErrorMessage";
 
 interface IRegisterProps{
@@ -39,6 +41,7 @@ function RegisterComponent(props: IRegisterProps){
     let [email, setemail] = useState('')
     let [username, setusername] = useState('')
     let [password, setpassword] = useState('')
+
     let [errorMessage, setErrorMessage] = useState('');
 
     function updatefirstName(e:any){
@@ -61,9 +64,11 @@ function RegisterComponent(props: IRegisterProps){
         console.log("Register button clicked")
         try {
             if(firstName && lastName && email && username && password){
+                setErrorMessage('')
 
                 let request = await registerNewUser({firstName, lastName, email, username, password})
                 console.log(RegisterUserRequest)
+
 
 
             }else {
@@ -71,6 +76,13 @@ function RegisterComponent(props: IRegisterProps){
             }
         } catch (e: any) {
             setErrorMessage(e.message);
+            }else{
+                setErrorMessage('You need to input valid information for the user detailings')
+                console.log("Incorrect information")
+            }
+        }catch (e:any){
+            setErrorMessage(e.message)
+            console.log(e.message)
         }
     }
 
@@ -126,8 +138,6 @@ function RegisterComponent(props: IRegisterProps){
             { errorMessage ? <ErrorMessageComponent  errorMessage = {"You must fill in all the fields!"} /> : <></> }
         </>
     )
-
-
 }
 
 export default RegisterComponent;
