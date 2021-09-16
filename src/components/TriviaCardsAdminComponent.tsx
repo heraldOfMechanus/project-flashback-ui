@@ -115,11 +115,8 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     });
 
     function handleUpdateCardSetOpen (req: Card) {
-
         updateCardSetOpen(true);
         setUpdateId(req.id);
-        console.log("CARD: " + req);
-        console.log("UPDATE ID: " + updateId);
     };
 
     const handleUpdateCardSetClose = () => {
@@ -163,13 +160,17 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     //do something here to send id as well
     async function updateTriviaCardtoSet(card: Card){
+        let id = updateId;
         try{
             if(props.currentSet?.id && updateCardFormData.question && updateCardFormData.question &&
                 updateCardFormData.answerOne && updateCardFormData.answerTwo && 
                 updateCardFormData.answerThree && updateCardFormData.answerFour && 
                 updateCardFormData.correctAnswer) {
+
+                console.log(id + " " + updateCardFormData.question + " " + updateCardFormData.correctAnswer);
+                 
                 updateTriviaCard({
-                    cardID: updateId,
+                    id: id,
                     triviaCardSetId: props.currentSet.id,
                     question: updateCardFormData.question,
                     correctAnswer: updateCardFormData.correctAnswer,

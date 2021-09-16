@@ -39,7 +39,7 @@ export const deleteCardById = async (id: string | undefined) => {
 }
 
 
-export const updateTriviaCard = async (UpdateCardRequest: {cardID: string, triviaCardSetId:string, question:string, correctAnswer:string, answers:string[], points: number}) => {
+export const updateTriviaCard = async (UpdateCardRequest: {id: string, triviaCardSetId:string, question:string, correctAnswer:string, answers:string[], points: number}) => {
 
     let resp = await flashbackClient.put('trivia/card/update-card', UpdateCardRequest);
 
