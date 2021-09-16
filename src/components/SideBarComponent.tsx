@@ -197,7 +197,6 @@ export function SideBarComponent(props: INavbarProps) {
                         </ListItem>
                         <ListItem button component={Link} to={'/leaderboards'}>
                         <ListItemIcon><Leaderboard/></ListItemIcon>
-                        
                         <Typography color="inherit" variant="h6">Leaderboard</Typography>
                     </ListItem>
                     </List>
