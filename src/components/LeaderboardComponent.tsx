@@ -34,8 +34,11 @@ function LeaderboardComponent(props: ILeaderbooard){
         },
         h1: {
             color: "#3f51b5",
-            fontSize: "xxx-large"
-        }
+            fontSize: "xxx-large",
+            borderStyle: "inset"
+        },
+
+
     });
 
     const StyledTableCell = withStyles((theme: Theme) =>
@@ -73,6 +76,7 @@ function LeaderboardComponent(props: ILeaderbooard){
         try {
             let allUsers = await getAllUsers();
             setUsers(allUsers);
+            console.log(allUsers)
 
 
         }catch (e: any){
@@ -81,43 +85,38 @@ function LeaderboardComponent(props: ILeaderbooard){
     }
 
 
-
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ];
-
-    function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-        return { name, calories, fat, carbs, protein };
-    }
     const classes = useStyles();
+    let place = 1
+
+    function addOne(){
+        place++
+
+    }
 
     return(
 
         <>
             <div className={classes.div}>
-            <div>
-            <h1 className={classes.h1}> FLASHBACK LEADERBOARDS</h1>
-            </div>
+             <div>
 
-                <TableContainer component={Paper}>
+                    <h1 className={classes.h1}> FLASHBACK LEADERBOARDS</h1>
+            </div>
+            <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead >
                             <TableRow >
 
-
+                                <StyledTableCell align="center">Place </StyledTableCell>
                                 <StyledTableCell align="center">Username</StyledTableCell>
                                 <StyledTableCell align="center">Score</StyledTableCell>
+
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {users.map((row) => (
                                 <StyledTableRow>
 
-
+                                    <StyledTableCell align="center">#{place} {addOne()}</StyledTableCell>
                                     <StyledTableCell align="center">{row.username.toUpperCase()}</StyledTableCell>
                                     <StyledTableCell align="center">{row.totalScore}</StyledTableCell>
                                 </StyledTableRow>

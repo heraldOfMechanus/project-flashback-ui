@@ -49,16 +49,22 @@ function QuestionPage( props: ITriviaQuestionPage){
 
         root: {
            textAlign: "center",
-            backgroundColor: "lightgrey",
+            backgroundColor: "#abb3e2",
             width: "50%",
             display: "inline-grid",
-            border: "inset",
+            border: "outset",
             borderColor: "63, 81, 101"
         },
 
         buttons: {
             width: "100%",
+        },
+        h1: {
+            border: "outset",
+            width: "50%",
+            backgroundColor: "#abb3e2",
         }
+
 
     }));
     const classes = useStyles();
@@ -170,7 +176,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         <>
 
 
-            <h1> Trivia page</h1>
+            <h1 className={classes.h1}> Trivia page</h1>
 
 
             {Cards.slice(x,x+1).map((Cards,index, n) =>{

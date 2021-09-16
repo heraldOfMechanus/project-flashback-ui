@@ -10,9 +10,10 @@ export class Principal {
     lastName: string;
     email: string;
     totalScore: number;
+    registrationDate: String
 
 
-    constructor(id: string, un: string, role: string, token: string, firstName: string, lastName: string, email: string, totalScore: number) {
+    constructor(id: string, un: string, role: string, token: string, firstName: string, lastName: string, email: string, totalScore: number, NewDate: string) {
         this.id = id;
         this.username = un;
         this.role = role;
@@ -21,5 +22,6 @@ export class Principal {
         this.lastName = lastName;
         this.email = email;
         this.totalScore = totalScore;
+        this.registrationDate = NewDate;
     }
 }

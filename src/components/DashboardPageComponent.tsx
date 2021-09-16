@@ -48,7 +48,7 @@ function DashboardComponent(props: IDashboardComponent) {
         displayProfilePicture();
     }, []);
 
-    // @ts-ignore
+
     return (
         <>
             <h1>WELCOME, {props.currentUser?.firstName.toUpperCase()}  {props.currentUser?.lastName.toUpperCase()}  </h1>
@@ -85,7 +85,7 @@ function DashboardComponent(props: IDashboardComponent) {
                             <EventAvailableOutlinedIcon/>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Member Since" secondary="July 20, 2014" />
+                    <ListItemText primary="Member Since" secondary={props.currentUser?.registrationDate} />
                 </ListItem>
             </List>
         </>
