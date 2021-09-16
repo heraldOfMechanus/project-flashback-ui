@@ -63,7 +63,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
         try {
             let allcards = await getCardsBySetId(props.currentSet?.id);
             setCards(allcards)
-            console.log(allcards);
         }catch (e: any){
             console.log(e.message);
         }
@@ -90,9 +89,11 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     };
     
     function deleteTriviaCardModal(card: Card) {
-        console.log(card.question);
+        let id = deleteId;
         try {
-            deleteCardById(card.id);
+            if(card){
+                deleteCardById(id);
+            }
         } catch (e:any){
             console.log(e.message)
         }
@@ -114,8 +115,11 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     });
 
     function handleUpdateCardSetOpen (req: Card) {
+
         updateCardSetOpen(true);
         setUpdateId(req.id);
+        console.log("CARD: " + req);
+        console.log("UPDATE ID: " + updateId);
     };
 
     const handleUpdateCardSetClose = () => {
@@ -165,13 +169,12 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                 updateCardFormData.answerThree && updateCardFormData.answerFour && 
                 updateCardFormData.correctAnswer) {
                 updateTriviaCard({
-                    cardID: card.id,
+                    cardID: updateId,
                     triviaCardSetId: props.currentSet.id,
                     question: updateCardFormData.question,
                     correctAnswer: updateCardFormData.correctAnswer,
                     answers: [updateCardFormData.answerOne, updateCardFormData.answerTwo, updateCardFormData.answerThree, updateCardFormData.answerFour],
                     points: updateCardFormData.points});
-                    console.log(props.currentSet.id);
                 } 
         } catch (e: any) {
             console.log(e.message);
@@ -191,7 +194,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                         <div className={classes.root}>
 
                         <span> <h2>{card.question}</h2></span>
-                        {console.log(card)}
                         <br />
                         {card.answers[0] === card.correctAnswer
                         ?
