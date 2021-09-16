@@ -43,8 +43,6 @@ export const updateTriviaCardSet = async (UpdateTriviaCardSet: {id: string, topi
 
 export const deleteTriviaCardSet = async (DeleteTriviaCardSet: any) => {
 
-    console.log("About to delete Trivia Card Set..." + DeleteTriviaCardSet["topic"] );
-
     let resp = await flashbackClient.delete('trivia/set/delete-set', {
                                                 data: {
                                                     id: DeleteTriviaCardSet["id"],

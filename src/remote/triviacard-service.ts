@@ -36,5 +36,15 @@ export const deleteCardById = async (id: string | undefined) => {
         throw resp.data;
     }
 
+}
+
+
+export const updateTriviaCard = async (UpdateCardRequest: {triviaCardSetId:string, question:string, correctAnswer:string, answers:string[], points: number}) {
+
+    let resp = await flashbackClient.put('trivia/card/update-card', UpdateCardRequest);
+
+    if (resp.status >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
 
 }
