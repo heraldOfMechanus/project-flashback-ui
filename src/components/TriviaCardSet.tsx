@@ -239,7 +239,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                 addCardFormData.correctAnswer) {
                 addNewCard({triviaCardSetId: props.currentSet.id,
                     question: addCardFormData.question,
-                    correctAnswer: addCardFormData.question,
+                    correctAnswer: addCardFormData.correctAnswer,
                     answers: [addCardFormData.answerOne, addCardFormData.answerTwo, addCardFormData.answerThree, addCardFormData.answerFour],
                     points: addCardFormData.points});
                     console.log(props.currentSet.id);
