@@ -2,7 +2,7 @@
 
 import { addNewTriviaCardSet } from "../remote/trivia-card-set-service";
 import {useState} from "react";
-import {FormControl, Input, InputLabel} from '@material-ui/core';
+import {Button, FormControl, Input, InputLabel} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 
 
@@ -51,7 +51,7 @@ function AddTriviaCardSetComponent(){
                 </FormControl>
 
                 <br/><br/>
-                <button id="add-btn" onClick={addTriviaCardSet}>Add Set</button>
+                <Button id="add-btn" onClick={addTriviaCardSet}>Add Set</Button>
             </div>
 
         </>
