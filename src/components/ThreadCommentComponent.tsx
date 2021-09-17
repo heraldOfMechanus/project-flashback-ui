@@ -90,6 +90,8 @@ function ThreadCommentComponent(props: ICommentProps) {
         } catch (e: any) {
             setErrorMessage(e.message);
         }
+        setNewComment('');
+        
     }
 
     async function fetchComments() {
