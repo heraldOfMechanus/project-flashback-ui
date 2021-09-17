@@ -33,6 +33,4 @@ export const deleteCommentById = async(req: {id: string}) => {
     if(resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
-    
-    return resp.data;
 }
