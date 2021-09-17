@@ -138,7 +138,7 @@ function TriviaPage( props: ITriviaPageProps) {
             addNewTriviaCardSet({topic: addSetFormData.topic});
         }
     }
-    
+
 
     return (
         <> 
