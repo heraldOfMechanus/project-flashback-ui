@@ -139,9 +139,14 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     }
 
+    function showState() {
+        console.log(props.currentSet);
+    }
+
     return (
         <> 
             <h1>TRIVIA PAGE</h1>
+            <Button onClick={showState}>SHOW STATE</Button>
             {isAdmin
             ?
                 <div>
