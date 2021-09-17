@@ -26,3 +26,13 @@ export const getAllComments = async (req: {threadId: string}) => {
 
     return resp.data;
 }
+
+export const deleteCommentById = async(req: {id: string}) => {
+    let resp = await flashbackClient.post('threads/remove-comment', req);
+
+    if(resp.status >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+    
+    return resp.data;
+}
