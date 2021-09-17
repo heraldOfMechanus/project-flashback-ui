@@ -73,7 +73,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         root: {
             minWidth: 275,
             width: "50%",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
             
         },
         bullet: {
@@ -265,6 +265,9 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                 <Typography variant="h3" component="h2">
                                     {triviaSet.topic}
                                 </Typography>
+                                <Button> HELP!
+                                
+                                </Button>
 
                                 <Typography  variant="h5" color="textSecondary" gutterBottom>
                                 Card Count: {triviaSet.cardCount}
@@ -309,7 +312,6 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                         <Input id="correctAnswer-input" type="text" onChange={handleAddCardChangeCorrectAnswer} />
                                                     </FormControl>
                                                     <br/><br/>
-                                                    {/* <Radio value={addCardFormData.answerOne} /> */}
                                                     <FormControl>
                                                         <InputLabel htmlFor="answer1-input">Option One</InputLabel>
                                                         <Input id="answers1-input" type="text:" onChange={handleAddCardChangeAnswerOne} />

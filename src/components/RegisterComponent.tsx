@@ -3,7 +3,7 @@ import {RegisterUserRequest} from "../dtos/register-user-request";
 import {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
-
+import {useHistory} from 'react-router-dom';
 import {Button, Container, FormControl, Grid, Input, InputLabel} from '@material-ui/core';
 import { Link, Redirect } from "react-router-dom";
 import ErrorMessageComponent from "./ErrorMessage";
@@ -15,6 +15,7 @@ interface IRegisterProps{
 
 
 function RegisterComponent(props: IRegisterProps){
+    const history = useHistory();
     const useStyles = makeStyles((theme) => ({
         root: {
             backgroundColor: 'lightskyblue',
@@ -77,6 +78,8 @@ function RegisterComponent(props: IRegisterProps){
                 console.log(RegisterUserRequest)
                 regClicked = true;
                 setErrorMessage('User successfully registered');
+                history.push("/login");
+
 
             }else {
                 setErrorMessage('You must fill in all the fields.');
@@ -113,7 +116,7 @@ function RegisterComponent(props: IRegisterProps){
                             <br/>
                         </FormControl>
                     </Grid>
-                    <Grid item></Grid>
+                    <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="email-input">Email</InputLabel>
                             <Input id="email-input" type="text" onChange={updateemail} onKeyPress={handleSeachInputKeyPress}/>
@@ -126,7 +129,7 @@ function RegisterComponent(props: IRegisterProps){
                             <Input id="username-input" type="text:" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
-                    </Grid>              
+                    </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
@@ -137,6 +140,8 @@ function RegisterComponent(props: IRegisterProps){
                     <Grid item>
                         <Button className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
                     </Grid>
+
+                </Grid>
             </Container>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
         </>

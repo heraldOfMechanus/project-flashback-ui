@@ -9,7 +9,9 @@ import {Button, makeStyles} from "@material-ui/core";
 import {useHistory} from 'react-router-dom';
 import {Principal} from "../dtos/Principal";
 import {updateUserScore} from "../remote/user-service";
-
+import {getAllSubForums} from "../remote/sub-forum-service";
+import { Subforum } from "../dtos/Subforum";
+import { Link, Redirect } from "react-router-dom";
 
 
 
@@ -38,6 +40,8 @@ function QuestionPage( props: ITriviaQuestionPage){
     let [x,setX] = useState(0)
 
     let [Cards, setCards] = useState([] as Card[] );
+    let [subforums, setSubforums] = useState([] as Subforum[]);
+
 
     let id = props.currentSet?.id;
 
@@ -47,7 +51,7 @@ function QuestionPage( props: ITriviaQuestionPage){
 
         root: {
            textAlign: "center",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
             width: "50%",
             display: "inline-grid",
             border: "outset",
@@ -60,7 +64,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         h1: {
             border: "outset",
             width: "50%",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
         }
 
 
@@ -68,7 +72,9 @@ function QuestionPage( props: ITriviaQuestionPage){
     const classes = useStyles();
 
 
-    useEffect(() => {      allCardsBySetId();
+    useEffect(() => {
+        allCardsBySetId();
+        getSubforums();
     }, []);
 
 
@@ -152,17 +158,33 @@ function QuestionPage( props: ITriviaQuestionPage){
                 console.log(e)
             }
 
-
         }else{
             console.log("This is the total score " , e)
             history.push("/trivia");
             return;
         }
 
+    }
 
 
+    async function getSubforums() {
+        try {
+             let resp = await getAllSubForums();
+             setSubforums(resp);
+        } catch (e: any) {
+            console.log(e.message);
+        }
+    }
 
-
+    function navToForums(topic: any){
+        for(let s of subforums){
+            console.log(s.subforumTitle);
+            if(s.subforumTitle === topic) {
+                console.log("FOUND A MATCH");
+               <Link to={"/forum/" + s.subforumTitle} />
+            } 
+        }
+        <Link to={"/forum"} />
     }
 
 
@@ -181,7 +203,7 @@ function QuestionPage( props: ITriviaQuestionPage){
 
                 return <div className={classes.root}>
 
-                    <span> <h2> {x + ") "+  n[index]["question"]}</h2></span>
+                    <span> <h2> {x +1  + ") "+  n[index]["question"]}</h2></span>
 
                     <br/>
 
@@ -211,7 +233,8 @@ function QuestionPage( props: ITriviaQuestionPage){
             <div>
                 <h5> There are {Cards.length} questions total </h5>
                 <h4> Total Score: {total}</h4>
-                <Button onClick={ () =>{endGame({total}); }} color="secondary">End Game</Button>
+                <Button onClick={ () =>{endGame({total}); }} variant="contained" color="secondary">End Game</Button>
+                <Button onClick={ () =>{(navToForums(props.currentSet?.topic)); }} variant="contained">Help</Button>
             </div>
 
 

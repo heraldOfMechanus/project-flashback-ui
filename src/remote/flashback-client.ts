@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const flashbackClient = axios.create({
-    // baseURL: 'http://flashbackapp-env.eba-cbwt3tb3.us-east-1.elasticbeanstalk.com/flashback',
-    baseURL: 'http://localhost:5000',
+    baseURL: 'http://flashbackapp-env.eba-cbwt3tb3.us-east-1.elasticbeanstalk.com/flashback',
+    // baseURL: 'http://localhost:5000',
     headers: {
         'Content-Type': 'application/json'
     }
