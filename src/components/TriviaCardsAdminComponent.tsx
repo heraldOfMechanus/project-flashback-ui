@@ -186,6 +186,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     return(
         <>
             <h1>TRIVIA ADMIN PAGE</h1>
+            <h1>SET : {props.currentSet?.topic}</h1>
             {Cards.map((card) =>{
 
                 return <div>

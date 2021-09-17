@@ -284,7 +284,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                             {isAdmin
                             ?
                                 <div>
-                                    <Button onClick={() => {console.log(triviaSet); handleAddCardSetOpen(triviaSet)}}>
+                                    <Button onClick={() => {handleAddCardSetOpen(triviaSet); props.setCurrentSet(triviaSet)}}>
                                         <AddIcon />
                                     </Button>
                                         <Modal
@@ -294,7 +294,8 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                             aria-describedby="simple-modal-description-1"
                                             >
                                                 <div style={modalStyle} className={classes.paper}>
-                                                    <h1>Add Card</h1>
+                                                <h1>Add Card</h1>
+                                                <h2><i>{props.currentSet?.topic}</i></h2>
                                                     <FormControl>
                                                         <InputLabel htmlFor="question-input">Question</InputLabel>
                                                         <input id="question-input" type="text" onChange={handleAddCardChangeQuestion} />
@@ -341,7 +342,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                     <Button id="newCard-btn-nvm" color="secondary" onClick={() => {handleAddCardSetClose();}}>Close</Button>
                                                 </div>
                                         </Modal>
-                                    <Button onClick={() => {handleUpdateSetOpen(triviaSet)}}>
+                                    <Button onClick={() => {handleUpdateSetOpen(triviaSet); props.setCurrentSet(triviaSet)}}>
                                         <UpdateIcon />
                                     </Button>
                                         <Modal
@@ -351,7 +352,8 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                             aria-describedby="simple-modal-description-2"
                                             >
                                                 <div style={modalStyle} className={classes.paper}>
-                                                    <h1>Update Set</h1>
+                                                <h1>Update Set</h1>
+                                                <h2>Are you sure you want to update <i>{props.currentSet?.topic}</i>?</h2>
                                                     <FormControl>
                                                         <InputLabel htmlFor="title-input">Topic</InputLabel>
                                                         <input id="title-input" type="text" onChange={handleUpdateSetChange} />
@@ -363,7 +365,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
 
                                                 </div>
                                         </Modal>
-                                    <Button onClick={() => {handleDeleteSetOpen(triviaSet);}}>
+                                    <Button onClick={() => {handleDeleteSetOpen(triviaSet); props.setCurrentSet(triviaSet)}}>
                                         <DeleteIcon />
                                     </Button>
                                         <Modal
@@ -374,7 +376,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                             >
                                             <div style={modalStyle} className={classes.paper}>
                                                 <h1>Delete Set</h1>
-                                                <p> Are you sure you want to delete this set? </p>
+                                                <h2> Are you sure you want to delete <i>{props.currentSet?.topic}</i>?</h2>
                                                 <br/>
                                                 <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose();}}>Confirm</Button>
                                                 <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteSetClose();}}>Close</Button>
