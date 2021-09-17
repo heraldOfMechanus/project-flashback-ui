@@ -123,7 +123,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 <FormControl>
                     <input id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
                 </FormControl>
-                <button id="comment-btn" type="submit" onSubmit={newComment}>Send</button>
+                <button id="comment-btn" type="submit" onClick={newComment}>Send</button>
                 
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
