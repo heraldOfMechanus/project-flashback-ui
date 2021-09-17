@@ -3,9 +3,9 @@ import {RegisterUserRequest} from "../dtos/register-user-request";
 import {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
-
-import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
-import { Link } from "react-router-dom";
+import {useHistory} from 'react-router-dom';
+import {Button, Container, FormControl, Grid, Input, InputLabel, Typography} from '@material-ui/core';
+import { Link, Redirect } from "react-router-dom";
 import ErrorMessageComponent from "./ErrorMessage";
 
 interface IRegisterProps{
@@ -15,6 +15,7 @@ interface IRegisterProps{
 
 
 function RegisterComponent(props: IRegisterProps){
+    const history = useHistory();
     const useStyles = makeStyles((theme) => ({
         root: {
             backgroundColor: 'lightskyblue',
@@ -40,6 +41,7 @@ function RegisterComponent(props: IRegisterProps){
     let [email, setemail] = useState('')
     let [username, setusername] = useState('')
     let [password, setpassword] = useState('')
+    let regClicked = false;
 
     let [errorMessage, setErrorMessage] = useState('');
 
@@ -59,27 +61,38 @@ function RegisterComponent(props: IRegisterProps){
         setpassword(e.currentTarget.value)
     }
 
+    const handleSeachInputKeyPress = (event:any) => {
+        if (event.key === 'Enter') {
+          register();
+        }
+      }
     async function register(){
         console.log("Register button clicked")
+        
         try {
             if(firstName && lastName && email && username && password){
+
                 setErrorMessage('')
 
                 let request = await registerNewUser({firstName, lastName, email, username, password})
                 console.log(RegisterUserRequest)
+                regClicked = true;
+                setErrorMessage('User successfully registered');
+                history.push("/login");
 
 
-
-            } else {
+            }else {
                 setErrorMessage('You must fill in all the fields.');
             }
         } catch (e: any) {
-            setErrorMessage('You need to input valid information for the user detailings')
-            console.log("Incorrect information")
+            setErrorMessage('User already registered');
+            console.log(e.message);
+            }
         }
-    }
 
     return(
+        !(firstName && lastName && username && email && password && regClicked)
+        ?
         <>
             <Container className={classes.root} maxWidth='sm'>
                 <Grid
@@ -87,49 +100,53 @@ function RegisterComponent(props: IRegisterProps){
                     spacing={10}
                 >
                     <Grid item>
-                        <h1>Register Page</h1>
+                        <Typography variant='h2'>Register Page</Typography>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="firstName-input">First Name</InputLabel>
-                            <input id="firstName-input" type="text" onChange={updatefirstName} />
+                            <Input id="firstName-input" type="text" onChange={updatefirstName} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="lastName-input">Last Name</InputLabel>
-                            <input id="lastName-input" type="text" onChange={updatelastName} />
+                            <Input id="lastName-input" type="text" onChange={updatelastName} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
-                    <Grid item></Grid>
+                    <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="email-input">Email</InputLabel>
-                            <input id="email-input" type="text" onChange={updateemail} />
+                            <Input id="email-input" type="text" onChange={updateemail} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="username-input">Username</InputLabel>
-                            <input id="username-input" type="text:" onChange={updateusername} />
+                            <Input id="username-input" type="text:" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
-                    </Grid>              
+                    </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
-                            <input id="password-input" type="password" onChange={updatepassword} />
+                            <Input id="password-input" type="password" onChange={updatepassword} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={register} component = {Link} to={'/'}>Register</Button>
+                        <Button className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
                     </Grid>
+
+                </Grid>
             </Container>
-            { errorMessage ? <ErrorMessageComponent  errorMessage = {"You must fill in all the fields!"} /> : <></> }
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
         </>
+        :
+        <Redirect to="/" />
     )
 }
 

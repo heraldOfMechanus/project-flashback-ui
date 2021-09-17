@@ -5,10 +5,8 @@ import { useState, useEffect } from "react";
 import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
-import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
-import AddTriviaCardSetComponent from "./AddTriviaCardSetComponent";
 import { TriviaSet } from "../dtos/TriviaSet";
-import { Button } from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
 
 
@@ -53,6 +51,12 @@ function TriviaPage( props: ITriviaPageProps) {
             width: "50%",
             backgroundColor: "lightblue",
         },
+        h1: {
+            backgroundColor: '#6495ec',
+            width: "50%",
+            border: 'outset',
+            fontSize: 'xx-large',
+        },
         bullet: {
             display: 'inline-block',
             margin: '0 2px',
@@ -77,7 +81,7 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     });
 
-    let [done, setDone] = useState(false);
+    const [done, setDone] = useState(false);
 
 
     async function displayTriviaCardSets() {
@@ -125,7 +129,7 @@ function TriviaPage( props: ITriviaPageProps) {
           <h1>Create Set</h1>
                 <FormControl>
                     <InputLabel htmlFor="title-input">Topic</InputLabel>
-                    <input id="topic-input" type="text" onChange={handleAddSetChange} />
+                    <Input id="topic-input" type="text" onChange={handleAddSetChange} />
                     <br/>
                 </FormControl>
                 <br/>
@@ -139,14 +143,10 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     }
 
-    function showState() {
-        console.log(props.currentSet);
-    }
 
     return (
         <> 
-            <h1>TRIVIA PAGE</h1>
-            <Button onClick={showState}>SHOW STATE</Button>
+            <h1 className={classes.h1}>TRIVIA PAGE</h1>
             {isAdmin
             ?
                 <div>
@@ -168,7 +168,7 @@ function TriviaPage( props: ITriviaPageProps) {
             <div>
                 {triviaCardSetList[0]
                     ?
-                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList}  currentSet={props.currentSet}  setCurrentSet={props.setCurrentSet} user={props.currentUser} />
+                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList}  currentSet={props.currentSet}  setCurrentSet={props.setCurrentSet} user={props.currentUser} done={done} setDone={setDone} />
                     :
                     <></>
                 }

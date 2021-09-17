@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
-import {ButtonBase, FormControl, Grid, InputLabel, Typography} from "@material-ui/core";
+import {Box, Button, ButtonBase, FormControl, Grid, Input, InputLabel, Typography} from "@material-ui/core";
 import { ThreadComment } from "../dtos/ThreadComment";
 import { Thread } from "../dtos/Thread";
 import { Principal } from "../dtos/Principal";
 import { addNewComment, getAllComments } from "../remote/thread-comments-service";
 import { getProfilePicture } from "../remote/user-service";
 import { color, typography } from "@mui/system";
+import blank_profile from "../assets/blank_profile.png"
 
 
 interface ICommentProps {
@@ -24,19 +25,58 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [threadComm, setThreadComm] = useState([] as ThreadComment[]);
     let [done, setDone] = useState(false);
     const[pfp, setPfp] = useState('');
+    const twenty_seconds = 20000;
 
     const useStyles = makeStyles((theme) => ({
         root: {
             backgroundColor: 'lightskyblue',
-            textAlign: "left",
-            alignItems: 'left',
+            textAlign: "center",
+            alignItems: 'center',
             paddingLeft: 240,
             borderStyle: 'solid',
-            borgderColor: 'royalblue',
-            borderWidth: '.12rem',
+            borderColor: 'royalblue',
+            width: "80%",
+
         },
+        title: {
+            border:'outset',
+            width: "80%",
+        },
+        form:{
+            width: '100%',
+            height: '56px'
+
+
+        },
+        button:{
+            width: "50%",
+            color: "white",
+            fontSize: 'large',
+            border: 'outset',
+            backgroundColor: '#3f51b5',
+
+        },
+        div:{
+            textAlign: "center",
+            alignItems: 'center',
+            border: 'solid',
+            width: '100%'
+        },
+        div2:{
+            textAlign: "center",
+            alignItems: 'center',
+            width: '80%'
+        },
+
         pic: {
             borderRadius: '.7rem',
+            marginRight: '.5rem',
+        },
+        comment: {
+            marginTop: '.7rem',
+        },
+        timestamp: {
+            marginRight: '1rem',
         }
     }));
 
@@ -47,6 +87,11 @@ function ThreadCommentComponent(props: ICommentProps) {
             fetchComments();
             setDone(true);
         }
+        const interval = setInterval(() => {
+            fetchComments();
+          }, twenty_seconds);
+        
+          return () => clearInterval(interval);
     })
 
     const [formData, setFormData] = useState({
@@ -59,6 +104,11 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [comment, setNewComment] = useState('');
     let [errorMessage, setErrorMessage] = useState('');
 
+    const handleSeachInputKeyPress = (event:any) => {
+        if (event.key === 'Enter') {
+          newComment();
+        }
+      }
     function updateComment(e: any) {
         console.log(e.currentTarget.value);
         setNewComment(e.currentTarget.value);
@@ -77,6 +127,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 let newComment = new ThreadComment(formData.threadId, formData.userId, comment);
                 setDone(false);
                 addNewComment(newComment);
+                setErrorMessage('')
                 //@ts-ignore
                 document.getElementById("comment-input").value = "";
             } else {
@@ -113,28 +164,58 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     return (
         <>
+
+            <div className={classes.title}>
+            <Typography variant='h2'>Thread: {props.currentThread?.threadTitle}   </Typography>
+            <Typography variant='h4'>{props.currentThread?.threadContent}   </Typography>
+            </div>
+
+            <br/>
+            <br/>
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
-                <FormControl>
-                    <input id="comment-input" type="text" onChange={updateComment} />
+                <br/>
+                <div className={classes.div2}>
+                <FormControl className={classes.div}>
+                    <input className={classes.form} id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
                 </FormControl>
-                <button id="comment-btn" onClick={newComment}>Send</button>
+                    <br/>
+                <Button className={classes.button} id="comment-btn" type="submit" onClick={newComment}>Send</Button>
+                    { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
 
+
+                </div>
+
+
+
+                <Grid
+                    direction="column"
+                    spacing={10}
+                >
                 {threadComm?.map((ThreadComment) => {
-                if(ThreadComment.userId){
-                    return <Grid item>
-                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
+                if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
+                    return <Grid item className={classes.comment}>
+                    <Box
+                        display="flex"
+                        alignItems="middle"
+                    >
+                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary' className={classes.timestamp}>{ThreadComment.timestamp + " "}</Typography><Typography variant='inherit' color = 'secondary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
+                    </Box>
+                </Grid>
+                }
+                else {
+                    return <Grid item className={classes.comment}>
+                        <Box
+                            display="flex"
+                            alignItems="middle"
+                        >
+                            <img className={classes.pic} src={blank_profile}></img><Typography variant='caption' color = 'primary' className={classes.timestamp}>{ThreadComment.timestamp}</Typography><Typography variant='inherit' color = 'secondary'>{" Anonymous: "}</Typography>{ThreadComment.content}
+                        </Box>
                     </Grid>
                 }
-                else{
-                    return <Grid item>
-                    <Typography variant='caption' color = 'secondary'>{"Anonymous: "}</Typography>{ThreadComment.content}
-                    </Grid>
-                }
-                
                 })}
+                </Grid>
             </div>
-            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }      
         </>
         
     )

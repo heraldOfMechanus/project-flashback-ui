@@ -38,3 +38,12 @@ export const deleteThread = async (req: {id: string}) => {
         throw resp.data;
     }
 }
+
+export const updateOldThread = async (thread: Thread) => {
+
+    let resp = await flashbackClient.put('forum/update-thread', thread);
+
+    if(resp.data >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+}

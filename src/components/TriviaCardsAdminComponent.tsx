@@ -3,7 +3,7 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import {RegisterUserRequest} from "../dtos/register-user-request";
-import {FormControl, InputLabel} from '@material-ui/core';
+import {FormControl, InputLabel, Input} from '@material-ui/core';
 import { addNewCard } from "../remote/triviacard-service";
 import {getCardsBySetId, deleteCardById} from "../remote/triviacard-service";
 
@@ -68,10 +68,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
         }
 
     }
-
-    useEffect(() => {
-        allCardsBySetId();
-    }, []);
 
     // FOR THE MODAL FOR DELETING A TRIVIA CARD SET
 
@@ -182,7 +178,15 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
         }
     }
 
-    
+    let [done, setDone] = useState(false);
+
+    useEffect(() => {
+        if(!done) {
+            allCardsBySetId();
+            setDone(true);
+        }
+    })
+
     return(
         <>
             <h1>TRIVIA ADMIN PAGE</h1>
@@ -222,7 +226,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                         }
                         <br/>
                         <br/>
-                        <Button onClick={() => {handleUpdateCardSetOpen(card); props.setCurrentCard(card)}}> 
+                        <Button onClick={() => {handleUpdateCardSetOpen(card); props.setCurrentCard(card);}}> 
                             <UpdateIcon />
                         </Button>
                         <Modal
@@ -236,47 +240,40 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                                     <h2><i>{props.currentCard?.question}</i></h2>
                                     <FormControl>
                                         <InputLabel htmlFor="question-input">Question</InputLabel>
-                                        <input id="question-input" type="text" onChange={handleUpdateCardChangeQuestion} />
-                                        <br/>
+                                        <Input id="question-input" type="text" onChange={handleUpdateCardChangeQuestion} defaultValue={props.currentCard?.question} />
                                     </FormControl>
                                     <br/><br/>
                                     <FormControl>
                                         <InputLabel htmlFor="correctAnswer-input">Correct Answer</InputLabel>
-                                        <input id="correctAnswer-input" type="text" onChange={handleUpdateCardChangeCorrectAnswer} />
-                                        <br/>
+                                        <Input id="correctAnswer-input" type="text" onChange={handleUpdateCardChangeCorrectAnswer} defaultValue={props.currentCard?.correctAnswer} />
                                     </FormControl>
                                     <br/><br/>
                                     <FormControl>
                                         <InputLabel htmlFor="answer1-input">Option One</InputLabel>
-                                        <input id="answers1-input" type="text:" onChange={handleUpdateCardChangeAnswerOne} />
-                                        <br/>
+                                        <Input id="answers1-input" type="text:" onChange={handleUpdateCardChangeAnswerOne} defaultValue={props.currentCard?.answers[0]} />
                                     </FormControl>
                                     <br/><br/>
                                     <FormControl>
                                         <InputLabel htmlFor="answer2-input">Option Two</InputLabel>
-                                        <input id="answers2-input" type="text:" onChange={handleUpdateCardChangeAnswerTwo} />
-                                        <br/>
+                                        <Input id="answers2-input" type="text:" onChange={handleUpdateCardChangeAnswerTwo} defaultValue={props.currentCard?.answers[1]} />
                                     </FormControl>
                                     <br/><br/>
                                     <FormControl>
                                         <InputLabel htmlFor="answer3-input">Option Three</InputLabel>
-                                        <input id="answers3-input" type="text:" onChange={handleUpdateCardChangeAnswerThree} />
-                                        <br/>
+                                        <Input id="answers3-input" type="text:" onChange={handleUpdateCardChangeAnswerThree} defaultValue={props.currentCard?.answers[2]} />
                                     </FormControl>
                                     <br/><br/>
                                     <FormControl>
                                         <InputLabel htmlFor="answer4-input">Option Four</InputLabel>
-                                        <input id="answers4-input" type="text:" onChange={handleUpdateCardChangeAnswerFour} />
-                                        <br/><br/>
-                                    </FormControl>
-                                    <br/>
-                                    <FormControl>
-                                        <InputLabel htmlFor="points-input">Points</InputLabel>
-                                        <input id="points-input" type="text:" onChange={handleUpdateCardChangePoints} />
-                                        <br/><br/>
+                                        <Input id="answers4-input" type="text:" onChange={handleUpdateCardChangeAnswerFour} defaultValue={props.currentCard?.answers[3]} />
                                     </FormControl>
                                     <br/><br/>
-                                    <Button id="newCard-btn" color="primary" onClick={() => {updateTriviaCardtoSet(card); handleUpdateCardSetClose(); }}>Update Card</Button>
+                                    <FormControl>
+                                        <InputLabel htmlFor="points-input">Points</InputLabel>
+                                        <Input id="points-input" type="text:" onChange={handleUpdateCardChangePoints} defaultValue={props.currentCard?.points} />
+                                    </FormControl>
+                                    <br/><br/>
+                                    <Button id="newCard-btn" color="primary" onClick={() => {updateTriviaCardtoSet(card); handleUpdateCardSetClose(); setDone(false)}}>Update Card</Button>
                                     <Button id="newCard-btn-nvm" color="secondary" onClick={() => {handleUpdateCardSetClose();}}>Close</Button>
                                 </div>
                             </Modal>
@@ -293,7 +290,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                                     <h1>Delete Card</h1>
                                     <h2>Are you sure you want to delete <i>{props.currentCard?.question}</i></h2>
                                     <br/>
-                                    <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardModal(card); handleDeleteCardClose();}}>Confirm</Button>
+                                    <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardModal(card); handleDeleteCardClose(); setDone(false)}}>Confirm</Button>
                                     <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteCardClose();}}>Close</Button>
                                   </div>
                             </Modal>

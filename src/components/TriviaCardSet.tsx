@@ -11,11 +11,14 @@ import {
     Theme,
     useTheme,
     FormControl,
+    FormControlLabel,
     InputLabel,
     createStyles,
     ListItemIcon,
+    RadioGroup,
+    Radio,
     ListItem,
-    ButtonBase, Tooltip
+    ButtonBase, Tooltip, Input
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {render} from "@testing-library/react";
@@ -33,17 +36,18 @@ import ForumIcon from "@material-ui/icons/Forum";
 import TriviaQuestionPage from "./TriviaQuestionPage";
 import {Subforum} from "../dtos/Subforum";
 import {addNewCard} from "../remote/triviacard-service";
+import { FormControlUnstyledContext } from "@mui/core";
 
 
 
 interface ITriviaCardSetProps {
     triviaCardSets: TriviaSet[] | undefined;
     setTriviaCardSets: (nextTriviaCardSet: TriviaSet[]) => void;
-    currentSet: TriviaSet |undefined
+    currentSet: TriviaSet |undefined;
     setCurrentSet: (nextSet: TriviaSet | undefined) => void;
     user: Principal|undefined;
-    // updateModal: boolean;
-    // setUpdateModal: (isOpen: boolean) => void;
+    done: boolean;
+    setDone: (isDone: boolean) => void;
 }
 
 function TriviaCardSet(props: ITriviaCardSetProps) {
@@ -69,7 +73,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         root: {
             minWidth: 275,
             width: "50%",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
             
         },
         bullet: {
@@ -262,6 +266,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                     {triviaSet.topic}
                                 </Typography>
 
+
                                 <Typography  variant="h5" color="textSecondary" gutterBottom>
                                 Card Count: {triviaSet.cardCount}
                                 </Typography>
@@ -294,55 +299,47 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                             aria-describedby="simple-modal-description-1"
                                             >
                                                 <div style={modalStyle} className={classes.paper}>
-                                                <h1>Add Card</h1>
-                                                <h2><i>{props.currentSet?.topic}</i></h2>
+                                                <h1>Add Card to <i>{props.currentSet?.topic}</i></h1>
                                                     <FormControl>
                                                         <InputLabel htmlFor="question-input">Question</InputLabel>
-                                                        <input id="question-input" type="text" onChange={handleAddCardChangeQuestion} />
-                                                        <br/>
+                                                        <Input id="question-input" type="text" onChange={handleAddCardChangeQuestion} />
                                                     </FormControl>
                                                     <br/><br/>
                                                     <FormControl>
                                                         <InputLabel htmlFor="correctAnswer-input">Correct Answer</InputLabel>
-                                                        <input id="correctAnswer-input" type="text" onChange={handleAddCardChangeCorrectAnswer} />
-                                                        <br/>
+                                                        <Input id="correctAnswer-input" type="text" onChange={handleAddCardChangeCorrectAnswer} />
                                                     </FormControl>
                                                     <br/><br/>
                                                     <FormControl>
                                                         <InputLabel htmlFor="answer1-input">Option One</InputLabel>
-                                                        <input id="answers1-input" type="text:" onChange={handleAddCardChangeAnswerOne} />
-                                                        <br/>
+                                                        <Input id="answers1-input" type="text:" onChange={handleAddCardChangeAnswerOne} />
                                                     </FormControl>
                                                     <br/><br/>
                                                     <FormControl>
                                                         <InputLabel htmlFor="answer2-input">Option Two</InputLabel>
-                                                        <input id="answers2-input" type="text:" onChange={handleAddCardChangeAnswerTwo} />
-                                                        <br/>
+                                                        <Input id="answers2-input" type="text:" onChange={handleAddCardChangeAnswerTwo} />
                                                     </FormControl>
                                                     <br/><br/>
                                                     <FormControl>
                                                         <InputLabel htmlFor="answer3-input">Option Three</InputLabel>
-                                                        <input id="answers3-input" type="text:" onChange={handleAddCardChangeAnswerThree} />
-                                                        <br/>
+                                                        <Input id="answers3-input" type="text:" onChange={handleAddCardChangeAnswerThree} />
                                                     </FormControl>
                                                     <br/><br/>
                                                     <FormControl>
                                                         <InputLabel htmlFor="answer4-input">Option Four</InputLabel>
-                                                        <input id="answers4-input" type="text:" onChange={handleAddCardChangeAnswerFour} />
-                                                        <br/><br/>
+                                                        <Input id="answers4-input" type="text:" onChange={handleAddCardChangeAnswerFour} />
                                                     </FormControl>
-                                                    <br/>
+                                                    <br/><br/>
                                                     <FormControl>
                                                         <InputLabel htmlFor="points-input">Points</InputLabel>
-                                                        <input id="points-input" type="text:" onChange={handleAddCardChangePoints} />
-                                                        <br/><br/>
+                                                        <Input id="points-input" type="text:" onChange={handleAddCardChangePoints} />
                                                     </FormControl>
                                                     <br/><br/>
                                                     <Button id="newCard-btn" color="primary" onClick={() => {addTriviaCardtoSet(); handleAddCardSetClose(); }}>Add Card</Button>
                                                     <Button id="newCard-btn-nvm" color="secondary" onClick={() => {handleAddCardSetClose();}}>Close</Button>
                                                 </div>
                                         </Modal>
-                                    <Button onClick={() => {handleUpdateSetOpen(triviaSet); props.setCurrentSet(triviaSet)}}>
+                                    <Button onClick={() => {handleUpdateSetOpen(triviaSet); props.setCurrentSet(triviaSet);}}>
                                         <UpdateIcon />
                                     </Button>
                                         <Modal
@@ -356,11 +353,11 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                 <h2>Are you sure you want to update <i>{props.currentSet?.topic}</i>?</h2>
                                                     <FormControl>
                                                         <InputLabel htmlFor="title-input">Topic</InputLabel>
-                                                        <input id="title-input" type="text" onChange={handleUpdateSetChange} />
+                                                        <Input id="title-input" type="text" onChange={handleUpdateSetChange} defaultValue={props.currentSet?.topic}/>
                                                         <br/>
                                                     </FormControl>
                                                     <br/>
-                                                    <Button id="updateSet-btn" color="primary" onClick={() => {updateTriviaCardSetModal(updateSetFormData.topic, triviaSet.cardCount); handleUpdateSetClose();}}>Submit</Button>
+                                                    <Button id="updateSet-btn" color="primary" onClick={() => {updateTriviaCardSetModal(updateSetFormData.topic, triviaSet.cardCount); handleUpdateSetClose(); props.setDone(false)}}>Submit</Button>
                                                     <Button id="updateSet-btn-nvm" color="secondary" onClick={() => {handleUpdateSetClose();}}>Close</Button>
 
                                                 </div>
@@ -378,7 +375,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                                 <h1>Delete Set</h1>
                                                 <h2> Are you sure you want to delete <i>{props.currentSet?.topic}</i>?</h2>
                                                 <br/>
-                                                <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose();}}>Confirm</Button>
+                                                <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardSetModal(triviaSet); handleDeleteSetClose(); props.setDone(false)}}>Confirm</Button>
                                                 <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteSetClose();}}>Close</Button>
                                             </div>
                                         </Modal>
