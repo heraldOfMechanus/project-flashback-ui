@@ -73,7 +73,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
         root: {
             minWidth: 275,
             width: "50%",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
             
         },
         bullet: {

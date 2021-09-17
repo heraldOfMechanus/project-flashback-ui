@@ -43,6 +43,8 @@ function LandingPageComponent() {
             height: '',
             padding: '',
             textAlign: 'center',
+            width: '80%'
+
           },
         
         image: {

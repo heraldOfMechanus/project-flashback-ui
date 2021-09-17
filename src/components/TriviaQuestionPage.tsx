@@ -47,7 +47,7 @@ function QuestionPage( props: ITriviaQuestionPage){
 
         root: {
            textAlign: "center",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
             width: "50%",
             display: "inline-grid",
             border: "outset",
@@ -60,7 +60,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         h1: {
             border: "outset",
             width: "50%",
-            backgroundColor: "#abb3e2",
+            backgroundColor: "#87ceeb",
         }
 
 
@@ -181,7 +181,7 @@ function QuestionPage( props: ITriviaQuestionPage){
 
                 return <div className={classes.root}>
 
-                    <span> <h2> {x + ") "+  n[index]["question"]}</h2></span>
+                    <span> <h2> {x +1  + ") "+  n[index]["question"]}</h2></span>
 
                     <br/>
 
