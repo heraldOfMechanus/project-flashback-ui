@@ -3,7 +3,7 @@ import { Principal } from "../dtos/Principal";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
 import {authenticate} from '../remote/auth-service'
-import {Button, Container, FormControl, Grid, InputLabel, Typography} from "@material-ui/core";
+import {Button, Container, FormControl, Grid, Input, InputLabel, Typography} from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 
 
@@ -91,14 +91,14 @@ function LoginComponent(props: ILoginProps) {
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="username-input">Username</InputLabel>
-                            <input id="username-input" type="text" onChange={updateUsername} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="username-input" type="text" onChange={updateUsername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
-                            <input id="password-input" type="password" onChange={updatePassword} onKeyPress={handleSeachInputKeyPress} />
+                            <Input id="password-input" type="password" onChange={updatePassword} onKeyPress={handleSeachInputKeyPress} />
                             <br/>
                         </FormControl>
                     </Grid>

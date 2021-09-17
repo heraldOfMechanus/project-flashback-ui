@@ -6,7 +6,7 @@ import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
 import { TriviaSet } from "../dtos/TriviaSet";
-import { Button } from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
 
 
@@ -129,7 +129,7 @@ function TriviaPage( props: ITriviaPageProps) {
           <h1>Create Set</h1>
                 <FormControl>
                     <InputLabel htmlFor="title-input">Topic</InputLabel>
-                    <input id="topic-input" type="text" onChange={handleAddSetChange} />
+                    <Input id="topic-input" type="text" onChange={handleAddSetChange} />
                     <br/>
                 </FormControl>
                 <br/>

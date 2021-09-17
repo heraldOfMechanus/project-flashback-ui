@@ -4,7 +4,7 @@ import {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from 'react-router-dom';
-import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
+import {Button, Container, FormControl, Grid, Input, InputLabel} from '@material-ui/core';
 import { Link, Redirect } from "react-router-dom";
 import ErrorMessageComponent from "./ErrorMessage";
 
@@ -105,35 +105,35 @@ function RegisterComponent(props: IRegisterProps){
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="firstName-input">First Name</InputLabel>
-                            <input id="firstName-input" type="text" onChange={updatefirstName} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="firstName-input" type="text" onChange={updatefirstName} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="lastName-input">Last Name</InputLabel>
-                            <input id="lastName-input" type="text" onChange={updatelastName} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="lastName-input" type="text" onChange={updatelastName} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="email-input">Email</InputLabel>
-                            <input id="email-input" type="text" onChange={updateemail} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="email-input" type="text" onChange={updateemail} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="username-input">Username</InputLabel>
-                            <input id="username-input" type="text:" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="username-input" type="text:" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
-                            <input id="password-input" type="password" onChange={updatepassword} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="password-input" type="password" onChange={updatepassword} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
