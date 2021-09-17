@@ -77,7 +77,7 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     });
 
-    let [done, setDone] = useState(false);
+    const [done, setDone] = useState(false);
 
 
     async function displayTriviaCardSets() {
@@ -164,7 +164,7 @@ function TriviaPage( props: ITriviaPageProps) {
             <div>
                 {triviaCardSetList[0]
                     ?
-                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList}  currentSet={props.currentSet}  setCurrentSet={props.setCurrentSet} user={props.currentUser} />
+                    <TriviaCardSet triviaCardSets={triviaCardSetList} setTriviaCardSets={setTriviaCardSetList}  currentSet={props.currentSet}  setCurrentSet={props.setCurrentSet} user={props.currentUser} done={done} setDone={setDone} />
                     :
                     <></>
                 }

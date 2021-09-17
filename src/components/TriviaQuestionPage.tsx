@@ -23,8 +23,6 @@ interface ITriviaQuestionPage{
     currentUser: Principal | undefined
     setCurrentUser: (nextUser: Principal | undefined) => void;
 
-
-
 }
 
 
@@ -63,12 +61,7 @@ function QuestionPage( props: ITriviaQuestionPage){
             border: "outset",
             width: "50%",
             backgroundColor: "#abb3e2",
-        },
-
-        h2: {
-
         }
-
 
 
     }));
@@ -211,17 +204,16 @@ function QuestionPage( props: ITriviaQuestionPage){
 
 
                     <h4> This question is worth: {Cards.points}</h4>
-
-
                 </div>
 
             })}
 
-                    <div>
-                        <h5> There are {Cards.length} questions total </h5>
-                        <h4> Total Score: {total}</h4>
-                        <Button onClick={ () =>{endGame({total}); }} color="secondary">End Game</Button>
-                    </div>
+            <div>
+                <h5> There are {Cards.length} questions total </h5>
+                <h4> Total Score: {total}</h4>
+                <Button onClick={ () =>{endGame({total}); }} color="secondary">End Game</Button>
+            </div>
+
 
         </>
 
