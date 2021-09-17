@@ -25,7 +25,7 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [threadComm, setThreadComm] = useState([] as ThreadComment[]);
     let [done, setDone] = useState(false);
     const[pfp, setPfp] = useState('');
-    const twenty_seconds = 20000;
+    const fetchTimer = 10000;
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -89,7 +89,7 @@ function ThreadCommentComponent(props: ICommentProps) {
         }
         const interval = setInterval(() => {
             fetchComments();
-          }, twenty_seconds);
+          }, fetchTimer);
         
           return () => clearInterval(interval);
     })
@@ -128,6 +128,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 setDone(false);
                 addNewComment(newComment);
                 setErrorMessage('')
+                setNewComment('');
                 //@ts-ignore
                 document.getElementById("comment-input").value = "";
             } else {
