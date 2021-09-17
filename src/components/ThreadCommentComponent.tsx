@@ -142,27 +142,27 @@ function ThreadCommentComponent(props: ICommentProps) {
                     direction="column"
                     spacing={10}
                 >
-                    {threadComm?.map((ThreadComment) => {
-                    if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
-                        return <Grid item className={classes.comment}>
-                            <Box
-                                display="flex"
-                                alignItems="middle"
-                            >
-                            <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary' className={classes.timestamp}>{ThreadComment.timestamp + " "}</Typography><Typography variant='inherit' color = 'secondary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
-                            </Box>
-                        </Grid>        
-                    }
-                    else{
-                        return <Grid item className={classes.comment}>
-                            <Box
-                                display="flex"
-                                alignItems="middle"
-                            >
-                                <img className={classes.pic} src={blank_profile}></img><Typography variant='caption' color = 'primary' className={classes.timestamp}>{ThreadComment.timestamp}</Typography><Typography variant='inherit' color = 'secondary'>{" Anonymous: "}</Typography>{ThreadComment.content}
-                            </Box>
-                        </Grid>
-                    }
+                {threadComm?.map((ThreadComment) => {
+                if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
+                    return <Grid item className={classes.comment}>
+                    <Box
+                        display="flex"
+                        alignItems="middle"
+                    >
+                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary' className={classes.timestamp}>{ThreadComment.timestamp + " "}</Typography><Typography variant='inherit' color = 'secondary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
+                    </Box>
+                </Grid>
+                }
+                else {
+                    return <Grid item className={classes.comment}>
+                        <Box
+                            display="flex"
+                            alignItems="middle"
+                        >
+                            <img className={classes.pic} src={blank_profile}></img><Typography variant='caption' color = 'primary' className={classes.timestamp}>{ThreadComment.timestamp}</Typography><Typography variant='inherit' color = 'secondary'>{" Anonymous: "}</Typography>{ThreadComment.content}
+                        </Box>
+                    </Grid>
+                }
                 })}
                 </Grid>
             </div>
