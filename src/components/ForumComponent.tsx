@@ -1,14 +1,16 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button, Snackbar } from '@material-ui/core';
+import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel, Box, Button, Snackbar, Input } from '@material-ui/core';
 import { Alert, ButtonBase } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link, Redirect } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
-import { addNewThread, deleteThread, getAllThreads } from '../remote/thread-service';
+import { addNewThread, deleteThread, getAllThreads, updateOldThread } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
+import { DeleteOutline, Update } from '@mui/icons-material';
+import { wait } from '@testing-library/dom';
 
 
 interface IForumProps {
@@ -26,11 +28,13 @@ function ForumComponent(props: IForumProps) {
 
     let [threads, setThreads] = useState([] as Thread[]);
     let [open, setOpen] = useState(false);
+    let [open2, setOpen2] = useState(false);
     let [toastOpen, setToastOpen] = useState(false);
     let [done, setDone] = useState(false);
     let [isAdmin, setAdmin] = useState(false);
     
     let [deletionId, setDeletionId] = useState('');
+    let [updateThread, setUpdateThread] = useState(undefined as unknown as Thread);
 
     // Integer state for forceUpdate function
     let count = 0;
@@ -151,10 +155,45 @@ function ForumComponent(props: IForumProps) {
         setToastOpen(true);
     }
 
+    // @ts-ignore
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const performOpen2 = async () => {
+        setOpen2(true);
+
+        console.log(updateThread);
+        // Set the form data to the current update thread.
+        // await delay(5000);
+        // setFormData({...formData, ["threadTitle"]: updateThread.threadTitle });
+        // setFormData({...formData, ["threadContent"]: updateThread.threadContent});
+    }
+
+    const performClose2 = () => {
+        setOpen2(false);
+    }
+
     function performDelete() {
         console.log(deletionId)
         deleteThread({id: deletionId});
         performClose();
+    }
+
+    function performUpdate() {
+        if(formData.userId) {
+            // @ts-ignore
+            let newUpdateThread = new Thread(updateThread.id, formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent);
+            if(!newUpdateThread?.threadTitle) {
+                newUpdateThread.threadTitle = updateThread.threadTitle;
+            }
+            if(!newUpdateThread?.threadContent) {
+                newUpdateThread.threadContent = updateThread.threadContent;
+            }
+            console.log(newUpdateThread)
+            updateOldThread(newUpdateThread);
+            setDone(false);
+            performClose2();
+        } else {
+            console.log('You are not signed in!');
+        }
     }
 
     const performClose = () => {
@@ -190,17 +229,41 @@ function ForumComponent(props: IForumProps) {
           <h1>New Thread!</h1>
                 <FormControl>
                     <InputLabel htmlFor="title-input">Subject</InputLabel>
-                    <input id="title-input" type="text" onChange={handleChange} />
+                    <Input id="title-input" type="text" onChange={handleChange} />
                     <br/>
                 </FormControl>
                 <br/>
                 <FormControl>
                     <InputLabel htmlFor="content-input">Content</InputLabel>
-                    <input id="content-input" type="text" onChange={handleChange2} />
+                    <Input id="content-input" type="text" onChange={handleChange2} />
                     <br/>
                 </FormControl>
                 <br/>
                 <button id="newCard-btn" onClick={newThread}>Submit</button>
+        </div>
+    );
+
+    const body2 = (
+        <div className={classes.paper}>
+            <Box className={classes.modalButton}>
+                <Button onClick={performClose2}>
+                    Exit
+                </Button>
+            </Box>
+          <h1>Update this Thread!</h1>
+                <FormControl>
+                    <InputLabel htmlFor="title-input">Thread Title</InputLabel>
+                    <Input id="title-input" type="text" onChange={handleChange} defaultValue={updateThread?.threadTitle}/> 
+                    <br/>
+                </FormControl>
+                <br/>
+                <FormControl>
+                    <InputLabel htmlFor="content-input">Content</InputLabel>
+                    <Input id="content-input" type="text" onChange={handleChange2} defaultValue={updateThread?.threadContent} />
+                    <br/>
+                </FormControl>
+                <br/>
+                <Button onClick={performUpdate}>Submit</Button>
         </div>
     );
 
@@ -230,6 +293,13 @@ function ForumComponent(props: IForumProps) {
                 >
                     {body}
                 </Modal>
+                <Modal
+                    open={open2}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                >
+                    {body2}
+                </Modal>
             </div>
             <Container className={classes.root} maxWidth='lg'>
                 <Typography variant='h1'>{props.currentTopic?.subforumTitle} Forum</Typography>
@@ -243,8 +313,11 @@ function ForumComponent(props: IForumProps) {
                                 <ButtonBase onClick={() => {props.setCurrentThread(thread); handleClose()}} component={Link} to={"/threads/" + thread.id}>
                                     <Typography variant='h6'>{thread.threadTitle} | {thread.threadContent}</Typography>
                                 </ButtonBase>
-                                <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => {performOpen(thread);} }>
-                                    Delete Thread
+                                <Button onClick={() => {performOpen(thread);} }>
+                                    <DeleteOutline />
+                                </Button>
+                                <Button onClick={() => {setUpdateThread(thread); performOpen2();}}>
+                                    <Update />
                                 </Button>
                             </Box>
                         </Grid>}): threads?.map((thread) => {

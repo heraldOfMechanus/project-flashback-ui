@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, FormControl, Grid, Typography} from "@material-ui/core";
+import {Button, FormControl, Grid, Input, Typography} from "@material-ui/core";
 import { ThreadComment } from "../dtos/ThreadComment";
 import { Thread } from "../dtos/Thread";
 import { Principal } from "../dtos/Principal";
@@ -141,7 +141,7 @@ function ThreadCommentComponent(props: ICommentProps) {
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
                 <FormControl>
-                    <input id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
+                    <Input id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
                 </FormControl>
                 <button id="comment-btn" type="submit" onClick={newComment}>Send</button>
                 
