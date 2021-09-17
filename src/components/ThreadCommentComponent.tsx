@@ -134,12 +134,12 @@ function ThreadCommentComponent(props: ICommentProps) {
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
                     return <Grid item>
-                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
+                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.timestamp + " "}</Typography><Typography variant='inherit' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
                     </Grid>
                 }
                 else{
                     return <Grid item>
-                    <Typography variant='caption' color = 'secondary'>{"Anonymous: "}</Typography>{ThreadComment.content}
+                    <Typography variant='caption' color = 'primary'>{ThreadComment.timestamp + " "}</Typography><Typography variant='inherit' color = 'secondary'>{" Anonymous: "}</Typography>{ThreadComment.content}
                     </Grid>
                 }
                 
