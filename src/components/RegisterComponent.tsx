@@ -60,6 +60,11 @@ function RegisterComponent(props: IRegisterProps){
         setpassword(e.currentTarget.value)
     }
 
+    const handleSeachInputKeyPress = (event:any) => {
+        if (event.key === 'Enter') {
+          register();
+        }
+      }
     async function register(){
         console.log("Register button clicked")
         
@@ -97,40 +102,40 @@ function RegisterComponent(props: IRegisterProps){
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="firstName-input">First Name</InputLabel>
-                            <input id="firstName-input" type="text" onChange={updatefirstName} />
+                            <input id="firstName-input" type="text" onChange={updatefirstName} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="lastName-input">Last Name</InputLabel>
-                            <input id="lastName-input" type="text" onChange={updatelastName} />
+                            <input id="lastName-input" type="text" onChange={updatelastName} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item></Grid>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="email-input">Email</InputLabel>
-                            <input id="email-input" type="text" onChange={updateemail} />
+                            <input id="email-input" type="text" onChange={updateemail} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="username-input">Username</InputLabel>
-                            <input id="username-input" type="text:" onChange={updateusername} />
+                            <input id="username-input" type="text:" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>              
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
-                            <input id="password-input" type="password" onChange={updatepassword} />
+                            <input id="password-input" type="password" onChange={updatepassword} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={register}>Register</Button>
+                        <Button className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
                     </Grid>
             </Container>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
