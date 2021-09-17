@@ -53,6 +53,11 @@ function LoginComponent(props: ILoginProps) {
         setPassword(e.currentTarget.value);
     }
 
+    const handleSeachInputKeyPress = (event:any) => {
+        if (event.key === 'Enter') {
+          login();
+        }
+      }
     async function login() {
         console.log('Login button clicked! Form values: ', username, password);
 
@@ -86,14 +91,14 @@ function LoginComponent(props: ILoginProps) {
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="username-input">Username</InputLabel>
-                            <input id="username-input" type="text" onChange={updateUsername} />
+                            <input id="username-input" type="text" onChange={updateUsername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="password-input">Password</InputLabel>
-                            <input id="password-input" type="password" onChange={updatePassword} />
+                            <input id="password-input" type="password" onChange={updatePassword} onKeyPress={handleSeachInputKeyPress} />
                             <br/>
                         </FormControl>
                     </Grid>

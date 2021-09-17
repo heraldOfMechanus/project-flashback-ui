@@ -139,6 +139,7 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     }
 
+
     return (
         <> 
             <h1>TRIVIA PAGE</h1>

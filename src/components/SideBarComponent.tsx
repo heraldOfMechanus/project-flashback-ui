@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import LoginIcon from '@mui/icons-material/Login';
+import { Leaderboard } from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
@@ -195,7 +196,7 @@ export function SideBarComponent(props: INavbarProps) {
 
                         </ListItem>
                         <ListItem button component={Link} to={'/leaderboards'}>
-                        <ListItemIcon><ClearAllRoundedIcon/></ListItemIcon>
+                        <ListItemIcon><Leaderboard/></ListItemIcon>
                         <Typography color="inherit" variant="h6">Leaderboard</Typography>
                     </ListItem>
                     </List>

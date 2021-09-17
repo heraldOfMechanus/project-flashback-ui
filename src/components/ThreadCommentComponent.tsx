@@ -59,6 +59,11 @@ function ThreadCommentComponent(props: ICommentProps) {
     let [comment, setNewComment] = useState('');
     let [errorMessage, setErrorMessage] = useState('');
 
+    const handleSeachInputKeyPress = (event:any) => {
+        if (event.key === 'Enter') {
+          newComment();
+        }
+      }
     function updateComment(e: any) {
         console.log(e.currentTarget.value);
         setNewComment(e.currentTarget.value);
@@ -116,12 +121,12 @@ function ThreadCommentComponent(props: ICommentProps) {
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
                 <FormControl>
-                    <input id="comment-input" type="text" onChange={updateComment} />
+                    <input id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
                 </FormControl>
-                <button id="comment-btn" onClick={newComment}>Send</button>
-
+                <button id="comment-btn" type="submit" onSubmit={newComment}>Send</button>
+                
                 {threadComm?.map((ThreadComment) => {
-                if(ThreadComment.userId){
+                if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
                     return <Grid item>
                     <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
                     </Grid>
