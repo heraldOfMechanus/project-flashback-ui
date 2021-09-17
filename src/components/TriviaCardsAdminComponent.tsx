@@ -69,10 +69,6 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     }
 
-    useEffect(() => {
-        allCardsBySetId();
-    }, []);
-
     // FOR THE MODAL FOR DELETING A TRIVIA CARD SET
 
     let [deleteId, setDeleteId] = useState('');
@@ -182,7 +178,15 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
         }
     }
 
-    
+    let [done, setDone] = useState(false);
+
+    useEffect(() => {
+        if(!done) {
+            allCardsBySetId();
+            setDone(true);
+        }
+    })
+
     return(
         <>
             <h1>TRIVIA ADMIN PAGE</h1>
@@ -222,7 +226,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                         }
                         <br/>
                         <br/>
-                        <Button onClick={() => {handleUpdateCardSetOpen(card); props.setCurrentCard(card)}}> 
+                        <Button onClick={() => {handleUpdateCardSetOpen(card); props.setCurrentCard(card);}}> 
                             <UpdateIcon />
                         </Button>
                         <Modal
@@ -276,7 +280,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                                         <br/><br/>
                                     </FormControl>
                                     <br/><br/>
-                                    <Button id="newCard-btn" color="primary" onClick={() => {updateTriviaCardtoSet(card); handleUpdateCardSetClose(); }}>Update Card</Button>
+                                    <Button id="newCard-btn" color="primary" onClick={() => {updateTriviaCardtoSet(card); handleUpdateCardSetClose(); setDone(false)}}>Update Card</Button>
                                     <Button id="newCard-btn-nvm" color="secondary" onClick={() => {handleUpdateCardSetClose();}}>Close</Button>
                                 </div>
                             </Modal>
@@ -293,7 +297,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                                     <h1>Delete Card</h1>
                                     <h2>Are you sure you want to delete <i>{props.currentCard?.question}</i></h2>
                                     <br/>
-                                    <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardModal(card); handleDeleteCardClose();}}>Confirm</Button>
+                                    <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardModal(card); handleDeleteCardClose(); setDone(false)}}>Confirm</Button>
                                     <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteCardClose();}}>Close</Button>
                                   </div>
                             </Modal>
