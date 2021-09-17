@@ -5,7 +5,7 @@ import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 
 import {Button, Container, FormControl, Grid, InputLabel} from '@material-ui/core';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import ErrorMessageComponent from "./ErrorMessage";
 
 interface IRegisterProps{
@@ -40,22 +40,28 @@ function RegisterComponent(props: IRegisterProps){
     let [email, setemail] = useState('')
     let [username, setusername] = useState('')
     let [password, setpassword] = useState('')
+    let regClicked = false;
 
     let [errorMessage, setErrorMessage] = useState('');
 
     function updatefirstName(e:any){
+        console.log(e.currentTarget.value)
         setfirstName(e.currentTarget.value)
     }
     function updatelastName(e:any){
+        console.log(e.currentTarget.value)
         setlastName(e.currentTarget.value)
     }
     function updateemail(e:any){
+        console.log(e.currentTarget.value)
         setemail(e.currentTarget.value)
     }
     function updateusername(e:any){
+        console.log(e.currentTarget.value)
         setusername(e.currentTarget.value)
     }
     function updatepassword(e:any){
+        console.log(e.currentTarget.value)
         setpassword(e.currentTarget.value)
     }
 
@@ -63,23 +69,28 @@ function RegisterComponent(props: IRegisterProps){
         console.log("Register button clicked")
         try {
             if(firstName && lastName && email && username && password){
+
                 setErrorMessage('')
+                regClicked = true;
 
                 let request = await registerNewUser({firstName, lastName, email, username, password})
                 console.log(RegisterUserRequest)
 
 
 
-            } else {
+            }else {
+                regClicked = false;
                 setErrorMessage('You must fill in all the fields.');
             }
         } catch (e: any) {
-            setErrorMessage('You need to input valid information for the user detailings')
-            console.log("Incorrect information")
+            setErrorMessage('User already registered');
+            console.log(e.message);
+            }
         }
-    }
 
     return(
+        !(firstName && lastName && username && email && password && regClicked)
+        ?
         <>
             <Container className={classes.root} maxWidth='sm'>
                 <Grid
@@ -125,11 +136,13 @@ function RegisterComponent(props: IRegisterProps){
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={register} component = {Link} to={'/'}>Register</Button>
+                        <Button className={classes.button} onClick={register}>Register</Button>
                     </Grid>
             </Container>
-            { errorMessage ? <ErrorMessageComponent  errorMessage = {"You must fill in all the fields!"} /> : <></> }
+            { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }
         </>
+        :
+        <Redirect to="/" />
     )
 }
 
