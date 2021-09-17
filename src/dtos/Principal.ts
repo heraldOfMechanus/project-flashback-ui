@@ -10,7 +10,7 @@ export class Principal {
     lastName: string;
     email: string;
     totalScore: number;
-    registrationDate: String
+    registrationDate: string
 
 
     constructor(id: string, un: string, role: string, token: string, firstName: string, lastName: string, email: string, totalScore: number, NewDate: string) {

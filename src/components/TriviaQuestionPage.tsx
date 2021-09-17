@@ -63,7 +63,12 @@ function QuestionPage( props: ITriviaQuestionPage){
             border: "outset",
             width: "50%",
             backgroundColor: "#abb3e2",
+        },
+
+        h2: {
+
         }
+
 
 
     }));
@@ -205,7 +210,9 @@ function QuestionPage( props: ITriviaQuestionPage){
                     <br/>
 
 
-                    <br/>
+                    <h4> This question is worth: {Cards.points}</h4>
+
+
                 </div>
 
             })}
@@ -214,11 +221,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                         <h5> There are {Cards.length} questions total </h5>
                         <h4> Total Score: {total}</h4>
                         <Button onClick={ () =>{endGame({total}); }} color="secondary">End Game</Button>
-                        </div>
-
-
-
-
+                    </div>
 
         </>
 
