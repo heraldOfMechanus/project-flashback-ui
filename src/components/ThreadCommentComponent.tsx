@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, FormControl, Grid, Input, Typography} from "@material-ui/core";
+import {ButtonBase, FormControl, Grid, Input, InputLabel, Typography} from "@material-ui/core";
 import { ThreadComment } from "../dtos/ThreadComment";
 import { Thread } from "../dtos/Thread";
 import { Principal } from "../dtos/Principal";
-import Delete from "@material-ui/icons/Delete";
-import { addNewComment, deleteCommentById, getAllComments } from "../remote/thread-comments-service";
+import { addNewComment, getAllComments } from "../remote/thread-comments-service";
 import { getProfilePicture } from "../remote/user-service";
 import { color, typography } from "@mui/system";
-import { DeleteOutlined } from "@mui/icons-material";
 
 
 interface ICommentProps {
@@ -25,8 +23,8 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     let [threadComm, setThreadComm] = useState([] as ThreadComment[]);
     let [done, setDone] = useState(false);
-    let [admin, setAdmin] = useState(false);
     const[pfp, setPfp] = useState('');
+    const twenty_seconds = 20000;
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -50,9 +48,11 @@ function ThreadCommentComponent(props: ICommentProps) {
             fetchComments();
             setDone(true);
         }
-        if(props.currentUser?.role === "admin") {
-            setAdmin(true)
-        }
+        const interval = setInterval(() => {
+            fetchComments();
+          }, twenty_seconds);
+        
+          return () => clearInterval(interval);
     })
 
     const [formData, setFormData] = useState({
@@ -69,22 +69,10 @@ function ThreadCommentComponent(props: ICommentProps) {
         if (event.key === 'Enter') {
           newComment();
         }
-    }
-
+      }
     function updateComment(e: any) {
         console.log(e.currentTarget.value);
         setNewComment(e.currentTarget.value);
-    }
-
-    function deleteComment(tobedeleted: string | undefined) {
-        console.log(tobedeleted);
-        if(tobedeleted) {
-            deleteCommentById({id: tobedeleted});
-        } else {
-            setErrorMessage("That comment ID is null!");
-        }
-
-        setDone(false);
     }
 
     async function newComment() {
@@ -100,7 +88,6 @@ function ThreadCommentComponent(props: ICommentProps) {
                 let newComment = new ThreadComment(formData.threadId, formData.userId, comment);
                 setDone(false);
                 addNewComment(newComment);
-                setErrorMessage('');
                 //@ts-ignore
                 document.getElementById("comment-input").value = "";
             } else {
@@ -109,7 +96,6 @@ function ThreadCommentComponent(props: ICommentProps) {
         } catch (e: any) {
             setErrorMessage(e.message);
         }
-        setNewComment('');
     }
 
     async function fetchComments() {
@@ -145,28 +131,18 @@ function ThreadCommentComponent(props: ICommentProps) {
                 </FormControl>
                 <button id="comment-btn" type="submit" onClick={newComment}>Send</button>
                 
-                {admin ? threadComm?.map((ThreadComment) => {
-                    if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
-                        return <Grid item>
-                        <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
-                        <Button onClick={() => {deleteComment(ThreadComment.id); setDone(false);}}><DeleteOutlined/></Button>
-                        </Grid>
-                    } else {
-                        return <Grid item>
-                        <Typography variant='caption' color = 'secondary'>{"Anonymous: "}</Typography>{ThreadComment.content}
-                        <Button onClick={() => {deleteComment(ThreadComment.id); setDone(false);}}><DeleteOutlined/></Button>
-                        </Grid>
-                    }
-                }) : threadComm?.map((ThreadComment) => {
-                    if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
-                        return <Grid item>
-                        <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
-                        </Grid>
-                    } else {
-                        return <Grid item>
-                        <Typography variant='caption' color = 'secondary'>{"Anonymous: "}</Typography>{ThreadComment.content}
-                        </Grid>
-                    }
+                {threadComm?.map((ThreadComment) => {
+                if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
+                    return <Grid item>
+                    <img className={classes.pic} src={'https://picsum.photos/seed/' + ThreadComment.userId + '/25'}></img><Typography variant='caption' color = 'primary'>{ThreadComment.userId + ": "}</Typography>{" " + ThreadComment.content}
+                    </Grid>
+                }
+                else{
+                    return <Grid item>
+                    <Typography variant='caption' color = 'secondary'>{"Anonymous: "}</Typography>{ThreadComment.content}
+                    </Grid>
+                }
+                
                 })}
             </div>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {errorMessage} /> : <></> }      
