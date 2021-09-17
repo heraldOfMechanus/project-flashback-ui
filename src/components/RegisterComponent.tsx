@@ -45,41 +45,35 @@ function RegisterComponent(props: IRegisterProps){
     let [errorMessage, setErrorMessage] = useState('');
 
     function updatefirstName(e:any){
-        console.log(e.currentTarget.value)
         setfirstName(e.currentTarget.value)
     }
     function updatelastName(e:any){
-        console.log(e.currentTarget.value)
         setlastName(e.currentTarget.value)
     }
     function updateemail(e:any){
-        console.log(e.currentTarget.value)
         setemail(e.currentTarget.value)
     }
     function updateusername(e:any){
-        console.log(e.currentTarget.value)
         setusername(e.currentTarget.value)
     }
     function updatepassword(e:any){
-        console.log(e.currentTarget.value)
         setpassword(e.currentTarget.value)
     }
 
     async function register(){
         console.log("Register button clicked")
+        
         try {
             if(firstName && lastName && email && username && password){
 
                 setErrorMessage('')
-                regClicked = true;
 
                 let request = await registerNewUser({firstName, lastName, email, username, password})
                 console.log(RegisterUserRequest)
-
-
+                regClicked = true;
+                setErrorMessage('User successfully registered');
 
             }else {
-                regClicked = false;
                 setErrorMessage('You must fill in all the fields.');
             }
         } catch (e: any) {
