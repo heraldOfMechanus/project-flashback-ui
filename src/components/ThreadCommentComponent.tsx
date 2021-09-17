@@ -82,6 +82,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 let newComment = new ThreadComment(formData.threadId, formData.userId, comment);
                 setDone(false);
                 addNewComment(newComment);
+                setErrorMessage('');
                 //@ts-ignore
                 document.getElementById("comment-input").value = "";
             } else {
@@ -91,7 +92,6 @@ function ThreadCommentComponent(props: ICommentProps) {
             setErrorMessage(e.message);
         }
         setNewComment('');
-        
     }
 
     async function fetchComments() {
