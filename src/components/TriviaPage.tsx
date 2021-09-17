@@ -5,10 +5,8 @@ import { useState, useEffect } from "react";
 import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
-import { AddTriviaCardSetRequest } from "../dtos/add-trivia-card-set-request";
-import AddTriviaCardSetComponent from "./AddTriviaCardSetComponent";
 import { TriviaSet } from "../dtos/TriviaSet";
-import { Button } from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
 
 
@@ -52,6 +50,12 @@ function TriviaPage( props: ITriviaPageProps) {
             minWidth: 275,
             width: "50%",
             backgroundColor: "lightblue",
+        },
+        h1: {
+            backgroundColor: '#6495ec',
+            width: "50%",
+            border: 'outset',
+            fontSize: 'xx-large',
         },
         bullet: {
             display: 'inline-block',
@@ -125,7 +129,7 @@ function TriviaPage( props: ITriviaPageProps) {
           <h1>Create Set</h1>
                 <FormControl>
                     <InputLabel htmlFor="title-input">Topic</InputLabel>
-                    <input id="topic-input" type="text" onChange={handleAddSetChange} />
+                    <Input id="topic-input" type="text" onChange={handleAddSetChange} />
                     <br/>
                 </FormControl>
                 <br/>
@@ -142,7 +146,7 @@ function TriviaPage( props: ITriviaPageProps) {
 
     return (
         <> 
-            <h1>TRIVIA PAGE</h1>
+            <h1 className={classes.h1}>TRIVIA PAGE</h1>
             {isAdmin
             ?
                 <div>
