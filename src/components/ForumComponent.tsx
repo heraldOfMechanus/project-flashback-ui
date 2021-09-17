@@ -239,7 +239,7 @@ function ForumComponent(props: IForumProps) {
                     <br/>
                 </FormControl>
                 <br/>
-                <button id="newCard-btn" onClick={newThread}>Submit</button>
+                <Button id="newCard-btn" onClick={newThread}>Submit</Button>
         </div>
     );
 
@@ -283,9 +283,9 @@ function ForumComponent(props: IForumProps) {
                 </Alert>
             </Snackbar>
             <div>
-                <button type="button" onClick={handleOpen}>
+                <Button type="button" onClick={handleOpen}>
                     Create New Thread
-                </button>
+                </Button>
                 <Modal
                     open={open}
                     aria-labelledby="simple-modal-title"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
-import {ButtonBase, FormControl, Grid, Input, InputLabel, Typography} from "@material-ui/core";
+import {Button, ButtonBase, FormControl, Grid, Input, InputLabel, Typography} from "@material-ui/core";
 import { ThreadComment } from "../dtos/ThreadComment";
 import { Thread } from "../dtos/Thread";
 import { Principal } from "../dtos/Principal";
@@ -129,7 +129,7 @@ function ThreadCommentComponent(props: ICommentProps) {
                 <FormControl>
                     <Input id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
                 </FormControl>
-                <button id="comment-btn" type="submit" onClick={newComment}>Send</button>
+                <Button id="comment-btn" type="submit" onClick={newComment}>Send</Button>
                 
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){
