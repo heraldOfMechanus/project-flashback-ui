@@ -4,7 +4,7 @@ import {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from 'react-router-dom';
-import {Button, Container, FormControl, Grid, Input, InputLabel} from '@material-ui/core';
+import {Button, Container, FormControl, Grid, Input, InputLabel, Typography} from '@material-ui/core';
 import { Link, Redirect } from "react-router-dom";
 import ErrorMessageComponent from "./ErrorMessage";
 
@@ -100,7 +100,7 @@ function RegisterComponent(props: IRegisterProps){
                     spacing={10}
                 >
                     <Grid item>
-                        <h1>Register Page</h1>
+                        <Typography variant='h2'>Register Page</Typography>
                     </Grid>
                     <Grid item>
                         <FormControl className={classes.field}>

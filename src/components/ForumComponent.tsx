@@ -60,6 +60,9 @@ function ForumComponent(props: IForumProps) {
             borderColor: 'royalblue',
             borderWidth: '.2rem',
         },
+        type:{
+            borderBottom: 'solid',
+        },
         button: {
             backgroundColor: 'cornflowerblue',
             width: '15rem',
@@ -283,9 +286,11 @@ function ForumComponent(props: IForumProps) {
                 </Alert>
             </Snackbar>
             <div>
-                <Button type="button" onClick={handleOpen}>
+                <Button type="button" onClick={handleOpen} variant="contained" color="primary">
                     Create New Thread
                 </Button>
+                <br/>
+                <br/>
                 <Modal
                     open={open}
                     aria-labelledby="simple-modal-title"
@@ -303,6 +308,8 @@ function ForumComponent(props: IForumProps) {
             </div>
             <Container className={classes.root} maxWidth='lg'>
                 <Typography variant='h1'>{props.currentTopic?.subforumTitle} Forum</Typography>
+                <br/>
+                <br/>
                 <Grid
                     direction="column"
                     spacing={10}

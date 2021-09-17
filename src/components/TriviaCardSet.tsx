@@ -265,9 +265,7 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                 <Typography variant="h3" component="h2">
                                     {triviaSet.topic}
                                 </Typography>
-                                <Button> HELP!
-                                
-                                </Button>
+
 
                                 <Typography  variant="h5" color="textSecondary" gutterBottom>
                                 Card Count: {triviaSet.cardCount}

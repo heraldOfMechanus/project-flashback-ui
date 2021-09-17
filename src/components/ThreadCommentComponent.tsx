@@ -30,13 +30,28 @@ function ThreadCommentComponent(props: ICommentProps) {
     const useStyles = makeStyles((theme) => ({
         root: {
             backgroundColor: 'lightskyblue',
-            textAlign: "left",
-            alignItems: 'left',
-            paddingLeft: 240,
+            textAlign: "center",
+            alignItems: 'center',
+            paddingLeft: 50,
             borderStyle: 'solid',
-            borgderColor: 'royalblue',
-            borderWidth: '.12rem',
+            borderColor: 'royalblue',
+            width: "80%",
+
         },
+        title: {
+            border:'outset',
+            width: "80%",
+        },
+        form:{
+            width: '80%',
+
+
+        },
+        div:{
+            textAlign: "center",
+            alignItems: 'center',
+        },
+
         pic: {
             borderRadius: '.7rem',
         }
@@ -125,12 +140,23 @@ function ThreadCommentComponent(props: ICommentProps) {
 
     return (
         <>
+
+            <div className={classes.title}>
+            <Typography variant='h2'>Thread: {props.currentThread?.threadTitle}   </Typography>
+            <Typography variant='h4'>{props.currentThread?.threadContent}   </Typography>
+            </div>
+
+            <br/>
+            <br/>
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
-                <FormControl>
+                <div>
+                <FormControl className={classes.form}>
                     <Input id="comment-input" type="text" onChange={updateComment} onKeyPress={handleSeachInputKeyPress} />
                 </FormControl>
                 <Button id="comment-btn" type="submit" onClick={newComment}>Send</Button>
+                </div>
+
                 
                 {threadComm?.map((ThreadComment) => {
                 if(ThreadComment.userId && ThreadComment.userId != "Anonymous"){

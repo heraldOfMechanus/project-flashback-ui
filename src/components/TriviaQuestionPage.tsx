@@ -1,17 +1,14 @@
 import {Card} from "../dtos/Card";
 import {useEffect, useState} from "react";
-import ForumTopicListComponent from "./ForumTopicListComponent";
-
 import {getCardsBySetId} from "../remote/triviacard-service";
 import {TriviaSet} from "../dtos/TriviaSet";
 import {Button, makeStyles} from "@material-ui/core";
-
 import {useHistory} from 'react-router-dom';
 import {Principal} from "../dtos/Principal";
 import {updateUserScore} from "../remote/user-service";
 import {getAllSubForums} from "../remote/sub-forum-service";
 import { Subforum } from "../dtos/Subforum";
-import { Link, Redirect } from "react-router-dom";
+
 
 
 
@@ -24,6 +21,8 @@ interface ITriviaQuestionPage{
     setCurrentCard: (nextCard: Card) => void;
     currentUser: Principal | undefined
     setCurrentUser: (nextUser: Principal | undefined) => void;
+    currentTopic: Subforum | undefined
+    setCurrentTopic: (nextTopic: Subforum | undefined) => void;
 
 }
 
@@ -177,14 +176,20 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
     function navToForums(topic: any){
+        let m: Subforum | undefined;
         for(let s of subforums){
             console.log(s.subforumTitle);
-            if(s.subforumTitle === topic) {
+            if(s.subforumTitle === props.currentSet?.topic) {
                 console.log("FOUND A MATCH");
-               <Link to={"/forum/" + s.subforumTitle} />
-            } 
+                props.setCurrentTopic(s);
+                history.push("/forum/" + s.subforumTitle);
+                return;
+            } else if(s.subforumTitle === "Miscellaneous") {
+                m = s;
+            }
         }
-        <Link to={"/forum"} />
+        props.setCurrentTopic(m);
+        history.push("/forum/Miscellaneous");
     }
 
 
