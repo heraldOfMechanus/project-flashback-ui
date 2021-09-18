@@ -1,6 +1,6 @@
 
 import {RegisterUserRequest} from "../dtos/register-user-request";
-import {useState} from "react";
+import React, {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from 'react-router-dom';
@@ -139,6 +139,11 @@ function RegisterComponent(props: IRegisterProps){
                     </Grid>
                     <Grid item>
                         <Button className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
+                    </Grid>
+                    <Grid item>
+                        <Link to="/login">
+                            Already have an account? Click Me!
+                        </Link>
                     </Grid>
 
                 </Grid>

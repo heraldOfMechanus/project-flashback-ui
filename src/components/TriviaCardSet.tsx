@@ -37,6 +37,8 @@ import TriviaQuestionPage from "./TriviaQuestionPage";
 import {Subforum} from "../dtos/Subforum";
 import {addNewCard} from "../remote/triviacard-service";
 import { FormControlUnstyledContext } from "@mui/core";
+import {useHistory} from 'react-router-dom';
+import ErrorMessageComponent from "./ErrorMessage";
 
 
 
@@ -52,8 +54,17 @@ interface ITriviaCardSetProps {
 
 function TriviaCardSet(props: ITriviaCardSetProps) {
 
+
+    const history = useHistory();
+    if(!props.user?.username)
+    {
+        history.push("/login")
+    }
     let role;
     let isAdmin: boolean;
+
+
+
 
     //check to see if a user is logged in. if not, role and isAdmin remain undefined (i.e., falsy)
     if(props.user){
@@ -279,10 +290,14 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                         <Typography color="inherit" variant="h6">Go to Cards</Typography>
                                     </ListItem>
                                 :
+
+
+
                                     <ListItem button component={Link} to={'/trivia-question'} onClick={() => {props.setCurrentSet(triviaSet)}}>
-                                        <ListItemIcon><ForumIcon/></ListItemIcon>
-                                        <Typography color="inherit" variant="h6">Go to Cards</Typography>
+                                    <ListItemIcon><ForumIcon/></ListItemIcon>
+                                    <Typography color="inherit" variant="h6">Go to Cards</Typography>
                                     </ListItem>
+
                                 }
                             </CardActions>
 
