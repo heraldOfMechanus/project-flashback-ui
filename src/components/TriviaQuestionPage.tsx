@@ -29,7 +29,6 @@ interface ITriviaQuestionPage{
 
 function QuestionPage( props: ITriviaQuestionPage){
 
-
     const history = useHistory();
 
     let currentSelected = -1;
@@ -40,7 +39,6 @@ function QuestionPage( props: ITriviaQuestionPage){
 
     let [Cards, setCards] = useState([] as Card[] );
     let [subforums, setSubforums] = useState([] as Subforum[]);
-
 
     let id = props.currentSet?.id;
 
@@ -89,7 +87,6 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
     let updateScore = async (score: string) =>{
-
         try {
 
             return await updateUserScore(username, score);
@@ -104,20 +101,41 @@ function QuestionPage( props: ITriviaQuestionPage){
         if(correctAnswer === selectedAnswer){
             console.log("true")
             add(Number(points))
-
-
         }else{
             console.log("false")
-
         }
-
     }
 
     function updateAnswer(a: number){
         currentSelected = a;
+
+        if(a === 0) {
+            setButtonColor1(true);
+            setButtonColor2(false);
+            setButtonColor3(false);
+            setButtonColor4(false);
+        }
+        if(a === 1) {
+            setButtonColor1(false);
+            setButtonColor2(true);
+            setButtonColor3(false);
+            setButtonColor4(false);
+        }
+        if(a === 2) {
+            setButtonColor1(false);
+            setButtonColor2(false);
+            setButtonColor3(true);
+            setButtonColor4(false);
+        }
+        if(a === 3) {
+            setButtonColor1(false);
+            setButtonColor2(false);
+            setButtonColor3(false);
+            setButtonColor4(true);
+        }
+
         console.log("Currently Selected: " + currentSelected);
     }
-
 
 
     function add(e: any){
@@ -133,13 +151,12 @@ function QuestionPage( props: ITriviaQuestionPage){
         console.log(Cards.length)
 
         updateAnswer(-1);
-
-
-
     }
 
-
-
+    const [buttonColor1, setButtonColor1] = useState(false);
+    const [buttonColor2, setButtonColor2] = useState(false);
+    const [buttonColor3, setButtonColor3] = useState(false);
+    const [buttonColor4, setButtonColor4] = useState(false);
 
 
 
@@ -175,6 +192,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         }
     }
 
+
     function navToForums(topic: any){
         let m: Subforum | undefined;
         for(let s of subforums){
@@ -193,41 +211,31 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
 
-
-
     return(
-
-
         <>
-
-            <Typography variant="h2">Trivia Page</Typography>
+            <Typography variant="h2">Trivia Cards</Typography>
             <Typography variant="h4">Set: {props.currentSet?.topic}</Typography>
             <br />
             {Cards.slice(x,x+1).map((Cards,index, n) =>{
-
                 return <div className={classes.root}>
 
                     <span> <h2> {x +1  + ") "+  n[index]["question"]}</h2></span>
 
                     <br/>
 
-                    <Button className={classes.buttons} onClick={() =>{updateAnswer(0)}} variant="contained">{Cards.answers[0]} </Button>
+                    <Button id="button-1" className={classes.buttons} onClick={() =>{updateAnswer(0)}} variant="contained" color={buttonColor1 ? "primary" : "default"}>{Cards.answers[0]} </Button>
                     <br/>
-
-                    <Button className={classes.buttons} onClick={ () =>{updateAnswer(1)}} variant="contained">{Cards.answers[1]}</Button>
+                    <Button id="button-2" className={classes.buttons} onClick={ () =>{updateAnswer(1)}} variant="contained" color={buttonColor2 ? "primary" : "default"}>{Cards.answers[1]}</Button>
                     <br/>
-                    <Button className={classes.buttons} onClick={ () =>{updateAnswer(2)}} variant="contained">{Cards.answers[2]}</Button>
+                    <Button id="button-3" className={classes.buttons} onClick={ () =>{updateAnswer(2)}} variant="contained" color={buttonColor3 ? "primary" : "default"}>{Cards.answers[2]}</Button>
                     <br/>
-                    <Button className={classes.buttons} onClick={ () =>{updateAnswer(3)}} variant="contained">{Cards.answers[3]}</Button>
+                    <Button id="button-4" className={classes.buttons} onClick={ () =>{updateAnswer(3)}} variant="contained" color={buttonColor4 ? "primary" : "default"}>{Cards.answers[3]}</Button>
                     <br/>
-
-
 
                     <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[currentSelected], Cards.points); updateX()}} variant="contained" color="primary">
                         next question
                     </Button>
                     <br/>
-
 
                     <h4> This question is worth: {Cards.points}</h4>
                 </div>
@@ -235,8 +243,8 @@ function QuestionPage( props: ITriviaQuestionPage){
             })}
 
             <div>
-                <h5> There are {Cards.length} questions total </h5>
-                <h4> Total Score: {total}</h4>
+                <h4> There are {Cards.length} questions total </h4>
+                <h3> Total Score: {total}</h3>
                 <Button onClick={ () =>{endGame({total}); }} variant="contained" color="secondary">End Game</Button>
                 <Button onClick={ () =>{(navToForums(props.currentSet?.topic)); }} variant="contained">Help</Button>
             </div>
