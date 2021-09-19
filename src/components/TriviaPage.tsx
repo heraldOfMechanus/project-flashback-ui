@@ -81,7 +81,7 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     });
 
-    const [done, setDone] = useState(false);
+    let [done, setDone] = useState(false);
 
 
     async function displayTriviaCardSets() {

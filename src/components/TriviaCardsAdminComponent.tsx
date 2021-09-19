@@ -59,7 +59,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     const modalStyle = getModalStyle();
     const classes = useStyles();
 
-    let allCardsBySetId = async () =>{
+    async function allCardsBySetId() {
         try {
             let allcards = await getCardsBySetId(props.currentSet?.id);
             setCards(allcards)
@@ -101,13 +101,13 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     const [updateCardOpen, updateCardSetOpen] = React.useState(false);
 
     const [updateCardFormData, setUpdateCardFormData] = useState({
-        question: '',
-        correctAnswer: '',
-        answerOne: '',
-        answerTwo: '',
-        answerThree: '',
-        answerFour: '',
-        points: 0,
+        question: props.currentCard?.question,
+        correctAnswer: props.currentCard?.correctAnswer,
+        answerOne: props.currentCard?.answers[0],
+        answerTwo: props.currentCard?.answers[1],
+        answerThree: props.currentCard?.answers[2],
+        answerFour: props.currentCard?.answers[3],
+        points: 0
     });
 
     function handleUpdateCardSetOpen (req: Card) {
@@ -156,15 +156,24 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     //do something here to send id as well
     async function updateTriviaCardtoSet(card: Card){
+        console.log("----------");
         let id = updateId;
+        console.log("id: " + id);
+        console.log("set id: " + props.currentSet?.id);
+        console.log("question: " + updateCardFormData.question);
+        console.log("ans 1: " + updateCardFormData.answerOne);
+        console.log("ans 2: " + updateCardFormData.answerTwo);
+        console.log("ans 3: " + updateCardFormData.answerThree);
+        console.log("ans 4: " + updateCardFormData.answerFour);
+        console.log("correct answer: " + updateCardFormData.correctAnswer);
+        console.log("points: " + updateCardFormData.points);
         try{
-            if(props.currentSet?.id && updateCardFormData.question && updateCardFormData.question &&
+            if(props.currentSet?.id && updateCardFormData.question &&
                 updateCardFormData.answerOne && updateCardFormData.answerTwo && 
                 updateCardFormData.answerThree && updateCardFormData.answerFour && 
                 updateCardFormData.correctAnswer) {
-
-                console.log(id + " " + updateCardFormData.question + " " + updateCardFormData.correctAnswer);
                  
+                console.log("about to query API");
                 updateTriviaCard({
                     id: id,
                     triviaCardSetId: props.currentSet.id,
@@ -292,7 +301,7 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                                     <h2>Are you sure you want to delete <i>{props.currentCard?.question}</i></h2>
                                     <br/>
                                     <Button id="deleteSet-btn" color="primary" onClick={() => {deleteTriviaCardModal(card); handleDeleteCardClose(); setDone(false)}}>Confirm</Button>
-                                    <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteCardClose();}}>Close</Button>
+                                    <Button id="deleteSet-btn-nvm" color="secondary" onClick={() => {handleDeleteCardClose(); setDone(false)}}>Close</Button>
                                   </div>
                             </Modal>
                     </div>
