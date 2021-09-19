@@ -15,8 +15,6 @@ import {
     Typography
 } from "@material-ui/core";
 import {Link, Redirect} from "react-router-dom";
-import {Alert} from "@mui/material";
-import ForumIcon from "@material-ui/icons/Forum";
 
 
 interface ILoginProps {
@@ -116,18 +114,18 @@ function LoginComponent(props: ILoginProps) {
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={login}>Log in!</Button>
+                        <Button id='login-button' className={classes.button} onClick={login}>Log in!</Button>
                     </Grid>
 
-                    <Grid item>
-                        <Link to="/register">
-                            Click here to register an account
-                        </Link>
-                    </Grid>
+                    {/*<Grid item>*/}
+                    {/*    <Link to="/register">*/}
+                    {/*        Click here to register an account*/}
+                    {/*    </Link>*/}
+                    {/*</Grid>*/}
 
 
-
-                </Grid>
+i
+            </Grid>
 
             </Container>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {"Invalid Credentials"} /> : <></> }

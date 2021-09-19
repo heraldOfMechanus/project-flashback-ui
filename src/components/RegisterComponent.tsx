@@ -126,7 +126,7 @@ function RegisterComponent(props: IRegisterProps){
                     <Grid item>
                         <FormControl className={classes.field}>
                             <InputLabel htmlFor="username-input">Username</InputLabel>
-                            <Input id="username-input" type="text:" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
+                            <Input id="username-input" type="text" onChange={updateusername} onKeyPress={handleSeachInputKeyPress}/>
                             <br/>
                         </FormControl>
                     </Grid>
@@ -138,13 +138,13 @@ function RegisterComponent(props: IRegisterProps){
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <Button className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
+                        <Button id="register-button" className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
                     </Grid>
-                    <Grid item>
-                        <Link to="/login">
-                            Already have an account? Click Me!
-                        </Link>
-                    </Grid>
+                    {/*<Grid item>*/}
+                    {/*    <Link to="/login">*/}
+                    {/*        Already have an account? Click Me!*/}
+                    {/*    </Link>*/}
+                    {/*</Grid>*/}
 
                 </Grid>
             </Container>
