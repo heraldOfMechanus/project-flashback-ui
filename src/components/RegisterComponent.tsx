@@ -26,8 +26,12 @@ function RegisterComponent(props: IRegisterProps){
             borderColor: 'royalblue',
         },
         button: {
-            backgroundColor: 'lightseagreen',
+            color: 'white',
+            backgroundColor: 'steelblue',
             marginTop: '1rem',
+            borderRadius: '.5rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
         },
         field: {
             marginBottom: '.5rem',

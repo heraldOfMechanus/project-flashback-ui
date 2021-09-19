@@ -2,7 +2,7 @@ import {Card} from "../dtos/Card";
 import {useEffect, useState} from "react";
 import {getCardsBySetId} from "../remote/triviacard-service";
 import {TriviaSet} from "../dtos/TriviaSet";
-import {Button, makeStyles} from "@material-ui/core";
+import {Button, makeStyles, Typography} from "@material-ui/core";
 import {useHistory} from 'react-router-dom';
 import {Principal} from "../dtos/Principal";
 import {updateUserScore} from "../remote/user-service";
@@ -200,10 +200,9 @@ function QuestionPage( props: ITriviaQuestionPage){
 
         <>
 
-
-            <h1 className={classes.h1}> Trivia page</h1>
-
-
+            <Typography variant="h2">Trivia Page</Typography>
+            <Typography variant="h4">Set: {props.currentSet?.topic}</Typography>
+            <br />
             {Cards.slice(x,x+1).map((Cards,index, n) =>{
 
                 return <div className={classes.root}>

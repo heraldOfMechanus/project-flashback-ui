@@ -5,7 +5,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import {Typography} from '@material-ui/core'
+import { withStyles, Theme, createStyles, makeStyles} from '@material-ui/core/styles';
 import {useEffect, useState} from "react";
 import {Principal} from "../dtos/Principal";
 import {getAllUsers} from "../remote/user-service";
@@ -97,16 +98,16 @@ function LeaderboardComponent(props: ILeaderbooard){
 
         <>
             <div className={classes.div}>
-             <div>
-
-                    <h1 className={classes.h1}> FLASHBACK LEADERBOARDS</h1>
-            </div>
-            <TableContainer component={Paper}>
+                <div>
+                    <Typography variant='h2'>Leaderboard</Typography>
+                    <br></br>
+                </div>
+                <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead >
                             <TableRow >
 
-                                <StyledTableCell align="center">Place </StyledTableCell>
+                                <StyledTableCell align="center">Rank</StyledTableCell>
                                 <StyledTableCell align="center">Username</StyledTableCell>
                                 <StyledTableCell align="center">Score</StyledTableCell>
 

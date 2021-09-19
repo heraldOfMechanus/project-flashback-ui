@@ -307,7 +307,7 @@ function ForumComponent(props: IForumProps) {
                 </Modal>
             </div>
             <Container className={classes.root} maxWidth='lg'>
-                <Typography variant='h1'>{props.currentTopic?.subforumTitle} Forum</Typography>
+                <Typography variant='h3'>{props.currentTopic?.subforumTitle} Forum</Typography>
                 <br/>
                 <br/>
                 <Grid

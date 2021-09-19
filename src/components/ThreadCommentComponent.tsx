@@ -167,11 +167,10 @@ function ThreadCommentComponent(props: ICommentProps) {
         <>
 
             <div className={classes.title}>
-            <Typography variant='h2'>Thread: {props.currentThread?.threadTitle}   </Typography>
-            <Typography variant='h4'>{props.currentThread?.threadContent}   </Typography>
+                <Typography variant='h2'>Thread: {props.currentThread?.threadTitle}   </Typography>
+                <Typography variant='h4'>{props.currentThread?.threadContent}   </Typography>
             </div>
 
-            <br/>
             <br/>
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
             <div className={classes.root}>
