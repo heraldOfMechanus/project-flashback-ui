@@ -3,7 +3,7 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import {RegisterUserRequest} from "../dtos/register-user-request";
-import {FormControl, InputLabel, Input} from '@material-ui/core';
+import {FormControl, InputLabel, Input, Typography} from '@material-ui/core';
 import { addNewCard } from "../remote/triviacard-service";
 import {getCardsBySetId, deleteCardById} from "../remote/triviacard-service";
 
@@ -189,8 +189,9 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
 
     return(
         <>
-            <h1>TRIVIA ADMIN PAGE</h1>
-            <h1>SET : {props.currentSet?.topic}</h1>
+            <Typography variant="h2">Trivia Admin Page</Typography>
+            <Typography variant="h4">Set : {props.currentSet?.topic}</Typography>
+            <br />
             {Cards.map((card) =>{
 
                 return <div>
