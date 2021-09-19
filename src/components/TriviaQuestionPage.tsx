@@ -193,8 +193,9 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
 
-    function navToForums(topic: any){
+    function navToForums(e: any){
         let m: Subforum | undefined;
+        updateScore(e.total);
         for(let s of subforums){
             console.log(s.subforumTitle);
             if(s.subforumTitle === props.currentSet?.topic) {
@@ -246,7 +247,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                 <h4> There are {Cards.length} questions total </h4>
                 <h3> Total Score: {total}</h3>
                 <Button onClick={ () =>{endGame({total}); }} variant="contained" color="secondary">End Game</Button>
-                <Button onClick={ () =>{(navToForums(props.currentSet?.topic)); }} variant="contained">Help</Button>
+                <Button onClick={ () =>{navToForums({total}); }} variant="contained">Help</Button>
             </div>
 
 
