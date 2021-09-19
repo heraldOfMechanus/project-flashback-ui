@@ -6,8 +6,8 @@ import {render} from "@testing-library/react";
 import TriviaCardSet from "./TriviaCardSet";
 import { Principal } from "../dtos/Principal";
 import { TriviaSet } from "../dtos/TriviaSet";
-import { Button, Input } from "@material-ui/core";
-import { Container, Modal, useTheme, Typography, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
+import { Button, Input, Typography } from "@material-ui/core";
+import { Container, Modal, useTheme, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
 
 
 interface ITriviaPageProps {
@@ -146,7 +146,9 @@ function TriviaPage( props: ITriviaPageProps) {
 
     return (
         <> 
-            <h1 className={classes.h1}>TRIVIA PAGE</h1>
+            <div>
+                <Typography variant="h2">Trivia Page</Typography>
+            </div>
             {isAdmin
             ?
                 <div>

@@ -10,27 +10,17 @@ function LandingPageComponent() {
 
     const image1 = [
         {
-          url: '/static/images/image-list/breakfast.jpg',
+          url: '',
           title: 'Forum Page',
           width: '100%',
         }
-        // {
-        //   url: '/static/images/image-list/camera.jpg',
-        //   title: 'Camera',
-        //   width: '30%',
-        // },
       ];
       const image2 = [
         {
-          url: '/static/images/image-list/burgers.jpg',
+          url: '',
           title: 'Trivia Page',
           width: '100%',
         }
-        // {
-        //   url: '/static/images/image-list/camera.jpg',
-        //   title: 'Camera',
-        //   width: '30%',
-        // },
       ];
 
     const useStyles = makeStyles((theme) => ({
@@ -44,7 +34,6 @@ function LandingPageComponent() {
             padding: '',
             textAlign: 'center',
             width: '80%'
-
           },
         
         image: {
@@ -118,8 +107,9 @@ function LandingPageComponent() {
     return(
         <>
             <div className={classes.root}>
-                <h1>Flashback</h1>
+                <Typography variant='h2'>Flashback</Typography>
             </div>
+            <br />
 
             <div className={classes.root}>
                 {image1.map((image) => (

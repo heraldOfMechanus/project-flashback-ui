@@ -1,6 +1,6 @@
 
 import {RegisterUserRequest} from "../dtos/register-user-request";
-import {useState} from "react";
+import React, {useState} from "react";
 import {registerNewUser} from "../remote/user-service";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from 'react-router-dom';
@@ -26,8 +26,12 @@ function RegisterComponent(props: IRegisterProps){
             borderColor: 'royalblue',
         },
         button: {
-            backgroundColor: 'lightseagreen',
+            color: 'white',
+            backgroundColor: 'steelblue',
             marginTop: '1rem',
+            borderRadius: '.5rem',
+            borderStyle: 'solid',
+            borderColor: 'royalblue',
         },
         field: {
             marginBottom: '.5rem',
@@ -139,6 +143,11 @@ function RegisterComponent(props: IRegisterProps){
                     </Grid>
                     <Grid item>
                         <Button className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
+                    </Grid>
+                    <Grid item>
+                        <Link to="/login">
+                            Already have an account? Click Me!
+                        </Link>
                     </Grid>
 
                 </Grid>

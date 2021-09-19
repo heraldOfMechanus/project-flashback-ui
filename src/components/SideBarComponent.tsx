@@ -19,6 +19,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ForumIcon from '@material-ui/icons/Forum';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ClearAllRoundedIcon from '@material-ui/icons/ClearAllRounded';
+import {Alert} from "@mui/material";
 
 interface INavbarProps {
     currentUser:Principal|undefined,
@@ -37,6 +38,13 @@ export function SideBarComponent(props: INavbarProps) {
         root: {
             display: 'flex',
             textAlign: "center",
+        },
+        alert: {
+            textAlign: 'center',
+            width: '30%',
+            alignItems: 'center',
+            marginLeft: '29rem'
+
         },
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
@@ -136,7 +144,17 @@ export function SideBarComponent(props: INavbarProps) {
                                 Flashback
                             </Typography>
                         </ButtonBase>
+                        {props.currentUser
+                            ?
+                            ''
+                            :
+                            <Alert className={classes.alert} variant="filled" severity="info">
+                                You must be sign in in order to play the trivia game
+                            </Alert>
+
+                        }
                     </Toolbar>
+
                 </AppBar>
                 <Drawer
                     variant="permanent"

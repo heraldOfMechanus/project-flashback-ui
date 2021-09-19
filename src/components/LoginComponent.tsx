@@ -1,10 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Principal } from "../dtos/Principal";
 import ErrorMessageComponent from "./ErrorMessage";
 import {makeStyles} from "@material-ui/core/styles";
 import {authenticate} from '../remote/auth-service'
-import {Button, Container, FormControl, Grid, Input, InputLabel, Typography} from "@material-ui/core";
-import { Redirect } from "react-router-dom";
+import {
+    Button,
+    Container,
+    FormControl,
+    Grid,
+    Input,
+    InputLabel,
+    ListItem,
+    ListItemIcon,
+    Typography
+} from "@material-ui/core";
+import {Link, Redirect} from "react-router-dom";
+import {Alert} from "@mui/material";
+import ForumIcon from "@material-ui/icons/Forum";
 
 
 interface ILoginProps {
@@ -77,6 +89,7 @@ function LoginComponent(props: ILoginProps) {
 
     return (
         !props.currentUser?.id
+
         ?
         <>
             {/*make sure to set class name here( from useStyles) to take affect on the page*/}
@@ -105,7 +118,17 @@ function LoginComponent(props: ILoginProps) {
                     <Grid item>
                         <Button className={classes.button} onClick={login}>Log in!</Button>
                     </Grid>
+
+                    <Grid item>
+                        <Link to="/register">
+                            Click here to register an account
+                        </Link>
+                    </Grid>
+
+
+
                 </Grid>
+
             </Container>
             { errorMessage ? <ErrorMessageComponent  errorMessage = {"Invalid Credentials"} /> : <></> }
 
