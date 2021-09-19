@@ -98,6 +98,10 @@ function QuestionPage( props: ITriviaQuestionPage){
 
 
   function isAnswerCorrect(correctAnswer: string, selectedAnswer: string, points: string){
+        setButtonColor1(false);
+        setButtonColor2(false);
+        setButtonColor3(false);
+        setButtonColor4(false);
         if(correctAnswer === selectedAnswer){
             console.log("true")
             add(Number(points))
