@@ -31,9 +31,9 @@ function QuestionPage( props: ITriviaQuestionPage){
 
     const history = useHistory();
 
-    let currentSelected = -1;
+    let [currentSelected, setCurrentSelected] = useState(-1);
 
-    let [total,setTotal] =useState(0)
+    let [total,setTotal] = useState(0)
 
     let [x,setX] = useState(0)
 
@@ -102,6 +102,7 @@ function QuestionPage( props: ITriviaQuestionPage){
         setButtonColor2(false);
         setButtonColor3(false);
         setButtonColor4(false);
+        console.log(correctAnswer + " " + selectedAnswer + " " + points);
         if(correctAnswer === selectedAnswer){
             console.log("true")
             add(Number(points))
@@ -111,27 +112,25 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
     function updateAnswer(a: number){
-        currentSelected = a;
 
+        setCurrentSelected(a);
+        
         if(a === 0) {
             setButtonColor1(true);
             setButtonColor2(false);
             setButtonColor3(false);
             setButtonColor4(false);
-        }
-        if(a === 1) {
+        } else if (a === 1) {
             setButtonColor1(false);
             setButtonColor2(true);
             setButtonColor3(false);
             setButtonColor4(false);
-        }
-        if(a === 2) {
+        } else if(a === 2) {
             setButtonColor1(false);
             setButtonColor2(false);
             setButtonColor3(true);
             setButtonColor4(false);
-        }
-        if(a === 3) {
+        } else if(a === 3) {
             setButtonColor1(false);
             setButtonColor2(false);
             setButtonColor3(false);
@@ -152,9 +151,6 @@ function QuestionPage( props: ITriviaQuestionPage){
     function updateX(){
         x+=1
         setX(x)
-        console.log(Cards.length)
-
-        updateAnswer(-1);
     }
 
     const [buttonColor1, setButtonColor1] = useState(false);
@@ -197,8 +193,9 @@ function QuestionPage( props: ITriviaQuestionPage){
     }
 
 
-    function navToForums(topic: any){
+    function navToForums(e: any){
         let m: Subforum | undefined;
+        updateScore(e.total);
         for(let s of subforums){
             console.log(s.subforumTitle);
             if(s.subforumTitle === props.currentSet?.topic) {
@@ -236,7 +233,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                     <Button id="button-4" className={classes.buttons} onClick={ () =>{updateAnswer(3)}} variant="contained" color={buttonColor4 ? "primary" : "default"}>{Cards.answers[3]}</Button>
                     <br/>
 
-                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[currentSelected], Cards.points); updateX()}} variant="contained" color="primary">
+                    <Button className={classes.buttons} onClick={ () =>{isAnswerCorrect(Cards.correctAnswer, Cards.answers[currentSelected], Cards.points); updateX(); setCurrentSelected(-1)}} variant="contained" color="primary">
                         next question
                     </Button>
                     <br/>
@@ -250,7 +247,7 @@ function QuestionPage( props: ITriviaQuestionPage){
                 <h4> There are {Cards.length} questions total </h4>
                 <h3> Total Score: {total}</h3>
                 <Button onClick={ () =>{endGame({total}); }} variant="contained" color="secondary">End Game</Button>
-                <Button onClick={ () =>{(navToForums(props.currentSet?.topic)); }} variant="contained">Help</Button>
+                <Button onClick={ () =>{navToForums({total}); }} variant="contained">Help</Button>
             </div>
 
 
