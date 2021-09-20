@@ -8,6 +8,7 @@ import { Principal } from "../dtos/Principal";
 import { TriviaSet } from "../dtos/TriviaSet";
 import { Button, Input, Typography } from "@material-ui/core";
 import { Container, Modal, useTheme, CssBaseline, Grid, makeStyles, FormControl, InputLabel } from '@material-ui/core';
+import { clearInterval } from "timers";
 
 
 interface ITriviaPageProps {
@@ -81,11 +82,13 @@ function TriviaPage( props: ITriviaPageProps) {
         }
     });
 
-    let [done, setDone] = useState(false);
+    const [done, setDone] = useState(false);
 
 
     async function displayTriviaCardSets() {
+        console.log("FETCHING TRIVIA CARD SETS")
         try {
+            console.log('I am getting all triviaCardSets.');
             let allTriviaCardSets = await getAllTriviaCardSets();
             setTriviaCardSetList(allTriviaCardSets);
         } catch (e: any) {
@@ -95,10 +98,12 @@ function TriviaPage( props: ITriviaPageProps) {
 
     useEffect(() => {
         if(!done) {
+            console.log("not done!");
             displayTriviaCardSets();
             setDone(true);
+            
         }
-    })
+    });
 
     const classes = useStyles();
 
@@ -117,6 +122,11 @@ function TriviaPage( props: ITriviaPageProps) {
 
     const handleAddSetClose = () => {
         setAddSetOpen(false);
+        
+        setTimeout(function() {
+            setDone(false);
+        }, 2000)
+
     };
 
     let handleAddSetChange = (e: any) => {
@@ -133,8 +143,8 @@ function TriviaPage( props: ITriviaPageProps) {
                     <br/>
                 </FormControl>
                 <br/>
-                <Button color="primary" id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose(); setDone(false)}}>Create Set</Button>
-                <Button color="secondary" id="newCard-btn" onClick={() => {handleAddSetClose(); setDone(false)}}>Cancel</Button>
+                <Button color="primary" id="newCard-btn" onClick={() => {newTriviaCardSetModal(); handleAddSetClose();}}>Create Set</Button>
+                <Button color="secondary" id="newCard-btn" onClick={() => {handleAddSetClose();}}>Cancel</Button>
         </div>
     )
     function newTriviaCardSetModal() {
