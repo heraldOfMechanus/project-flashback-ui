@@ -115,7 +115,9 @@ function ForumComponent(props: IForumProps) {
     useEffect(() => {
         if(!done) {
             fetchThreads();
-            setDone(true);
+            setTimeout(function() {
+                setDone(true);
+            }, 1000); 
         }
         if(props.currentUser?.role === 'admin') {
             setAdmin(true);
