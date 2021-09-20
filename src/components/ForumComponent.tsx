@@ -5,7 +5,7 @@ import { Alert, ButtonBase } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link, Redirect } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
-import { addNewThread, deleteThread, getAllThreads } from '../remote/thread-service';
+import { addNewThread, deleteThread, getAllThreads, updateOldThread } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
