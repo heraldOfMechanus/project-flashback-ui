@@ -149,7 +149,7 @@ export function SideBarComponent(props: INavbarProps) {
                             ''
                             :
                             <Alert className={classes.alert} variant="filled" severity="info">
-                                You must be sign in in order to play the trivia game
+                                You must be signed in to play the trivia game!
                             </Alert>
 
                         }

@@ -26,7 +26,7 @@ import LeaderboardComponent from "./components/LeaderboardComponent";
 
 function App() {
 
-  document.body.style.backgroundColor = '#cfdbeb';
+  document.body.style.backgroundColor = 'red';
   const [authUser, setAuthUser] = useState(undefined as Principal | undefined);
   const [User] = useState(undefined as RegisterUserRequest | undefined);
   const [currentTopic, setCurrentTopic] = useState(undefined as Subforum | undefined);
@@ -37,7 +37,7 @@ function App() {
   const [value, setValue] = useState(0);
   
   return (
-    <>
+  <>
     <BrowserRouter>
       <SideBarComponent currentUser = {authUser} setCurrentUser={setAuthUser} />
 
