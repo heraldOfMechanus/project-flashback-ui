@@ -59,3 +59,16 @@ export const updateUserScore = async (username: string | undefined, score: strin
 
 }
 
+
+export const getUser = async (username: string | undefined) =>{
+
+    let resp = await flashbackClient.get('/users/getUser', {params: {u: username}})
+
+    if (resp.status >= 400 && resp.status <= 599) {
+        throw resp.data;
+    }
+
+    return resp.data;
+
+}
+
