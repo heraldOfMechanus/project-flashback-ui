@@ -144,11 +144,11 @@ function RegisterComponent(props: IRegisterProps){
                     <Grid item>
                         <Button id="register-button" className={classes.button} onClick={register} onKeyPress={handleSeachInputKeyPress}>Register</Button>
                     </Grid>
-                    {/*<Grid item>*/}
-                    {/*    <Link to="/login">*/}
-                    {/*        Already have an account? Click Me!*/}
-                    {/*    </Link>*/}
-                    {/*</Grid>*/}
+                    <Grid item>
+                        <Link to="/login">
+                            Already have an account? Click Me!
+                        </Link>
+                    </Grid>
 
                 </Grid>
             </Container>

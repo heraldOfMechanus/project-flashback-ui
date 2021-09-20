@@ -117,14 +117,14 @@ function LoginComponent(props: ILoginProps) {
                         <Button id='login-button' className={classes.button} onClick={login}>Log in!</Button>
                     </Grid>
 
-                    {/*<Grid item>*/}
-                    {/*    <Link to="/register">*/}
-                    {/*        Click here to register an account*/}
-                    {/*    </Link>*/}
-                    {/*</Grid>*/}
+                    <Grid item>
+                        <Link to="/register">
+                            Click here to register an account
+                        </Link>
+                    </Grid>
 
 
-i
+
             </Grid>
 
             </Container>

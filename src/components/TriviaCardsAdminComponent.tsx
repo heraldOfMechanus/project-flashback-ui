@@ -164,6 +164,10 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     async function updateTriviaCardtoSet(card: Card){
         console.log("----------");
         let id = updateId;
+
+        console.log(props.currentSet?.id)
+        console.log(id)
+
         console.log("id: " + id);
         console.log("set id: " + props.currentSet?.id);
         console.log("question: " + updateCardFormData.question);
@@ -173,11 +177,17 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
         console.log("ans 4: " + updateCardFormData.answerFour);
         console.log("correct answer: " + updateCardFormData.correctAnswer);
         console.log("points: " + updateCardFormData.points);
+
         try{
             if(props.currentSet?.id && updateCardFormData.question &&
                 updateCardFormData.answerOne && updateCardFormData.answerTwo && 
                 updateCardFormData.answerThree && updateCardFormData.answerFour && 
                 updateCardFormData.correctAnswer) {
+
+
+                console.log(id + " " + updateCardFormData.question + " " + updateCardFormData.correctAnswer);
+                console.log("NO error")
+
                  
                 console.log("about to query API");
                 updateTriviaCard({
@@ -187,9 +197,11 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                     correctAnswer: updateCardFormData.correctAnswer,
                     answers: [updateCardFormData.answerOne, updateCardFormData.answerTwo, updateCardFormData.answerThree, updateCardFormData.answerFour],
                     points: updateCardFormData.points});
-                } 
+                }
+
         } catch (e: any) {
             console.log(e.message);
+            console.log("THE ERROR")
         }
     }
 

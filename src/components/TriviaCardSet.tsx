@@ -301,9 +301,6 @@ function TriviaCardSet(props: ITriviaCardSetProps) {
                                         <Typography color="inherit" variant="h6">Go to Cards</Typography>
                                     </ListItem>
                                 :
-
-
-
                                     <ListItem button component={Link} to={'/trivia-question'} onClick={() => {props.setCurrentSet(triviaSet)}}>
                                     <ListItemIcon><ForumIcon/></ListItemIcon>
                                     <Typography color="inherit" variant="h6">Go to Cards</Typography>
