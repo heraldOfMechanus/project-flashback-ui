@@ -5,7 +5,7 @@ import { Alert, ButtonBase } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link, Redirect } from 'react-router-dom';
 import { Subforum } from '../dtos/Subforum';
-import { addNewThread, deleteThread, getAllThreads, updateOldThread } from '../remote/thread-service';
+import { addNewThread, deleteThread, getAllThreads } from '../remote/thread-service';
 import { Thread } from '../dtos/Thread';
 import { Principal } from '../dtos/Principal';
 import { ThreadDTO } from '../dtos/ThreadDTO';
@@ -115,9 +115,7 @@ function ForumComponent(props: IForumProps) {
     useEffect(() => {
         if(!done) {
             fetchThreads();
-            setTimeout(function() {
-                setDone(true);
-            }, 1000); 
+            setDone(true);
         }
         if(props.currentUser?.role === 'admin') {
             setAdmin(true);
@@ -180,6 +178,9 @@ function ForumComponent(props: IForumProps) {
         console.log(deletionId)
         deleteThread({id: deletionId});
         performClose();
+        setTimeout(function() {
+            setDone(false);
+        }, 1000)
     }
 
     function performUpdate() {
@@ -192,9 +193,10 @@ function ForumComponent(props: IForumProps) {
             if(!newUpdateThread?.threadContent) {
                 newUpdateThread.threadContent = updateThread.threadContent;
             }
-            console.log(newUpdateThread)
             updateOldThread(newUpdateThread);
-            setDone(false);
+            setTimeout(function() {
+                setDone(false);
+            }, 1000)
             performClose2();
         } else {
             console.log('You are not signed in!');
@@ -219,7 +221,9 @@ function ForumComponent(props: IForumProps) {
             let newThread = new ThreadDTO(formData.userId, formData.subforumId, formData.threadTitle, formData.threadContent)
             addNewThread(newThread);
             handleClose();
-            setDone(false);
+            setTimeout(function() {
+                setDone(false);
+            }, 1000)
         }
     }
 
@@ -282,7 +286,7 @@ function ForumComponent(props: IForumProps) {
             <Snackbar className={classes.snackbar} open={toastOpen} autoHideDuration={6000} onClose={performClose}>
                 <Alert onClose={performClose} severity="warning">
                     Are you sure you want to delete that thread? 
-                    <Button className={classes.toastButton} variant="contained" color="primary" onClick={() => {performDelete(); setDone(false);} } component = {Link} to={'/forum'}>
+                    <Button className={classes.toastButton} variant="contained" color="primary" onClick={() => {performDelete();} } component = {Link} to={'/forum'}>
                         Yes
                     </Button>
                 </Alert>
