@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Principal } from "../dtos/Principal";
 import ErrorMessageComponent from "./ErrorMessage";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {getProfilePicture} from '../remote/user-service'
+import {getProfilePicture, getUser} from '../remote/user-service'
 import {Avatar, Icon, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText} from "@material-ui/core";
 import classes from "*.module.css";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -22,6 +22,17 @@ interface IDashboardComponent {
 function DashboardComponent(props: IDashboardComponent) {
 
     const[pfp, setPfp] = useState('');
+    const[user, setUser] = useState({
+        id: '',
+        username: '',
+        role: '',
+        token: '',
+        firstName:'',
+        lastName: '',
+        email: '',
+        totalScore: '',
+        registrationDate: ''
+    })
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -46,7 +57,17 @@ function DashboardComponent(props: IDashboardComponent) {
             }
         }
         displayProfilePicture();
+        getUserScore()
     }, []);
+
+    let getUserScore = async () => {
+        try{
+            let user = await getUser(props.currentUser?.username);
+            setUser(user);
+        } catch (e: any){
+            console.log(e.message);
+        }
+    }
 
 
     return (
@@ -61,7 +82,7 @@ function DashboardComponent(props: IDashboardComponent) {
                             <GamesOutlinedIcon/>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Total Score" secondary= {props.currentUser?.totalScore}/>
+                    <ListItemText primary="Total Score" secondary= {user.totalScore}/>
                 </ListItem>
                 <ListItem>
                     <ListItemAvatar>

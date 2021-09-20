@@ -17,7 +17,6 @@ import ForumComponent from './components/ForumComponent';
 import DashboardComponent from './components/DashboardPageComponent';
 import { Subforum } from './dtos/Subforum';
 import ThreadCommentComponent from './components/ThreadCommentComponent';
-import ThreadComment from './components/ThreadCommentComponent';
 import { Thread } from './dtos/Thread';
 import TriviaQuestionPage from "./components/TriviaQuestionPage";
 import {Card} from "./dtos/Card";
