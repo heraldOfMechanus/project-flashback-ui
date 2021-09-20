@@ -157,13 +157,17 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
     //do something here to send id as well
     async function updateTriviaCardtoSet(card: Card){
         let id = updateId;
+        console.log(props.currentSet?.id)
+        console.log(id)
         try{
             if(props.currentSet?.id && updateCardFormData.question && updateCardFormData.question &&
                 updateCardFormData.answerOne && updateCardFormData.answerTwo && 
                 updateCardFormData.answerThree && updateCardFormData.answerFour && 
                 updateCardFormData.correctAnswer) {
 
+
                 console.log(id + " " + updateCardFormData.question + " " + updateCardFormData.correctAnswer);
+                console.log("NO error")
                  
                 updateTriviaCard({
                     id: id,
@@ -172,9 +176,11 @@ function TriviaAdminComponent(props: ITriviaAdminProps){
                     correctAnswer: updateCardFormData.correctAnswer,
                     answers: [updateCardFormData.answerOne, updateCardFormData.answerTwo, updateCardFormData.answerThree, updateCardFormData.answerFour],
                     points: updateCardFormData.points});
-                } 
+                }
+
         } catch (e: any) {
             console.log(e.message);
+            console.log("THE ERROR")
         }
     }
 
